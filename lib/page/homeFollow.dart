@@ -22,12 +22,37 @@ class _HomeFollowState extends State<HomeFollow>
 
   @override
   Widget build(BuildContext context) {
-    return new ListView();
+    return Container(
+      child: FollowBody(),
+    );
   }
+
+//  @override
+//  // ignore: must_cal_super
+//  Widget build(BuildContext context) {
+//    return FutureBuilder(
+//      future: loginService("zjg", "123456"),
+//      builder: (context, snapshot) {
+//        if (snapshot.hasData) {
+//          Map userData = json.decode(snapshot.data.toString());
+//          User user = User.fromJson(userData);
+//          List<Map> recommend = (userData['data']['recommend'] as List).cast();
+//          return Column(
+//            children: <Widget>[Recommend(recommend: recommend)],
+//          );
+//        } else {
+//          return Center(
+//            child: Text("gg"),
+//          );
+//        }
+//      },
+//    );
+//  }
 }
 
-class Follow extends StatelessWidget {
-  List<Map<String, dynamic>> recommend = [
+// ignore: must_be_immutable
+class FollowBody extends StatelessWidget {
+  List<Map<String, dynamic>> follow = [
     {'img': '111', 'text': '222'},
     {'img': '111', 'text': '333'},
     {'img': '111', 'text': '444'},
@@ -51,7 +76,7 @@ class Follow extends StatelessWidget {
 
 //  Recommend({Key key, this.recommend}) : super(key: key);
 //
-  //定义单条推荐消息
+  //定义单条关注消息
   Widget _item(index) {
     return InkWell(
       onTap: () {},
@@ -69,12 +94,12 @@ class Follow extends StatelessWidget {
         child: Column(
           children: <Widget>[
             new Text(
-              recommend[index]['text'],
+              follow[index]['text'],
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
             ),
-            new Image.network(recommend[index]['img']),
+//            new Image.network(follow[index]['img']),
           ],
         ),
       ),
@@ -85,7 +110,7 @@ class Follow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: recommend.length,
+        itemCount: follow.length,
         itemBuilder: (context, index) {
           return Material(child: _item(index));
         });

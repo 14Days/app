@@ -1,5 +1,4 @@
 import 'package:furture/component/comment.dart';
-import '../page/findPassword.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +17,6 @@ var registerHandler = new Handler(
   return new RegisterPage();
 });
 
-var findpwdHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return new FindpwdPage();
-});
 
 var btmNaHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -37,4 +32,10 @@ var myHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return new MyPage();
     });
+
+var setHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new SetPage();
+    });
+
 

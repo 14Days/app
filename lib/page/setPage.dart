@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 
-class MyPage extends StatefulWidget {
+class SetPage extends StatefulWidget {
   @override
-  _MyPageState createState() => _MyPageState();
+  _SetPageState createState() => _SetPageState();
 }
 
-class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
-
+class _SetPageState extends State<SetPage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState(); //无名无参需要调用
@@ -22,23 +21,47 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-
-    );
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("设置"),
+        ),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: SetItem(),
+            ),
+            new Container(
+                width: double.infinity,
+                height: 50.0,
+                margin: EdgeInsets.only(bottom: 0),
+                child: RaisedButton(
+                  color: Colors.blue,
+                  highlightColor: Colors.blue[700],
+                  colorBrightness: Brightness.dark,
+                  splashColor: Colors.grey,
+                  child: Text(
+                    "退出登录",
+                    style: TextStyle(),
+                  ),
+                  onPressed: () {
+                    LoginPage();
+                  },
+                )),
+          ],
+        ));
   }
 }
 
 //设置条目
 class SetItem extends StatelessWidget {
-  final String item;
-
-  SetItem({Key key, this.item}) : super(key: key);
+  final List<String> items = ['头像', '昵称', '手机', '颜色'];
 
   //定义单条设置栏目
-  Widget _item() {
+  Widget _item(index) {
     return InkWell(
       onTap: () {},
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10.0),
+        margin: const EdgeInsets.only(bottom: 5.0, left: 10.0),
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
             color: Colors.white70,
@@ -48,8 +71,24 @@ class SetItem extends StatelessWidget {
               top: BorderSide(width: 0.5, color: Colors.black12),
               bottom: BorderSide(width: 0.5, color: Colors.black12),
             )),
-        child: Text(
-          item,
+        child: Row(
+          children: <Widget>[
+            new Text(
+              items[index],
+              style: TextStyle(),
+            ),
+            new Expanded(
+              child: Container(),
+            ),
+            new IconButton(
+              icon: Icon(
+                Icons.chevron_right,
+                color: Colors.grey,
+                size: 30.0,
+              ),
+              onPressed: () {},
+            ),
+          ],
         ),
       ),
     );
@@ -57,8 +96,11 @@ class SetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: _item(),
-    );
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return Material(child: _item(index));
+        });
   }
 }

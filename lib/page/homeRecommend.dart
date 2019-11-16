@@ -28,9 +28,7 @@ class _HomeRecommendState extends State<HomeRecommend>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Recommend(),
-    );
+    return Container(child: new RecommendBody());
   }
 
 //  @override
@@ -58,7 +56,7 @@ class _HomeRecommendState extends State<HomeRecommend>
 
 //推荐类
 // ignore: must_be_immutable
-class Recommend extends StatelessWidget {
+class RecommendBody extends StatelessWidget {
   List<Map<String, dynamic>> recommend = [
     {'img': '111', 'text': '222'},
     {'img': '111', 'text': '333'},
@@ -106,7 +104,7 @@ class Recommend extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
             ),
-            new Image.network(recommend[index]['img']),
+//            new Image.network(recommend[index]['img']),
           ],
         ),
       ),

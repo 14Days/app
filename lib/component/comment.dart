@@ -6,3 +6,4 @@ export 'package:furture/page/homePage.dart';
 export 'package:furture/page/myPage.dart';
 export 'package:furture/page/noticePage.dart';
 export 'package:furture/page/bottomNavigator.dart';
+export 'package:furture/page/setPage.dart';

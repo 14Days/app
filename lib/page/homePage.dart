@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:furture/component/comment.dart';
 import 'package:furture/page/homeClass.dart';
 import 'package:furture/page/homeFollow.dart';
 import 'package:furture/page/homeRecommend.dart';
@@ -13,7 +12,36 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
-
+  //顶部导航列表
+  List<Widget> topTabs = [
+    new Tab(
+      child: Text(
+        "推荐",
+        style: new TextStyle(
+          color: Colors.white,
+          fontSize: 20.0,
+        ),
+      ),
+    ),
+    new Tab(
+      child: Text(
+        "关注",
+        style: new TextStyle(
+          color: Colors.white,
+          fontSize: 20.0,
+        ),
+      ),
+    ),
+    new Tab(
+      child: Text(
+        "分类",
+        style: new TextStyle(
+          color: Colors.white,
+          fontSize: 20.0,
+        ),
+      ),
+    ),
+  ];
   @override
   void initState() {
     _tabController = new TabController(
