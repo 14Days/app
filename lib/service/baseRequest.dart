@@ -16,17 +16,33 @@ class BaseRequest {
     ));
   }
 
-  Future<Response<T>> get<T>(String path, {Map<String, dynamic> query}) async {
+  Future<Response<T>> get<T>(String path, {Map<String, dynamic> queryParameters}) async {
     var getToken = await SharedPreferences.getInstance();
     var token = getToken.get(_token);
-    return await _base.get(path, queryParameters: query, options: Options(
+    return await _base.get(path, queryParameters: queryParameters, options: Options(
       headers: {
         'Authorization': token
       },
     ));
   }
 
-  Future<Response<T>> post<T>(String path, Map<String, dynamic> data) async {
-    return await _base.post(path, data: data);
+  Future<Response<T>> post<T>(String path, {Map<String, dynamic> data}) async {
+    var getToken = await SharedPreferences.getInstance();
+    var token = getToken.get(_token);
+    return await _base.post(path, data: data, options: Options(
+      headers: {
+        'Authorization': token
+      },
+    ));
+  }
+
+  Future<Response<T>> delete<T>(String path, {Map<String, dynamic> queryParameters}) async {
+    var getToken = await SharedPreferences.getInstance();
+    var token = getToken.get(_token);
+    return await _base.delete(path, queryParameters: queryParameters, options: Options(
+      headers: {
+        'Authorization': token
+      },
+    ));
   }
 }
