@@ -62,7 +62,6 @@ class _NoticeBodyState extends State<NoticeBody> {
   void initState() {
 //    getNotice();
     super.initState();
-
   }
 
   //当整个页面dispose时，dispose掉控制器，释放内存
@@ -73,30 +72,44 @@ class _NoticeBodyState extends State<NoticeBody> {
 
   //定义通知消息
   Widget _item(index) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10.0),
-        padding: const EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-            color: Colors.white70,
-            border: Border(
-              left: BorderSide(width: 0.5, color: Colors.black12),
-              right: BorderSide(width: 0.5, color: Colors.black12),
-              top: BorderSide(width: 0.5, color: Colors.black12),
-              bottom: BorderSide(width: 0.5, color: Colors.black12),
-            )),
-        child: Column(
-          children: <Widget>[
-            new Text(
-              noticeItems.data[index].content,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
-            ),
-            new Text(noticeItems.data[index].createAt),
-          ],
-        ),
+    return Container(
+      margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+      padding: const EdgeInsets.all(10.0),
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+          color: Colors.white70,
+          border: Border(
+            left: BorderSide(width: 0.5, color: Colors.black12),
+            right: BorderSide(width: 0.5, color: Colors.black12),
+            top: BorderSide(width: 0.5, color: Colors.black12),
+            bottom: BorderSide(width: 0.5, color: Colors.black12),
+          )),
+      child: Column(
+        children: <Widget>[
+          Container(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              alignment: Alignment.centerLeft,
+              child: new Text(
+                noticeItems.data[index].createAt,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 15.0
+                ),
+              )),
+          Container(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              alignment: Alignment.centerLeft,
+              child: new Text(
+                noticeItems.data[index].content,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 20.0
+                ),
+              )),
+        ],
       ),
     );
   }
