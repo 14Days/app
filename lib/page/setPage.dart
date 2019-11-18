@@ -1,68 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
+import '../service/serviceMethod.dart';
 
-class SetPage extends StatefulWidget {
+class SetPage extends StatelessWidget {
   @override
-  _SetPageState createState() => _SetPageState();
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("设置"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              child: SetItems(),
+            ),
+          ),
+          new Logout(),
+        ],
+      ),
+    );
+  }
 }
 
-class _SetPageState extends State<SetPage> with SingleTickerProviderStateMixin {
+//退出登录
+class Logout extends StatefulWidget {
   @override
-  void initState() {
-    super.initState(); //无名无参需要调用
-  }
+  _LogoutState createState() => _LogoutState();
+}
 
-  //当整个页面dispose时，dispose掉控制器，释放内存
-  @override
-  void dispose() {
-    super.dispose();
+class _LogoutState extends State<Logout> {
+  //退出登录
+  void testLogout() async {
+    final onValue = await logoutService();
+    setState(() {
+      if (onValue['status'] == 'success') {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LoginPage()),
+            (route) => route == null);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("设置"),
+    return new Container(
+      width: double.infinity,
+      height: 50.0,
+      margin: EdgeInsets.only(bottom: 0),
+      child: RaisedButton(
+        color: Colors.blue,
+        highlightColor: Colors.blue[700],
+        colorBrightness: Brightness.dark,
+        splashColor: Colors.grey,
+        child: Text(
+          "退出登录",
+          style: TextStyle(),
         ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: SetItem(),
-            ),
-            new Container(
-                width: double.infinity,
-                height: 50.0,
-                margin: EdgeInsets.only(bottom: 0),
-                child: RaisedButton(
-                  color: Colors.blue,
-                  highlightColor: Colors.blue[700],
-                  colorBrightness: Brightness.dark,
-                  splashColor: Colors.grey,
-                  child: Text(
-                    "退出登录",
-                    style: TextStyle(),
-                  ),
-                  onPressed: () {
-                    LoginPage();
-                  },
-                )),
-          ],
-        ));
+        onPressed: () {
+          testLogout();
+        },
+      ),
+    );
   }
 }
 
 //设置条目
-class SetItem extends StatelessWidget {
-  final List<String> items = ['头像', '昵称', '手机', '颜色'];
+class SetItems extends StatefulWidget {
+  @override
+  _SetItemsState createState() => _SetItemsState();
+}
+
+class _SetItemsState extends State<SetItems> {
+  final List<String> items = ['头像', '昵称', '性别', '邮箱', '颜色'];
 
   //定义单条设置栏目
-  Widget _item(index) {
+  Widget _item(context, index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        switch (index) {
+          case 0:
+            {
+              Application.router.navigateTo(context, Routes.setSex);
+            }
+            break;
+          case 1:
+            {
+              Application.router.navigateTo(context, Routes.setNickname);
+            }
+            break;
+          case 2:
+            {
+              Application.router.navigateTo(context, Routes.setSex);
+            }
+            break;
+          case 3:
+            {
+              Application.router.navigateTo(context, Routes.setEmail);
+            }
+            break;
+          case 4:
+            {
+              Application.router.navigateTo(context, Routes.setColor);
+            }
+            break;
+        }
+      },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 5.0, left: 10.0),
-        padding: const EdgeInsets.all(10.0),
+        height: 50.0,
+        margin: const EdgeInsets.only(top: 2.0),
+        padding: const EdgeInsets.only(left: 20.0),
         decoration: BoxDecoration(
             color: Colors.white70,
             border: Border(
@@ -80,13 +129,13 @@ class SetItem extends StatelessWidget {
             new Expanded(
               child: Container(),
             ),
-            new IconButton(
-              icon: Icon(
+            new Container(
+              margin: const EdgeInsets.only(right: 10.0),
+              child: Icon(
                 Icons.chevron_right,
                 color: Colors.grey,
                 size: 30.0,
               ),
-              onPressed: () {},
             ),
           ],
         ),
@@ -97,10 +146,11 @@ class SetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return Material(child: _item(index));
-        });
+      scrollDirection: Axis.vertical,
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return Material(child: _item(context, index));
+      },
+    );
   }
 }

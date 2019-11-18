@@ -60,7 +60,7 @@ class _NoticeBodyState extends State<NoticeBody> {
 
   @override
   void initState() {
-//    getNotice();
+    getNotice();
     super.initState();
   }
 
@@ -72,21 +72,23 @@ class _NoticeBodyState extends State<NoticeBody> {
 
   //定义通知消息
   Widget _item(index) {
-    return Container(
-      margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-      padding: const EdgeInsets.all(10.0),
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
+    if (noticeItems.data[index].content != null) {
+      return Container(
+        margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+        padding: const EdgeInsets.all(10.0),
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
           color: Colors.white70,
           border: Border(
             left: BorderSide(width: 0.5, color: Colors.black12),
             right: BorderSide(width: 0.5, color: Colors.black12),
             top: BorderSide(width: 0.5, color: Colors.black12),
             bottom: BorderSide(width: 0.5, color: Colors.black12),
-          )),
-      child: Column(
-        children: <Widget>[
-          Container(
+          ),
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               child: new Text(
@@ -94,45 +96,42 @@ class _NoticeBodyState extends State<NoticeBody> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 15.0
-                ),
-              )),
-          Container(
+                style: TextStyle(fontSize: 15.0),
+              ),
+            ),
+            Container(
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               child: new Text(
                 noticeItems.data[index].content,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 20.0
-                ),
-              )),
-        ],
-      ),
-    );
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    getNotice();
     if (noticeItems == null) {
       return Center(
         child: Text(
           "暂无通知",
-          style: TextStyle(
-            color: Colors.black,
-          ),
+          style: TextStyle(color: Colors.black, fontSize: 30),
         ),
       );
     } else {
       return ListView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: noticeItems.data.length,
-          itemBuilder: (context, index) {
-            return Material(child: _item(index));
-          });
+        scrollDirection: Axis.vertical,
+        itemCount: noticeItems.data.length,
+        itemBuilder: (context, index) {
+          return Material(child: _item(index));
+        },
+      );
     }
   }
 }

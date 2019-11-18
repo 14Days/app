@@ -7,3 +7,8 @@ export 'package:furture/page/myPage.dart';
 export 'package:furture/page/noticePage.dart';
 export 'package:furture/page/bottomNavigator.dart';
 export 'package:furture/page/setPage.dart';
+export 'package:furture/page/setSex.dart';
+export 'package:furture/page/setColor.dart';
+export 'package:furture/page/setEmail.dart';
+export 'package:furture/page/setNickname.dart';
+//export 'package:furture/page/setSex.dart';

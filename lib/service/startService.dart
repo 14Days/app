@@ -3,7 +3,7 @@ import 'package:furture/service/serviceUrl.dart';
 import 'dart:async';
 import 'serviceUrl.dart';
 import './baseRequest.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 //登录请求
 Future loginService(String username, String password) async {
   try {
@@ -12,7 +12,10 @@ Future loginService(String username, String password) async {
     //获取请求
     Response response =
         await BaseRequest().post(servicePath[login], data: loginParam);
+
     if (response.statusCode == 200) {
+      var setToken = await SharedPreferences.getInstance();
+      setToken.setString('token', response.data['data'].toString());
       return response.data;
     } else {
       throw Exception("登录请求异常");

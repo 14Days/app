@@ -2,19 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:provider/provider.dart';
 import './config/application.dart';
-import './provider/stateProvider.dart';
 import './config/routes.dart';
 import './page/loginPage.dart';
-import './page/detailsPage.dart';
+import 'provider/stateProvider.dart';
 
 void main() {
-  var category = Category();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<Category>.value(value: category)
-    ],
-    child: MyApp(),
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,13 +20,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FurtureApp',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (_) => UserState(),)
+      ],
+      child: Consumer<UserState>(
+        builder: (context,userState, _){
+          return MaterialApp(
+            title: 'FurtureApp',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: LoginPage(),
+            onGenerateRoute: Application.router.generator,
+          );
+        },
       ),
-      home: LoginPage(),
-      onGenerateRoute: Application.router.generator,
     );
   }
 }

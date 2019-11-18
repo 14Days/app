@@ -19,6 +19,7 @@ class BaseRequest {
   Future<Response<T>> get<T>(String path, {Map<String, dynamic> queryParameters}) async {
     var getToken = await SharedPreferences.getInstance();
     var token = getToken.get(_token);
+    print(token);
     return await _base.get(path, queryParameters: queryParameters, options: Options(
       headers: {
         'Authorization': token

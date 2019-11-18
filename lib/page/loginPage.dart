@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../component/comment.dart';
 import 'package:furture/service/serviceMethod.dart';
-
 import '../utils/utils.dart';
 
 class LoginPage extends StatelessWidget {

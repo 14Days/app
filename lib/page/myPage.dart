@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
-import './setPage.dart';
+import '../provider/stateProvider.dart';
+import 'package:provider/provider.dart';
 
-
-class MyPage extends StatefulWidget {
-  @override
-  _MyPageState createState() => _MyPageState();
-}
-
-class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
-  List<Widget> list = List();
-
-  @override
-  void initState() {
-    list..add(HomePage())..add(NoticePage())..add(MyPage());
-    super.initState(); //无名无参需要调用
-  }
-
-  //当整个页面dispose时，dispose掉控制器，释放内存
-  @override
-  void dispose() {
-    super.dispose();
-  }
+class MyPage extends StatelessWidget {
+//  @override
+//  _MyPageState createState() => _MyPageState();
+//}
+//
+//class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
+//  @override
+//  void initState() {
+//    super.initState(); //无名无参需要调用
+//  }
+//
+//  //当整个页面dispose时，dispose掉控制器，释放内存
+//  @override
+//  void dispose() {
+//    super.dispose();
+//  }
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserState>(context, listen: false);
+    print(user.nickname);
     return new Column(
       children: <Widget>[
         new Row(
@@ -44,8 +43,8 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
                 height: 125.0,
                 alignment: Alignment.centerLeft,
                 color: Colors.blue,
-                child: new Text(
-                  "11111111",
+                child: Text(
+                  user.nickname,
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: 30.0,
@@ -85,21 +84,22 @@ class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
         new Row(
           children: <Widget>[
             Expanded(
-                child: Container(
-              height: 50.0,
-              decoration: new BoxDecoration(
-                color: Colors.white,
-                border: new Border.all(width: 1.0, color: Colors.grey),
-              ),
-              child: Text(
-                "我的收藏",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 27.0,
-                  color: Colors.black,
+              child: Container(
+                height: 50.0,
+                alignment: Alignment.center,
+                decoration: new BoxDecoration(
+                  color: Colors.white,
+                  border: new Border.all(width: 1.0, color: Colors.grey),
+                ),
+                child: Text(
+                  "我的收藏",
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
-            )),
+            ),
           ],
         ),
         new Expanded(

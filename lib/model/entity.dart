@@ -1,82 +1,139 @@
 import 'package:flutter/material.dart';
 
+//用户user模型
 class UserModel {
-  String username;
-  String password;
-  String img;
-  String phone;
-  String color;
+  UserData data;
+  String status;
+
+  UserModel({this.data, this.status});
+
+  UserModel.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? new UserData.fromJson(json['data']) : null;
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data.toJson();
+    }
+    data['status'] = this.status;
+    return data;
+  }
+}
+class UserData {
+  int color;
   String email;
+  String name;
+  String nickname;
+  String phone;
   int sex;
 
-  UserModel(this.username, this.password, this.img, this.phone, this.color,
-      this.email, this.sex);
+  UserData(
+      {this.color, this.email, this.name, this.nickname, this.phone, this.sex});
 
-  UserModel.fromJson(Map<String, dynamic> json)
-      : username = json['username'],
-        password = json['password'],
-        img = json['img'],
-        phone = json['phone'],
-        color = json['color'],
-        email = json['email'],
-        sex = json['sex'];
+  UserData.fromJson(Map<String, dynamic> json) {
+    color = json['color'];
+    email = json['email'];
+    name = json['name'];
+    nickname = json['nickname'];
+    phone = json['phone'];
+    sex = json['sex'];
+  }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'username': username,
-        'password': password,
-        'img': img,
-        'phone': phone,
-        'color': color,
-        'email': email,
-        'sex': sex
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['color'] = this.color;
+    data['email'] = this.email;
+    data['name'] = this.name;
+    data['nickname'] = this.nickname;
+    data['phone'] = this.phone;
+    data['sex'] = this.sex;
+    return data;
+  }
 }
 
-class RecommendModel {
-  String name;
-  String avatar;
-  String create_at;
-  List<String> img_url;
-  int sum_likes;
-  int sum_comments;
+//请求消息模型
+class MessageModel {
+  List<MessageData> data;
+  String status;
+
+  MessageModel({this.data, this.status});
+
+  MessageModel.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = new List<MessageData>();
+      json['data'].forEach((v) {
+        data.add(new MessageData.fromJson(v));
+      });
+    }
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    data['status'] = this.status;
+    return data;
+  }
+}
+class MessageData {
   String content;
-  String id;
-  String designer_id;
-  bool id_follow;
+  String createAt;
+  int designerId;
+  int id;
+  List<String> imgsName;
+  bool isCollected;
+  bool isFollowed;
+  bool isLiked;
+  String name;
+  int sumCollects;
+  int sumLikes;
 
-  RecommendModel(
-      this.name,
-      this.avatar,
-      this.create_at,
-      this.img_url,
-      this.sum_likes,
-      this.sum_comments,
-      this.content,
-      this.id,
-      this.designer_id,
-      this.id_follow);
+  MessageData(
+      {this.content,
+        this.createAt,
+        this.designerId,
+        this.id,
+        this.imgsName,
+        this.isCollected,
+        this.isFollowed,
+        this.isLiked,
+        this.name,
+        this.sumCollects,
+        this.sumLikes});
 
-  RecommendModel.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        avatar = json['avatar'],
-        img_url = json['img_url'],
-        sum_likes = json['sum_likes'],
-        sum_comments = json['sum_comments'],
-        content = json['content'],
-        id = json['id'],
-        designer_id = json['designer_id'],
-        id_follow = json['id_follow'];
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'name': name,
-    'avatar': avatar,
-    'img_url': img_url,
-    'sum_likes': sum_likes,
-    'sum_comments': sum_comments,
-    'content': content,
-    'id': id,
-    'designer_id': designer_id,
-    'id_follow': id_follow,
-  };
+  MessageData.fromJson(Map<String, dynamic> json) {
+    content = json['content'];
+    createAt = json['create_at'];
+    designerId = json['designer_id'];
+    id = json['id'];
+    imgsName = json['imgs_name'].cast<String>();
+    isCollected = json['is_collected'];
+    isFollowed = json['is_followed'];
+    isLiked = json['is_liked'];
+    name = json['name'];
+    sumCollects = json['sum_collects'];
+    sumLikes = json['sum_likes'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['content'] = this.content;
+    data['create_at'] = this.createAt;
+    data['designer_id'] = this.designerId;
+    data['id'] = this.id;
+    data['imgs_name'] = this.imgsName;
+    data['is_collected'] = this.isCollected;
+    data['is_followed'] = this.isFollowed;
+    data['is_liked'] = this.isLiked;
+    data['name'] = this.name;
+    data['sum_collects'] = this.sumCollects;
+    data['sum_likes'] = this.sumLikes;
+    return data;
+  }
 }
 
 

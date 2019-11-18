@@ -7,23 +7,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:furture/service/serviceMethod.dart';
+import 'package:furture/model/entity.dart';
 
-import "../lib/main.dart";
-
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+void main() async {
+  ColorModel colors;
+  final log = await loginService("wjq", "Zzzz1111");
+  final onValue = await getColorService();
+  print(onValue);
+  if (onValue['status'] == 'success') {
+    colors = ColorModel.fromJson(onValue);
+    print(colors);
+  }
 }

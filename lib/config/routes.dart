@@ -13,6 +13,11 @@ class Routes {
   static String homeFollow = "/home/follow";
   static String homeClass = "home/class";
   static String set = "my/set";
+  static String setSex = "my/set/sex";
+  static String setEmail = "my/set/email";
+  static String setColor = "my/set/color";
+  static String setNickname = "my/set/nickname";
+//  static String setSex = "my/set/sex";
 
   static void configureRoutes(Router router) {
     //跳转至登录
@@ -33,5 +38,15 @@ class Routes {
 
     //跳转至我的/设置
     router.define(set, handler: setHandler);
+    //跳转至我的/设置/性别
+    router.define(setSex, handler: setSexHandler);
+    //跳转至我的/设置/邮件
+    router.define(setEmail, handler: setEmailHandler);
+    //跳转至我的/设置/颜色
+    router.define(setColor, handler: setColorHandler);
+    //跳转至我的/设置/昵称
+    router.define(setNickname, handler: setNicknameHandler);
+//    //跳转至我的/设置/性别
+//    router.define(setSex, handler: setSexHandler);
   }
 }

@@ -27,22 +27,16 @@ class _HomeRecommendState extends State<HomeRecommend>
   }
 
   @override
+  // ignore: must_cal_super
   Widget build(BuildContext context) {
-    return Container(child: new RecommendBody());
-  }
-
-//  @override
-//  // ignore: must_cal_super
-//  Widget build(BuildContext context) {
-//    return FutureBuilder(
-//      future: loginService("zjg", "123456"),
+    return RecommendBody();
+//    FutureBuilder(
+//      future: homeRecommendService(),
 //      builder: (context, snapshot) {
 //        if (snapshot.hasData) {
-//          Map userData = json.decode(snapshot.data.toString());
-//          User user = User.fromJson(userData);
-//          List<Map> recommend = (userData['data']['recommend'] as List).cast();
-//          return Column(
-//            children: <Widget>[Recommend(recommend: recommend)],
+//          MessageData messageData = MessageData.fromJson(snapshot.data);
+//          return Container(
+//            child: RecommendBody(),
 //          );
 //        } else {
 //          return Center(
@@ -51,36 +45,58 @@ class _HomeRecommendState extends State<HomeRecommend>
 //        }
 //      },
 //    );
-//  }
+  }
 }
 
 //推荐类
 // ignore: must_be_immutable
-class RecommendBody extends StatelessWidget {
-  List<Map<String, dynamic>> recommend = [
-    {'img': '111', 'text': '222'},
-    {'img': '111', 'text': '333'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-  ];
+class RecommendBody extends StatefulWidget {
+  @override
+  _RecommendBodyState createState() => _RecommendBodyState();
+}
 
-//  Recommend({Key key, this.recommend}) : super(key: key);
-//
+class _RecommendBodyState extends State<RecommendBody> {
+  MessageModel messageModel;
+
+//  _RecommendBodyState({Key key, this.messageData}) : super(key: key);
+
+  void getMessage() async {
+    final onValue = await homeRecommendService();
+    setState(() {
+      if (onValue['status'] == 'success') {
+        messageModel = MessageModel.fromJson(onValue);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getMessage();
+    super.initState();
+  }
+
+  //当整个页面dispose时，dispose掉控制器，释放内存
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Widget imageItems(index) {
+    List<Widget> images = []; //先建一个数组用于存放循环生成的widget
+    for (var image in messageModel.data[index].imgsName) {
+      images.add(
+        new Container(
+          child: Text(image.toString()),
+//                Image.network(image,width: 500,height: 100,fit: BoxFit.cover,),
+        ),
+      );
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: images,
+    );
+  }
+
   //定义单条推荐消息
   Widget _item(index) {
     return InkWell(
@@ -89,22 +105,41 @@ class RecommendBody extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10.0),
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-            color: Colors.white70,
-            border: Border(
-              left: BorderSide(width: 0.5, color: Colors.black12),
-              right: BorderSide(width: 0.5, color: Colors.black12),
-              top: BorderSide(width: 0.5, color: Colors.black12),
-              bottom: BorderSide(width: 0.5, color: Colors.black12),
-            )),
+          color: Colors.white70,
+          border: Border(
+            left: BorderSide(width: 0.5, color: Colors.black12),
+            right: BorderSide(width: 0.5, color: Colors.black12),
+            top: BorderSide(width: 0.5, color: Colors.black12),
+            bottom: BorderSide(width: 0.5, color: Colors.black12),
+          ),
+        ),
         child: Column(
           children: <Widget>[
-            new Text(
-              recommend[index]['text'],
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
+            new Container(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                messageModel.data[index].content,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 15.0),
+              ),
             ),
-//            new Image.network(recommend[index]['img']),
+            new Container(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: Colors.white70,
+                border: Border(
+                  left: BorderSide(width: 0.5, color: Colors.black12),
+                  right: BorderSide(width: 0.5, color: Colors.black12),
+                  top: BorderSide(width: 0.5, color: Colors.black12),
+                  bottom: BorderSide(width: 0.5, color: Colors.black12),
+                ),
+              ),
+              child: imageItems(index),
+            ),
           ],
         ),
       ),
@@ -113,11 +148,18 @@ class RecommendBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    if (messageModel != null) {
+      return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: recommend.length,
+        itemCount: messageModel.data.length,
         itemBuilder: (context, index) {
           return Material(child: _item(index));
-        });
+        },
+      );
+    } else {
+      return Center(
+        child: Text("正在获取消息"),
+      );
+    }
   }
 }

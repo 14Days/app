@@ -22,7 +22,7 @@ Future getUserService() async {
 }
 
 //用户信息编辑
-Future postUserService(String email, String sex, String nickname) async {
+Future postUserService(String email, int sex, String nickname) async {
   try {
     var userParam = {'email': email, 'sex': sex, 'nickname': nickname};
     //获取请求
@@ -149,11 +149,14 @@ Future unlikeService(String id) async {
 }
 
 //请求颜色列表
-Future getColorService(String id) async {
+Future getColorService() async {
   try {
     //获取请求
+    print(1111);
     Response response = await BaseRequest().get(servicePath[color]);
+    print(2222);
     if (response.statusCode == 200) {
+      print(response);
       return response.data;
     } else {
       throw Exception("颜色请求异常");

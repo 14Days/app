@@ -37,5 +37,25 @@ var setHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return new SetPage();
     });
+var setSexHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new SetSex();
+    });
+var setColorHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new SetColor();
+    });
+var setEmailHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new SetEmail();
+    });
+var setNicknameHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new SetNickname();
+    });
+//var setSexHandler = new Handler(
+//    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+//      return new SetSex();
+//    });
 
 
