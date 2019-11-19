@@ -8,7 +8,10 @@ class HomeFollow extends StatefulWidget {
 }
 
 class _HomeFollowState extends State<HomeFollow>
-    with SingleTickerProviderStateMixin {
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState(); //无名无参需要调用

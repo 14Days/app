@@ -7,6 +7,7 @@ class SetColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
+    user.getUserInfo();
     int _color = user.color;
     List<String> colors = [
       "red",

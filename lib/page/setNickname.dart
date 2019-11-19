@@ -1,7 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../provider/stateProvider.dart';
-import 'setPage.dart';
 import 'package:furture/service/serviceMethod.dart';
 
 class SetNickname extends StatefulWidget {
@@ -29,10 +28,11 @@ class _SetNicknameState extends State<SetNickname> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
+    user.getUserInfo();
     String _showText = "";
     void testSet() async {
       final onValue =
-      await postUserService(user.email, user.sex, user.nickname);
+          await postUserService(user.email, user.sex, user.nickname);
       if (onValue['status'] == 'success') {
         Navigator.pop(context);
       } else {
@@ -46,6 +46,7 @@ class _SetNicknameState extends State<SetNickname> {
         Scaffold.of(context).showSnackBar(_snackBar);
       }
     }
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -64,8 +65,7 @@ class _SetNicknameState extends State<SetNickname> {
                 ),
               ),
               onPressed: () {
-                print(_nickname.text + "1545644");
-                user.setEmail(_nickname.text);
+                user.setNickname(_nickname.text);
                 testSet();
               },
             ),
@@ -76,7 +76,7 @@ class _SetNicknameState extends State<SetNickname> {
             child: TextField(
               controller: _nickname,
               decoration: InputDecoration(
-                hintText: user.email,
+                hintText: user.nickname,
               ),
             ),
           ),

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import 'package:furture/service/serviceMethod.dart';
@@ -47,7 +45,7 @@ class NoticeBody extends StatefulWidget {
 }
 
 class _NoticeBodyState extends State<NoticeBody> {
-  NoticeModel noticeItems;
+  NoticeModel noticeItems = new NoticeModel();
 
   void getNotice() async {
     final onValue = await noticeService();

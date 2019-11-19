@@ -23,7 +23,7 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
-    print(user.nickname);
+    user.getUserInfo();
     return new Column(
       children: <Widget>[
         new Row(

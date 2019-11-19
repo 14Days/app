@@ -28,6 +28,7 @@ class _SetEmailState extends State<SetEmail> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
+    user.getUserInfo();
     String _showText = "";
     void testSet() async {
       final onValue =
@@ -45,6 +46,7 @@ class _SetEmailState extends State<SetEmail> {
         Scaffold.of(context).showSnackBar(_snackBar);
       }
     }
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -63,7 +65,6 @@ class _SetEmailState extends State<SetEmail> {
                 ),
               ),
               onPressed: () {
-                print(_email.text + "1545644");
                 user.setEmail(_email.text);
                 testSet();
               },

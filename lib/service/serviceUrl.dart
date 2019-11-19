@@ -23,7 +23,7 @@ const servicePath = {
 //验证码
   code: '/start/code',
 //用户信息 get post
-  user: '/users/info',
+  user: '/user/info',
 //是否关注
   follow: '/user/follow',
 //是否收藏

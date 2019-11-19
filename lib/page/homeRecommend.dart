@@ -148,17 +148,17 @@ class _RecommendBodyState extends State<RecommendBody> {
 
   @override
   Widget build(BuildContext context) {
-    if (messageModel != null) {
+    if (messageModel == null || messageModel.data.length == 0) {
+      return Center(
+        child: Text("暂无消息"),
+      );
+    } else {
       return ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: messageModel.data.length,
         itemBuilder: (context, index) {
           return Material(child: _item(index));
         },
-      );
-    } else {
-      return Center(
-        child: Text("正在获取消息"),
       );
     }
   }

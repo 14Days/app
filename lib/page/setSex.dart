@@ -7,6 +7,7 @@ class SetSex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
+//    user.getUserInfo();
     int _sex = user.sex;
 
     Widget sexForm() {

@@ -4,10 +4,10 @@ import '../service/serviceMethod.dart';
 
 class UserState with ChangeNotifier {
   String _nickname = '';
-  int _sex = 1;
+  int _sex = 0;
   String _email = '';
 //  String _avatar = '';
-  int _color = 1;
+  int _color = 0;
 
   String get nickname => _nickname;
 
@@ -30,7 +30,7 @@ class UserState with ChangeNotifier {
   }
 
   setEmail(String email) {
-    _nickname = nickname;
+    _email = email;
     notifyListeners();
   }
 
@@ -45,14 +45,14 @@ class UserState with ChangeNotifier {
 //  }
 
   getUserInfo() async {
-    UserModel userModel;
+    UserData userData;
     final onValue = await getUserService();
     if (onValue['status'] == 'success') {
-      userModel = UserModel.fromJson(onValue);
+      userData = UserData.fromJson(onValue['data']);
     }
-    _nickname = userModel.data.nickname;
-    _sex = userModel.data.sex;
-    _email = userModel.data.email;
-    _color = userModel.data.color;
+    _nickname = userData.nickname;
+    _sex = userData.sex;
+    _email = userData.email;
+    _color = userData.color;
   }
 }

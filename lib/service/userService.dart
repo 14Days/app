@@ -152,11 +152,8 @@ Future unlikeService(String id) async {
 Future getColorService() async {
   try {
     //获取请求
-    print(1111);
     Response response = await BaseRequest().get(servicePath[color]);
-    print(2222);
     if (response.statusCode == 200) {
-      print(response);
       return response.data;
     } else {
       throw Exception("颜色请求异常");

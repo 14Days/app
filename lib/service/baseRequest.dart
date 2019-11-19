@@ -10,7 +10,7 @@ class BaseRequest {
     _base = new Dio(BaseOptions(
       baseUrl: _baseUrl,
       contentType: 'application/json',
-      connectTimeout: 50000,
+      connectTimeout: 5000,
       receiveTimeout: 3000,
       responseType: ResponseType.json,
     ));
@@ -19,7 +19,6 @@ class BaseRequest {
   Future<Response<T>> get<T>(String path, {Map<String, dynamic> queryParameters}) async {
     var getToken = await SharedPreferences.getInstance();
     var token = getToken.get(_token);
-    print(token);
     return await _base.get(path, queryParameters: queryParameters, options: Options(
       headers: {
         'Authorization': token
