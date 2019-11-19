@@ -6,7 +6,7 @@ class UserState with ChangeNotifier {
   String _nickname = '';
   int _sex = 0;
   String _email = '';
-//  String _avatar = '';
+  String _avatar = '';
   int _color = 0;
 
   String get nickname => _nickname;
@@ -15,7 +15,7 @@ class UserState with ChangeNotifier {
 
   String get email => _email;
 
-//  String get avatar => _avatar;
+  String get avatar => _avatar;
 //List<int>
   int get color => _color;
 
@@ -39,10 +39,10 @@ class UserState with ChangeNotifier {
     notifyListeners();
   }
 
-//  setAvatar(String avatar) {
-//    _avatar = avatar;
-//    notifyListeners();
-//  }
+  setAvatar(String avatar) {
+    _avatar = avatar;
+    notifyListeners();
+  }
 
   getUserInfo() async {
     UserData userData;

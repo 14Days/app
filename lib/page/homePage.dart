@@ -63,6 +63,8 @@ class _HomePageState extends State<HomePage>
     return new Scaffold(
       appBar: new AppBar(
         title: new TabBar(
+          labelPadding: EdgeInsets.only(bottom: 10),
+          indicatorSize: TabBarIndicatorSize.tab,
           tabs: topTabs,
           controller: _tabController,
         ),

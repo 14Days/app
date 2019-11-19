@@ -4,22 +4,6 @@ import '../provider/stateProvider.dart';
 import 'package:provider/provider.dart';
 
 class MyPage extends StatelessWidget {
-//  @override
-//  _MyPageState createState() => _MyPageState();
-//}
-//
-//class _MyPageState extends State<MyPage> with SingleTickerProviderStateMixin {
-//  @override
-//  void initState() {
-//    super.initState(); //无名无参需要调用
-//  }
-//
-//  //当整个页面dispose时，dispose掉控制器，释放内存
-//  @override
-//  void dispose() {
-//    super.dispose();
-//  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
@@ -33,7 +17,15 @@ class MyPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 25.0),
                 height: 125.0,
                 color: Colors.blue,
-//                child: new Image(image: "111"),
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      left: 20, right: 20, top: 5, bottom: 5),
+                  child: CircleAvatar(
+                    radius: 100,
+                    backgroundColor: Colors.white70,
+                    backgroundImage: NetworkImage(user.avatar),
+                  ),
+                ),
               ),
               flex: 2,
             ),

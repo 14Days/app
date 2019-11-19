@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
@@ -30,21 +28,6 @@ class _HomeRecommendState extends State<HomeRecommend>
   // ignore: must_cal_super
   Widget build(BuildContext context) {
     return RecommendBody();
-//    FutureBuilder(
-//      future: homeRecommendService(),
-//      builder: (context, snapshot) {
-//        if (snapshot.hasData) {
-//          MessageData messageData = MessageData.fromJson(snapshot.data);
-//          return Container(
-//            child: RecommendBody(),
-//          );
-//        } else {
-//          return Center(
-//            child: Text("gg"),
-//          );
-//        }
-//      },
-//    );
   }
 }
 

@@ -22,6 +22,7 @@ class UserModel {
   }
 }
 class UserData {
+  String avatar;
   int color;
   String email;
   String name;
@@ -30,9 +31,10 @@ class UserData {
   int sex;
 
   UserData(
-      {this.color, this.email, this.name, this.nickname, this.phone, this.sex});
+      {this.avatar, this.color, this.email, this.name, this.nickname, this.phone, this.sex});
 
   UserData.fromJson(Map<String, dynamic> json) {
+    avatar = json['avatar'];
     color = json['color'];
     email = json['email'];
     name = json['name'];
@@ -43,6 +45,7 @@ class UserData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['avatar'] = this.avatar;
     data['color'] = this.color;
     data['email'] = this.email;
     data['name'] = this.name;
