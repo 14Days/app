@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import '../provider/stateProvider.dart';
 import 'package:provider/provider.dart';
+import '../utils/utils.dart';
 
 
 class MyPage extends StatefulWidget {
@@ -19,77 +20,12 @@ class _MyPageState extends State<MyPage> {
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context, listen: false);
-    setState(() {
-      user.getUserInfo();
-    });
     return new Column(
       children: <Widget>[
-        new Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(top: 25.0),
-                height: 125.0,
-                color: Colors.blue,
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      left: 20, right: 20, top: 5, bottom: 5),
-                  child: CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Colors.white70,
-                    backgroundImage: NetworkImage(user.avatar),
-                  ),
-                ),
-              ),
-              flex: 2,
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(top: 25.0),
-                height: 125.0,
-                alignment: Alignment.centerLeft,
-                color: Colors.blue,
-                child: Text(
-                  user.nickname,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.white,
-                    textBaseline: null,
-                  ),
-                ),
-              ),
-              flex: 3,
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(top: 25.0),
-                height: 125.0,
-                color: Colors.blue,
-                child: Material(
-                  color: Colors.blue,
-                  child: new IconButton(
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                      size: 30.0,
-                    ),
-                    onPressed: () {
-//                      Navigator.of(context).push(
-//                        MaterialPageRoute(builder: (context) => SetPage()),
-//                      );
-                      Application.router.navigateTo(context, Routes.set);
-                    },
-                  ),
-                ),
-              ),
-              flex: 1,
-            ),
-          ],
-        ),
+        TopMessage(),
         new Row(
           children: <Widget>[
             Expanded(
@@ -115,6 +51,76 @@ class _MyPageState extends State<MyPage> {
           child: CollectItem(),
         )
       ],
+    );
+  }
+}
+
+class TopMessage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<UserState>(context);
+    user.getUserInfo();
+    return Container(
+      child: new Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 25.0),
+              height: 125.0,
+              color: Colors.blue,
+              child: Container(
+                margin: const EdgeInsets.only(
+                    left: 20, right: 20, top: 5, bottom: 5),
+                child: CircleAvatar(
+                  radius: 100,
+                  backgroundColor: Colors.white70,
+                  backgroundImage: NetworkImage(Utils.imgPath(user.avatar)),
+                ),
+              ),
+            ),
+            flex: 2,
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 25.0),
+              height: 125.0,
+              alignment: Alignment.centerLeft,
+              color: Colors.blue,
+              child: Text(
+                user.nickname,
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 30.0,
+                  color: Colors.white,
+                  textBaseline: null,
+                ),
+              ),
+            ),
+            flex: 3,
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 25.0),
+              height: 125.0,
+              color: Colors.blue,
+              child: Material(
+                color: Colors.blue,
+                child: new IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    Application.router.navigateTo(context, Routes.set);
+                  },
+                ),
+              ),
+            ),
+            flex: 1,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,9 +1,12 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../provider/stateProvider.dart';
 import 'package:furture/service/serviceMethod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class SetAvatar extends StatefulWidget {
   @override
@@ -13,15 +16,24 @@ class SetAvatar extends StatefulWidget {
 class _SetAvatarState extends State<SetAvatar> {
   File _image;
 
+  String _showText = "";
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
     user.getUserInfo();
     String _imgPath = user.avatar;
-    String _showText = "";
     void testSet() async {
-      final onValue = await setAvatarService(_image);
+      FormData image = FormData.fromMap({
+        'avatar': await MultipartFile.fromFile(
+          _image.path,
+          filename:
+              basenameWithoutExtension(_image.path) + extension(_image.path),
+        )
+      });
+      final onValue = await setAvatarService(image);
       if (onValue['status'] == 'success') {
+        user.getUserInfo();
         Navigator.pop(context);
       } else {
         _showText = "设置失败";
@@ -49,8 +61,8 @@ class _SetAvatarState extends State<SetAvatar> {
               ),
             ),
             onPressed: () {
-              user.setAvatar(_imgPath);
               testSet();
+              user.getUserInfo();
             },
           ),
         ],

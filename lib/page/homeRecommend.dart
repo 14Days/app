@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import 'package:furture/service/serviceMethod.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class HomeRecommend extends StatefulWidget {
   @override
@@ -40,10 +41,11 @@ class RecommendBody extends StatefulWidget {
 
 class _RecommendBodyState extends State<RecommendBody> {
   MessageModel messageModel;
+  EasyRefreshController _refresh;
 
 //  _RecommendBodyState({Key key, this.messageData}) : super(key: key);
 
-  void getMessage() async {
+  getMessage() async {
     final onValue = await homeRecommendService();
     setState(() {
       if (onValue['status'] == 'success') {
@@ -54,8 +56,9 @@ class _RecommendBodyState extends State<RecommendBody> {
 
   @override
   void initState() {
-    getMessage();
     super.initState();
+    getMessage();
+    _refresh = EasyRefreshController();
   }
 
   //当整个页面dispose时，dispose掉控制器，释放内存
@@ -75,9 +78,20 @@ class _RecommendBodyState extends State<RecommendBody> {
       );
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: images,
     );
+//      GridView.builder(
+//      itemCount: images.length,
+//      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//          crossAxisCount: 2,
+//          mainAxisSpacing: 20.0,
+//          crossAxisSpacing: 10.0,
+//          childAspectRatio: 1.0),
+//      itemBuilder: (BuildContext context, int _index) {
+//        //Widget Function(BuildContext context, int index)
+//        return images[_index];
+//      },
+//    );
   }
 
   //定义单条推荐消息
@@ -135,6 +149,22 @@ class _RecommendBodyState extends State<RecommendBody> {
       return Center(
         child: Text("暂无消息"),
       );
+//        child:EasyRefresh(
+//        controller: _refresh,
+//        enableControlFinishRefresh: true,
+//        child: Center(
+//          child: Text("暂无消息"),
+//        ),
+//        onRefresh: () async {
+//          final onValue = await homeRecommendService();
+//          setState(() {
+//            if (onValue['status'] == 'success') {
+//              messageModel = MessageModel.fromJson(onValue);
+//            }
+//          });
+//          _refresh.resetLoadState();
+//        },
+//      );
     } else {
       return ListView.builder(
         scrollDirection: Axis.vertical,
@@ -143,6 +173,29 @@ class _RecommendBodyState extends State<RecommendBody> {
           return Material(child: _item(index));
         },
       );
+//        EasyRefresh.custom(
+//        controller: _refresh,
+//        enableControlFinishRefresh: true,
+//        enableControlFinishLoad: false,
+//        slivers: <Widget>[
+//          ListView.builder(
+//            scrollDirection: Axis.vertical,
+//            itemCount: messageModel.data.length,
+//            itemBuilder: (context, index) {
+//              return Material(child: _item(index));
+//            },
+//          ),
+//        ],
+//        onRefresh: () async {
+//          final onValue = await homeRecommendService();
+//          setState(() {
+//            if (onValue['status'] == 'success') {
+//              messageModel = MessageModel.fromJson(onValue);
+//            }
+//          });
+//          _refresh.resetLoadState();
+//        },
+//      );
     }
   }
 }

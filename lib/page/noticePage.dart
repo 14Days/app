@@ -47,7 +47,7 @@ class NoticeBody extends StatefulWidget {
 class _NoticeBodyState extends State<NoticeBody> {
   NoticeModel noticeItems = new NoticeModel();
 
-  void getNotice() async {
+  getNotice() async {
     final onValue = await noticeService();
     setState(() {
       if (onValue['status'] == 'success') {

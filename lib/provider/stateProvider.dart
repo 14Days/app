@@ -8,6 +8,8 @@ class UserState with ChangeNotifier {
   String _email = '';
   String _avatar = '';
   int _color = 0;
+  String _name = '';
+  String _phone = '';
 
   String get nickname => _nickname;
 
@@ -16,8 +18,13 @@ class UserState with ChangeNotifier {
   String get email => _email;
 
   String get avatar => _avatar;
+
 //List<int>
   int get color => _color;
+
+  String get name => _name;
+
+  String get phone => _phone;
 
   setNickname(String nickname) {
     _nickname = nickname;
@@ -54,5 +61,9 @@ class UserState with ChangeNotifier {
     _sex = userData.sex;
     _email = userData.email;
     _color = userData.color;
+    _name = userData.name;
+    _phone = userData.phone;
+    _avatar = userData.avatar;
+    notifyListeners();
   }
 }

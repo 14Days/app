@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:furture/service/serviceUrl.dart';
 import 'dart:async';
@@ -95,7 +94,7 @@ Future collectService(String id) async {
 }
 
 //用户取消收藏请求
-Future uncollectService(String id) async {
+Future notCollectService(String id) async {
   try {
     var collectParam = {
       'id': id,
@@ -200,11 +199,10 @@ Future logoutService() async {
 }
 
 //设置头像请求
-Future setAvatarService(File image) async {
+Future setAvatarService(FormData image) async {
   try {
-    var avatarParam = {'avatar': image};
     Response response =
-        await BaseRequest().post(servicePath[setAvatar], data: avatarParam);
+        await BaseRequest().post(servicePath[setAvatar], data: image);
     if (response.statusCode == 200) {
       return response.data;
     } else {

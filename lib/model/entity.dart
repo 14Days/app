@@ -21,6 +21,7 @@ class UserModel {
     return data;
   }
 }
+
 class UserData {
   String avatar;
   int color;
@@ -31,7 +32,13 @@ class UserData {
   int sex;
 
   UserData(
-      {this.avatar, this.color, this.email, this.name, this.nickname, this.phone, this.sex});
+      {this.avatar,
+      this.color,
+      this.email,
+      this.name,
+      this.nickname,
+      this.phone,
+      this.sex});
 
   UserData.fromJson(Map<String, dynamic> json) {
     avatar = json['avatar'];
@@ -54,6 +61,10 @@ class UserData {
     data['sex'] = this.sex;
     return data;
   }
+
+  @override
+  String toString() =>
+      ', 颜色: $color, 邮箱: $email, 用户名: $name, 昵称: $nickname, 电话: $phone, 性别: $sex';
 }
 
 //请求消息模型
@@ -82,6 +93,7 @@ class MessageModel {
     return data;
   }
 }
+
 class MessageData {
   String content;
   String createAt;
@@ -97,16 +109,16 @@ class MessageData {
 
   MessageData(
       {this.content,
-        this.createAt,
-        this.designerId,
-        this.id,
-        this.imgsName,
-        this.isCollected,
-        this.isFollowed,
-        this.isLiked,
-        this.name,
-        this.sumCollects,
-        this.sumLikes});
+      this.createAt,
+      this.designerId,
+      this.id,
+      this.imgsName,
+      this.isCollected,
+      this.isFollowed,
+      this.isLiked,
+      this.name,
+      this.sumCollects,
+      this.sumLikes});
 
   MessageData.fromJson(Map<String, dynamic> json) {
     content = json['content'];
@@ -139,11 +151,11 @@ class MessageData {
   }
 }
 
-
 //通知类 Model & Data
 class NoticeModel {
   List<NoticeData> data;
   String status;
+
   NoticeModel({this.data, this.status});
 
   NoticeModel.fromJson(Map<String, dynamic> json) {
@@ -165,6 +177,7 @@ class NoticeModel {
     return data;
   }
 }
+
 class NoticeData {
   String content;
   String createAt;
@@ -183,7 +196,6 @@ class NoticeData {
     return data;
   }
 }
-
 
 //颜色类 Model & Data
 class ColorModel {
@@ -208,6 +220,7 @@ class ColorModel {
     return data;
   }
 }
+
 class ColorData {
   String color;
   int colorId;

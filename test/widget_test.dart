@@ -1,22 +1,106 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:furture/service/serviceMethod.dart';
-import 'package:furture/model/entity.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-void main() async {
-  ColorModel colors;
-  final log = await loginService("wjq", "Zzzz1111");
-  final onValue = await getColorService();
-  print(onValue);
-  if (onValue['status'] == 'success') {
-    colors = ColorModel.fromJson(onValue);
-    print(colors);
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      // App名字
+      title: 'EasyRefresh',
+      // App主题
+      theme: new ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      // 主页
+      home: _Example(),
+    );
+  }
+}
+
+class _Example extends StatefulWidget {
+  @override
+  _ExampleState createState() {
+    return _ExampleState();
+  }
+}
+
+class _ExampleState extends State<_Example> {
+
+  EasyRefreshController _controller;
+
+  // 条目总数
+  int _count = 20;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = EasyRefreshController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("EasyRefresh"),
+        ),
+        body: EasyRefresh.custom(
+          enableControlFinishRefresh: false,
+          enableControlFinishLoad: true,
+          controller: _controller,
+          header: ClassicalHeader(),
+          footer: ClassicalFooter(),
+          onRefresh: () async {
+            await Future.delayed(Duration(seconds: 2), () {
+              print('onRefresh');
+              setState(() {
+                _count = 20;
+              });
+              _controller.resetLoadState();
+            });
+          },
+          onLoad: () async {
+            await Future.delayed(Duration(seconds: 2), () {
+              print('onLoad');
+              setState(() {
+                _count += 10;
+              });
+              _controller.finishLoad(noMore: _count >= 40);
+            });
+          },
+          slivers: <Widget>[
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                  return Container(
+                    width: 60.0,
+                    height: 60.0,
+                    child: Center(
+                      child: Text('$index'),
+                    ),
+                    color: index%2==0 ? Colors.grey[300] : Colors.transparent,
+                  );
+                },
+                childCount: _count,
+              ),
+            ),
+          ],
+        ),
+        persistentFooterButtons: <Widget>[
+          FlatButton(
+              onPressed: () {
+                _controller.callRefresh();
+              },
+              child: Text("Refresh", style: TextStyle(color: Colors.black))),
+          FlatButton(
+              onPressed: () {
+                _controller.callLoad();
+              },
+              child: Text("Load more", style: TextStyle(color: Colors.black))),
+        ]
+    );
   }
 }
