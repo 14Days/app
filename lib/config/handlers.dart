@@ -53,9 +53,9 @@ var setNicknameHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return new SetNickname();
     });
-//var setSexHandler = new Handler(
-//    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-//      return new SetSex();
-//    });
+var setAvatarHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new SetAvatar();
+    });
 
 

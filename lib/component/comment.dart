@@ -11,4 +11,4 @@ export 'package:furture/page/setSex.dart';
 export 'package:furture/page/setColor.dart';
 export 'package:furture/page/setEmail.dart';
 export 'package:furture/page/setNickname.dart';
-//export 'package:furture/page/setSex.dart';
+export 'package:furture/page/setAvatar.dart';

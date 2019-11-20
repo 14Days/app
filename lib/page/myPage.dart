@@ -3,11 +3,28 @@ import 'package:furture/component/comment.dart';
 import '../provider/stateProvider.dart';
 import 'package:provider/provider.dart';
 
-class MyPage extends StatelessWidget {
+
+class MyPage extends StatefulWidget {
+  @override
+  _MyPageState createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
-    user.getUserInfo();
+    setState(() {
+      user.getUserInfo();
+    });
     return new Column(
       children: <Widget>[
         new Row(
@@ -169,3 +186,4 @@ class CollectItem extends StatelessWidget {
         });
   }
 }
+

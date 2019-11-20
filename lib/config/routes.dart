@@ -17,7 +17,7 @@ class Routes {
   static String setEmail = "my/set/email";
   static String setColor = "my/set/color";
   static String setNickname = "my/set/nickname";
-//  static String setSex = "my/set/sex";
+  static String setAvatar = "my/set/avatar";
 
   static void configureRoutes(Router router) {
     //跳转至登录
@@ -46,7 +46,7 @@ class Routes {
     router.define(setColor, handler: setColorHandler);
     //跳转至我的/设置/昵称
     router.define(setNickname, handler: setNicknameHandler);
-//    //跳转至我的/设置/性别
-//    router.define(setSex, handler: setSexHandler);
+    //跳转至我的/设置/性别
+    router.define(setAvatar, handler: setAvatarHandler);
   }
 }

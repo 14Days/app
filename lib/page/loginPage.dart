@@ -165,9 +165,9 @@ class _LoginBodyState extends State<LoginBody> {
                       highlightColor: Colors.blue[700],
                       colorBrightness: Brightness.dark,
                       splashColor: Colors.grey,
-                      child: Text("登录"),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
+                      child: Text("登录"),
                       onPressed: () {
                         testLogin();
                       },

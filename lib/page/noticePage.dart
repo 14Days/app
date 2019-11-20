@@ -115,7 +115,7 @@ class _NoticeBodyState extends State<NoticeBody> {
 
   @override
   Widget build(BuildContext context) {
-    if (noticeItems == null) {
+    if (noticeItems == null || noticeItems.data.length == 0) {
       return Center(
         child: Text(
           "暂无通知",

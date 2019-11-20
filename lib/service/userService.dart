@@ -1,10 +1,9 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:furture/service/serviceUrl.dart';
 import 'dart:async';
 import 'serviceUrl.dart';
 import './baseRequest.dart';
-
-
 
 //用户信息请求
 Future getUserService() async {
@@ -26,7 +25,8 @@ Future postUserService(String email, int sex, String nickname) async {
   try {
     var userParam = {'email': email, 'sex': sex, 'nickname': nickname};
     //获取请求
-    Response response = await BaseRequest().post(servicePath[user], data: userParam);
+    Response response =
+        await BaseRequest().post(servicePath[user], data: userParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -44,7 +44,8 @@ Future followService(String id) async {
       'id': id,
     };
     //获取请求
-    Response response = await BaseRequest().post(servicePath[follow], data: followParam);
+    Response response =
+        await BaseRequest().post(servicePath[follow], data: followParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -62,8 +63,8 @@ Future unfollowService(String id) async {
       'id': id,
     };
     //获取请求
-    Response response =
-    await BaseRequest().delete(servicePath[follow], queryParameters: followParam);
+    Response response = await BaseRequest()
+        .delete(servicePath[follow], queryParameters: followParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -82,7 +83,7 @@ Future collectService(String id) async {
     };
     //获取请求
     Response response =
-    await BaseRequest().post(servicePath[collect], data: collectParam);
+        await BaseRequest().post(servicePath[collect], data: collectParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -100,8 +101,8 @@ Future uncollectService(String id) async {
       'id': id,
     };
     //获取请求
-    Response response =
-    await BaseRequest().delete(servicePath[collect], queryParameters: collectParam);
+    Response response = await BaseRequest()
+        .delete(servicePath[collect], queryParameters: collectParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -119,7 +120,8 @@ Future likeService(String id) async {
       'id': id,
     };
     //获取请求
-    Response response = await BaseRequest().post(servicePath[like], data: likeParam);
+    Response response =
+        await BaseRequest().post(servicePath[like], data: likeParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -137,7 +139,8 @@ Future unlikeService(String id) async {
       'id': id,
     };
     //获取请求
-    Response response = await BaseRequest().delete(servicePath[like], queryParameters: likeParam);
+    Response response = await BaseRequest()
+        .delete(servicePath[like], queryParameters: likeParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -170,7 +173,8 @@ Future postColorService(int colorId) async {
       'color_id': colorId,
     };
     //获取请求
-    Response response = await BaseRequest().post(servicePath[color], data: colorIdParam);
+    Response response =
+        await BaseRequest().post(servicePath[color], data: colorIdParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -185,6 +189,22 @@ Future postColorService(int colorId) async {
 Future logoutService() async {
   try {
     Response response = await BaseRequest().post(servicePath[logout]);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw Exception("退出登录请求异常");
+    }
+  } catch (e) {
+    return print('Error------------->$e');
+  }
+}
+
+//设置头像请求
+Future setAvatarService(File image) async {
+  try {
+    var avatarParam = {'avatar': image};
+    Response response =
+        await BaseRequest().post(servicePath[setAvatar], data: avatarParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {

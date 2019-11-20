@@ -83,7 +83,7 @@ class _SetItemsState extends State<SetItems> {
         switch (index) {
           case 0:
             {
-              Application.router.navigateTo(context, Routes.setSex);
+              Application.router.navigateTo(context, Routes.setAvatar);
             }
             break;
           case 1:
