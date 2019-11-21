@@ -27,7 +27,7 @@ class _SetEmailState extends State<SetEmail> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context, listen: false);
+    final user = Provider.of<UserState>(context);
     user.getUserInfo();
     String _showText = "";
     void testSet() async {

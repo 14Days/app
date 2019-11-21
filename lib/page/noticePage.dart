@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
+import 'package:furture/provider/noticeState.dart';
 import 'package:furture/service/serviceMethod.dart';
+import 'package:provider/provider.dart';
 
 class NoticePage extends StatefulWidget {
   @override
@@ -45,21 +47,12 @@ class NoticeBody extends StatefulWidget {
 }
 
 class _NoticeBodyState extends State<NoticeBody> {
-  NoticeModel noticeItems = new NoticeModel();
-
-  getNotice() async {
-    final onValue = await noticeService();
-    setState(() {
-      if (onValue['status'] == 'success') {
-        noticeItems = NoticeModel.fromJson(onValue);
-      }
-    });
-  }
-
   @override
   void initState() {
-    getNotice();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      Provider.of<NoticeState>(context).updateNotice();
+    });
   }
 
   //当整个页面dispose时，dispose掉控制器，释放内存
@@ -70,7 +63,8 @@ class _NoticeBodyState extends State<NoticeBody> {
 
   //定义通知消息
   Widget _item(index) {
-    if (noticeItems.data[index].content != null) {
+    final notice = Provider.of<NoticeState>(context);
+    if (notice.items[index].content != null) {
       return Container(
         margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
         padding: const EdgeInsets.all(10.0),
@@ -90,7 +84,7 @@ class _NoticeBodyState extends State<NoticeBody> {
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               child: new Text(
-                noticeItems.data[index].createAt,
+                notice.items[index].createAt,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
@@ -101,7 +95,7 @@ class _NoticeBodyState extends State<NoticeBody> {
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               child: new Text(
-                noticeItems.data[index].content,
+                notice.items[index].content,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 20.0),
@@ -115,7 +109,8 @@ class _NoticeBodyState extends State<NoticeBody> {
 
   @override
   Widget build(BuildContext context) {
-    if (noticeItems == null || noticeItems.data.length == 0) {
+    final notice = Provider.of<NoticeState>(context);
+    if (notice.items == null) {
       return Center(
         child: Text(
           "暂无通知",
@@ -125,7 +120,7 @@ class _NoticeBodyState extends State<NoticeBody> {
     } else {
       return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: noticeItems.data.length,
+        itemCount: notice.items.length,
         itemBuilder: (context, index) {
           return Material(child: _item(index));
         },

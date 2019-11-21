@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:furture/provider/messageState.dart';
+import 'package:furture/provider/noticeState.dart';
 import 'package:provider/provider.dart';
 import './config/application.dart';
 import './config/routes.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(builder: (_) => UserState(),),
         ChangeNotifierProvider(builder: (_) => MessageState(),),
+        ChangeNotifierProvider(builder: (_) => NoticeState(),),
       ],
       child: Consumer<UserState>(
         builder: (context,userState, _){

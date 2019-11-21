@@ -27,8 +27,7 @@ class _SetNicknameState extends State<SetNickname> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context, listen: false);
-    user.getUserInfo();
+    final user = Provider.of<UserState>(context);
     String _showText = "";
     void testSet() async {
       final onValue =
