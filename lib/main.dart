@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:furture/provider/messageState.dart';
 import 'package:provider/provider.dart';
 import './config/application.dart';
 import './config/routes.dart';
 import './page/loginPage.dart';
-import 'provider/stateProvider.dart';
+import 'provider/userState.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (_) => UserState(),)
+        ChangeNotifierProvider(builder: (_) => UserState(),),
+        ChangeNotifierProvider(builder: (_) => MessageState(),),
       ],
       child: Consumer<UserState>(
         builder: (context,userState, _){

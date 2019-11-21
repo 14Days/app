@@ -19,7 +19,6 @@ class UserState with ChangeNotifier {
 
   String get avatar => _avatar;
 
-//List<int>
   int get color => _color;
 
   String get name => _name;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
-import '../provider/stateProvider.dart';
+import '../provider/userState.dart';
 import 'package:provider/provider.dart';
 import '../utils/utils.dart';
 

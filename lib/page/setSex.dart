@@ -1,21 +1,32 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../provider/stateProvider.dart';
+import '../provider/userState.dart';
 import 'package:furture/service/serviceMethod.dart';
 
-class SetSex extends StatelessWidget {
+class SetSex extends StatefulWidget {
+  @override
+  _SetSexState createState() => _SetSexState();
+}
+
+class _SetSexState extends State<SetSex> {
+  int _sex;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      _sex = Provider.of<UserState>(context).sex;
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context, listen: false);
-    user.getUserInfo();
-    int _sex = user.sex;
-
+    final user = Provider.of<UserState>(context);
     Widget sexForm() {
       return new StatefulBuilder(
         builder: (
-          context,
-          StateSetter setState,
-        ) {
+            context,
+            StateSetter setState,
+            ) {
           return Row(
             children: <Widget>[
               Flexible(
@@ -50,7 +61,7 @@ class SetSex extends StatelessWidget {
 
     void testSet() async {
       final onValue =
-          await postUserService(user.email, user.sex, user.nickname);
+      await postUserService(user.email, user.sex, user.nickname);
       if (onValue['status'] == 'success') {
         Navigator.pop(context);
       }

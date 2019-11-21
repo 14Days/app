@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../provider/stateProvider.dart';
+import '../provider/userState.dart';
 import 'package:furture/service/serviceMethod.dart';
 
 class SetNickname extends StatefulWidget {

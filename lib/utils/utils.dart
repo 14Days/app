@@ -10,11 +10,6 @@ class Utils {
 
 ///间隔
 class Gaps {
-  /// 水平间隔
-  static double Gap5 = 5.0;
-  static double Gap10 = 10.0;
-  static double Gap15 = 15.0;
-
   /// 垂直间隔
   static Widget vGap5 = new SizedBox(height: 5.0);
   static Widget vGap10 = new SizedBox(height: 10.0);

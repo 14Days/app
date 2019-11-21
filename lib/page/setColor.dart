@@ -1,14 +1,27 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../provider/stateProvider.dart';
+import '../provider/userState.dart';
 import 'package:furture/service/serviceMethod.dart';
 
-class SetColor extends StatelessWidget {
+
+class SetColor extends StatefulWidget {
+  @override
+  _SetColorState createState() => _SetColorState();
+}
+
+class _SetColorState extends State<SetColor> {
+  int _color;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      _color = Provider.of<UserState>(context).color;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserState>(context, listen: false);
-    user.getUserInfo();
-    int _color = user.color;
+    final user = Provider.of<UserState>(context);
     List<String> colors = [
       "red",
       "yellow",
@@ -26,9 +39,9 @@ class SetColor extends StatelessWidget {
     Widget colorForm() {
       return new StatefulBuilder(
         builder: (
-          context,
-          StateSetter setState,
-        ) {
+            context,
+            StateSetter setState,
+            ) {
           return Column(
             children: <Widget>[
               Flexible(
@@ -358,3 +371,4 @@ class SetColor extends StatelessWidget {
     );
   }
 }
+
