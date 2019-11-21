@@ -22,6 +22,7 @@ class _SetColorState extends State<SetColor> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
+    _color = user.color;
     List<String> colors = [
       "red",
       "yellow",
@@ -342,6 +343,7 @@ class _SetColorState extends State<SetColor> {
       final onValue = await postColorService(user.color);
       if (onValue['status'] == 'success') {
         Navigator.pop(context);
+
       }
     }
 

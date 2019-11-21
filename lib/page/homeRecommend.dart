@@ -17,6 +17,9 @@ class _HomeRecommendState extends State<HomeRecommend>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      Provider.of<MessageState>(context).updateRecommend();
+    });
   }
 
   @override
@@ -42,9 +45,7 @@ class _RecommendBodyState extends State<RecommendBody> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateRecommend();
-    });
+
   }
 
   @override
@@ -53,9 +54,9 @@ class _RecommendBodyState extends State<RecommendBody> {
   }
 
   Widget _items(index) {
-    final message = Provider.of<MessageState>(context);
+    final _message = Provider.of<MessageState>(context);
     List<Widget> images = [];
-    for (var image in message.recommend[index].imgsName) {
+    for (var image in _message.recommend[index].imgsName) {
       images.add(
         new Container(
           child: Image.network(
@@ -88,7 +89,9 @@ class _RecommendBodyState extends State<RecommendBody> {
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                message.recommend[index].content,
+                _message.recommend[index].content != null
+                    ? _message.recommend[index].content
+                    : "无标题",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
@@ -108,7 +111,7 @@ class _RecommendBodyState extends State<RecommendBody> {
                 ),
               ),
               child: Row(
-                children: images,
+                children: images.length != 0 ? images : Text("无图片"),
               ),
             ),
           ],
@@ -119,15 +122,15 @@ class _RecommendBodyState extends State<RecommendBody> {
 
   @override
   Widget build(BuildContext context) {
-    final message = Provider.of<MessageState>(context);
-    if (message.recommend == null) {
+    final _message = Provider.of<MessageState>(context);
+    if (_message.recommend == null) {
       return Center(
         child: Text("暂无消息"),
       );
     } else {
       return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: message.recommend.length,
+        itemCount: _message.recommend.length,
         itemBuilder: (context, index) {
           return Material(
             child: _items(index),

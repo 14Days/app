@@ -21,6 +21,7 @@ class _SetSexState extends State<SetSex> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
+    _sex = user.sex;
     Widget sexForm() {
       return new StatefulBuilder(
         builder: (
