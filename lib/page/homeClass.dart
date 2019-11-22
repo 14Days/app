@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:furture/component/comment.dart';
 
 class HomeClass extends StatefulWidget {
   @override
@@ -14,12 +13,12 @@ class _HomeClassState extends State<HomeClass>
     super.initState(); //无名无参需要调用
   }
 
-  //当整个页面dispose时，dispose掉控制器，释放内存
   @override
   void dispose() {
     super.dispose();
   }
 
+  //基本框架 顶部分类+分类内容
   @override
   Widget build(BuildContext context) {
     return new Column(
@@ -76,11 +75,12 @@ class _TopClassState extends State<TopClass> {
         alignment: Alignment.topCenter,
         padding: const EdgeInsets.only(top: 15.0),
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              top: BorderSide(width: 1.0, color: Colors.black12),
-              bottom: BorderSide(width: 1.0, color: Colors.black12),
-            )),
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(width: 1.0, color: Colors.black12),
+            bottom: BorderSide(width: 1.0, color: Colors.black12),
+          ),
+        ),
         child: Text(
           category[index],
           maxLines: 1,
@@ -118,9 +118,7 @@ class CategoryBody extends StatelessWidget {
     {'img': '111', 'text': '444'},
   ];
 
-//  Recommend({Key key, this.recommend}) : super(key: key);
-//
-  //定义单条推荐消息
+  //定义单条消息
   Widget _item(index) {
     return InkWell(
       onTap: () {},
@@ -153,10 +151,13 @@ class CategoryBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: category.length,
-        itemBuilder: (context, index) {
-          return Material(child: _item(index));
-        });
+      scrollDirection: Axis.vertical,
+      itemCount: category.length,
+      itemBuilder: (context, index) {
+        return Material(
+          child: _item(index),
+        );
+      },
+    );
   }
 }

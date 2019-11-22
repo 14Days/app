@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 //用户user模型
 class UserModel {
   UserData data;
@@ -21,7 +19,6 @@ class UserModel {
     return data;
   }
 }
-
 class UserData {
   String avatar;
   int color;
@@ -93,7 +90,6 @@ class MessageModel {
     return data;
   }
 }
-
 class MessageData {
   String avatar;
   String content;
@@ -223,7 +219,7 @@ class SecondComment {
   }
 }
 
-//通知类 Model & Data
+//通知类
 class NoticeModel {
   List<NoticeData> data;
   String status;
@@ -249,7 +245,6 @@ class NoticeModel {
     return data;
   }
 }
-
 class NoticeData {
   String content;
   String createAt;
@@ -269,7 +264,7 @@ class NoticeData {
   }
 }
 
-//颜色类 Model & Data
+//颜色类
 class ColorModel {
   List<ColorData> data;
 
@@ -292,7 +287,6 @@ class ColorModel {
     return data;
   }
 }
-
 class ColorData {
   String color;
   int colorId;

@@ -142,12 +142,12 @@ class _TextDetailState extends State<TextDetail> {
                         }
                       });
                       if (_followIcon == "已关注") {
-                        final onValue = await followService(_message.id);
+                        final onValue = await followService(_message.designerId);
                         if (onValue['status'] != 'success') {
                           _followIcon = "关注";
                         }
                       } else {
-                        final onValue = await cancelFollowService(_message.id);
+                        final onValue = await cancelFollowService(_message.designerId);
                         if (onValue['status'] != 'success') {
                           _followIcon = "已关注";
                         }
@@ -185,10 +185,11 @@ class _TextDetailState extends State<TextDetail> {
             ),
           ),
           new Container(
-              color: Color.fromARGB(255, 250, 250, 250),
-              child: SizedBox(
-                height: 10.0,
-              )),
+            color: Color.fromARGB(255, 250, 250, 250),
+            child: SizedBox(
+              height: 10.0,
+            ),
+          ),
           new Container(
             alignment: Alignment.bottomLeft,
             padding: const EdgeInsets.only(left: 5.0),

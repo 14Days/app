@@ -28,51 +28,55 @@ class _BottomNavigationState extends State<BottomNavigation>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.blue,
-          //创建底部导航栏
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  CupertinoIcons.home,
-                  color: Colors.white,
-                ),
-                title: new Text(
-                  '首页',
-                  style: new TextStyle(color: Colors.white),
-                )),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  CupertinoIcons.mail,
-                  color: Colors.white,
-                ),
-                title: new Text(
-                  '通知',
-                  style: new TextStyle(color: Colors.white),
-                )),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  CupertinoIcons.person,
-                  color: Colors.white,
-                ),
-                title: new Text(
-                  '我的',
-                  style: new TextStyle(color: Colors.white),
-                )),
-          ],
-          //这是底部导航栏自带的位标属性。
-          currentIndex: _currentIndex,
-          //点击属性，会执行带有一个int值的回调函数，这个int值是系统自动返回的你点击的那个标签的位标
-          onTap: (int index) {
-            //进行状态更新，将系统返回的你点击的标签位标赋予当前位标属性，告诉系统当前要显示的导航标签被用户改变了。
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-        ),
-        body: IndexedStack(
-          index: _currentIndex,
-          children: pages,
-        ));
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue,
+        //创建底部导航栏
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.home,
+              color: Colors.white,
+            ),
+            title: new Text(
+              '首页',
+              style: new TextStyle(color: Colors.white),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.mail,
+              color: Colors.white,
+            ),
+            title: new Text(
+              '通知',
+              style: new TextStyle(color: Colors.white),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              CupertinoIcons.person,
+              color: Colors.white,
+            ),
+            title: new Text(
+              '我的',
+              style: new TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+        //这是底部导航栏自带的位标属性。
+        currentIndex: _currentIndex,
+        //点击属性，会执行带有一个int值的回调函数，这个int值是系统自动返回的你点击的那个标签的位标
+        onTap: (int index) {
+          //进行状态更新，将系统返回的你点击的标签位标赋予当前位标属性，告诉系统当前要显示的导航标签被用户改变了。
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: pages,
+      ),
+    );
   }
 }
