@@ -165,7 +165,7 @@ class _TextDetailState extends State<TextDetail> {
           new Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.only(top: 20.0),
-            padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+            padding: const EdgeInsets.only(top: 10.0, left: 5.0),
             child: Text(
               _message.content != null ? _message.content : "无标题",
               maxLines: 2,
@@ -174,7 +174,7 @@ class _TextDetailState extends State<TextDetail> {
               style: TextStyle(
                 decoration: TextDecoration.none,
                 color: Colors.black,
-                fontSize: 15.0,
+                fontSize: 18.0,
               ),
             ),
           ),
@@ -185,13 +185,18 @@ class _TextDetailState extends State<TextDetail> {
             ),
           ),
           new Container(
+              color: Color.fromARGB(255, 250, 250, 250),
+              child: SizedBox(
+                height: 10.0,
+              )),
+          new Container(
             alignment: Alignment.bottomLeft,
-            padding: const EdgeInsets.only(left: 10.0),
+            padding: const EdgeInsets.only(left: 5.0),
             child: Text(
               "评论",
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 15.0,
+                color: Colors.black87,
+                fontSize: 20.0,
               ),
             ),
           ),
@@ -211,7 +216,8 @@ class _InterActionState extends State<InterAction> {
   Widget _items(index) {
     MessageData _message = ModalRoute.of(context).settings.arguments;
     return Container(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(
+          left: 30.0, right: 15.0, top: 10.0, bottom: 10.0),
       margin: const EdgeInsets.only(bottom: 5.0),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
@@ -225,8 +231,8 @@ class _InterActionState extends State<InterAction> {
       child: Column(
         children: <Widget>[
           Container(
-            alignment: Alignment.centerLeft,
             padding: const EdgeInsets.only(left: 10.0),
+            alignment: Alignment.centerLeft,
             child: Text(
               _message.topComment[index].createBy != null
                   ? _message.topComment[index].createBy
@@ -235,26 +241,14 @@ class _InterActionState extends State<InterAction> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: 15.0,
-                color: Colors.grey,
+                fontSize: 17.0,
+                color: Colors.black,
               ),
             ),
           ),
           Container(
-            alignment: Alignment.centerLeft,
             padding: const EdgeInsets.only(left: 10.0),
-            child: Text(
-              _message.topComment[index].content != null
-                  ? _message.topComment[index].content
-                  : "刚刚",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 20.0),
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.centerLeft,
             child: Text(
               _message.topComment[index].createAt != null
                   ? _message.topComment[index].createAt
@@ -266,6 +260,19 @@ class _InterActionState extends State<InterAction> {
                 fontSize: 10.0,
                 color: Colors.grey,
               ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 10.0),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              _message.topComment[index].content != null
+                  ? _message.topComment[index].content
+                  : "刚刚",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 20.0),
             ),
           ),
         ],
