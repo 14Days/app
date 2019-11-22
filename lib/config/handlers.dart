@@ -18,45 +18,41 @@ var registerHandler = new Handler(
   return new RegisterPage();
 });
 
-
 var btmNaHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new BottomNavigation();
-    });
-
+  return new BottomNavigation();
+});
 
 var myHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new MyPage();
-    });
+  return new MyPage();
+});
 
 var setHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new SetPage();
-    });
+  return new SetPage();
+});
 var setSexHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new SetSex();
-    });
+  return new SetSex();
+});
 var setColorHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new SetColor();
-    });
+  return new SetColor();
+});
 var setEmailHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new SetEmail();
-    });
+  return new SetEmail();
+});
 var setNicknameHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new SetNickname();
-    });
+  return new SetNickname();
+});
 var setAvatarHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new SetAvatar();
-    });
+  return new SetAvatar();
+});
 var detailHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new DetailsPage();
-    });
-
-
+  return new DetailsPage();
+});

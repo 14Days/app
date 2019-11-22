@@ -1,8 +1,8 @@
+import 'package:furture/provider/messageState.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../provider/userState.dart';
 import 'package:furture/service/serviceMethod.dart';
-
 
 class SetColor extends StatefulWidget {
   @override
@@ -11,6 +11,7 @@ class SetColor extends StatefulWidget {
 
 class _SetColorState extends State<SetColor> {
   int _color;
+
   @override
   void initState() {
     super.initState();
@@ -40,9 +41,9 @@ class _SetColorState extends State<SetColor> {
     Widget colorForm() {
       return new StatefulBuilder(
         builder: (
-            context,
-            StateSetter setState,
-            ) {
+          context,
+          StateSetter setState,
+        ) {
           return Column(
             children: <Widget>[
               Flexible(
@@ -342,8 +343,8 @@ class _SetColorState extends State<SetColor> {
     void testSet() async {
       final onValue = await postColorService(user.color);
       if (onValue['status'] == 'success') {
+        Provider.of<MessageState>(context).updateRecommend();
         Navigator.pop(context);
-
       }
     }
 
@@ -373,4 +374,3 @@ class _SetColorState extends State<SetColor> {
     );
   }
 }
-

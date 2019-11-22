@@ -4,6 +4,7 @@ import 'dart:async';
 import 'serviceUrl.dart';
 import './baseRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 //登录请求
 Future loginService(String username, String password) async {
   try {
@@ -31,8 +32,8 @@ Future codeService(String phone) async {
     //要传递的参数
     var codeParam = {"phone": phone};
     //获取请求
-    Response response = await BaseRequest()
-        .delete(servicePath[code], queryParameters: codeParam);
+    Response response =
+        await BaseRequest().get(servicePath[code], queryParameters: codeParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {

@@ -4,9 +4,6 @@ import 'dart:async';
 import 'serviceUrl.dart';
 import './baseRequest.dart';
 
-
-
-
 //请求推荐消息
 Future homeRecommendService() async {
   try {
@@ -17,7 +14,7 @@ Future homeRecommendService() async {
       throw Exception("推荐消息请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('推荐消息请求异常Error------------->$e');
   }
 }
 
@@ -28,10 +25,10 @@ Future homeClassService() async {
     if (response.statusCode == 200) {
       return response.data;
     } else {
-      throw Exception("推荐消息请求异常");
+      throw Exception("分类消息请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('分类消息请求Error------------->$e');
   }
 }
 
@@ -42,10 +39,10 @@ Future homeFollowService() async {
     if (response.statusCode == 200) {
       return response.data;
     } else {
-      throw Exception("推荐消息请求异常");
+      throw Exception("关注消息请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('关注消息请求Error------------->$e');
   }
 }
 
@@ -56,9 +53,9 @@ Future myCollectService() async {
     if (response.statusCode == 200) {
       return response.data;
     } else {
-      throw Exception("推荐消息请求异常");
+      throw Exception("收藏消息请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('收藏消息请求Error------------->$e');
   }
 }

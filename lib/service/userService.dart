@@ -15,7 +15,7 @@ Future getUserService() async {
       throw Exception("用户信息请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('用户信息请求异常Error------------->$e');
   }
 }
 
@@ -32,12 +32,12 @@ Future postUserService(String email, int sex, String nickname) async {
       throw Exception("信息编辑请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('信息编辑请求Error------------->$e');
   }
 }
 
 //用户关注请求
-Future followService( id) async {
+Future followService(id) async {
   try {
     var followParam = {
       'id': id,
@@ -51,7 +51,7 @@ Future followService( id) async {
       throw Exception("关注请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('关注请求Error------------->$e');
   }
 }
 
@@ -62,15 +62,15 @@ Future cancelFollowService(int id) async {
       'id': id,
     };
     //获取请求
-    Response response = await BaseRequest()
-        .delete(servicePath[follow], queryParameters: followParam);
+    Response response =
+        await BaseRequest().delete(servicePath[follow], data: followParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
       throw Exception("取消关注请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('取消关注请求Error------------->$e');
   }
 }
 
@@ -89,7 +89,7 @@ Future collectService(int id) async {
       throw Exception("收藏请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('收藏请求Error------------->$e');
   }
 }
 
@@ -100,15 +100,15 @@ Future cancelCollectService(int id) async {
       'id': id,
     };
     //获取请求
-    Response response = await BaseRequest()
-        .delete(servicePath[collect], queryParameters: collectParam);
+    Response response =
+        await BaseRequest().delete(servicePath[collect], data: collectParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
       throw Exception("取消收藏请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('取消收藏请求Error------------->$e');
   }
 }
 
@@ -127,7 +127,7 @@ Future likeService(int id) async {
       throw Exception("点赞请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('点赞请求Error------------->$e');
   }
 }
 
@@ -138,15 +138,15 @@ Future cancelLikeService(int id) async {
       'id': id,
     };
     //获取请求
-    Response response = await BaseRequest()
-        .delete(servicePath[like], queryParameters: likeParam);
+    Response response =
+        await BaseRequest().delete(servicePath[like], data: likeParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {
       throw Exception("取消点赞请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('取消点赞Error------------->$e');
   }
 }
 
@@ -161,7 +161,7 @@ Future getColorService() async {
       throw Exception("颜色请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('颜色请求Error------------->$e');
   }
 }
 
@@ -180,7 +180,7 @@ Future postColorService(int colorId) async {
       throw Exception("颜色设置请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('颜色设置请求异常Error------------->$e');
   }
 }
 
@@ -194,7 +194,7 @@ Future logoutService() async {
       throw Exception("退出登录请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('退出登录请求Error------------->$e');
   }
 }
 
@@ -206,9 +206,9 @@ Future setAvatarService(FormData image) async {
     if (response.statusCode == 200) {
       return response.data;
     } else {
-      throw Exception("退出登录请求异常");
+      throw Exception("设置头像请求异常");
     }
   } catch (e) {
-    return print('Error------------->$e');
+    return print('设置头像请求Error------------->$e');
   }
 }

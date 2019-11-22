@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
+import 'package:furture/provider/messageState.dart';
 import 'package:furture/service/serviceMethod.dart';
 import 'package:furture/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class DetailsPage extends StatelessWidget {
   @override
@@ -58,13 +60,13 @@ class _TextDetailState extends State<TextDetail> {
 
     return Container(
       margin: const EdgeInsets.only(top: 10.0),
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: <BoxShadow>[
           new BoxShadow(
             color: Colors.grey, //阴影颜色
-            blurRadius: 12.0, //阴影大小
+            blurRadius: 5.0, //阴影大小
           ),
         ],
         border: Border(
@@ -104,7 +106,7 @@ class _TextDetailState extends State<TextDetail> {
                     style: TextStyle(
                       decoration: TextDecoration.none,
                       fontSize: 20.0,
-                      color: Colors.deepOrange,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -131,7 +133,7 @@ class _TextDetailState extends State<TextDetail> {
                         fontSize: 15.0,
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         if (_followIcon == "已关注") {
                           _followIcon = "关注";
@@ -139,6 +141,20 @@ class _TextDetailState extends State<TextDetail> {
                           _followIcon = "已关注";
                         }
                       });
+                      if (_followIcon == "已关注") {
+                        final onValue = await followService(_message.id);
+                        if (onValue['status'] != 'success') {
+                          _followIcon = "关注";
+                        }
+                      } else {
+                        final onValue = await cancelFollowService(_message.id);
+                        if (onValue['status'] != 'success') {
+                          _followIcon = "已关注";
+                        }
+                      }
+                      Provider.of<MessageState>(context).updateRecommend();
+                      Provider.of<MessageState>(context).updateCollect();
+                      Provider.of<MessageState>(context).updateFollow();
                     },
                   ),
                 ),
@@ -168,11 +184,15 @@ class _TextDetailState extends State<TextDetail> {
               children: images.length != 0 ? images : Text("无图片"),
             ),
           ),
-          Text(
-            "评论",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15.0,
+          new Container(
+            alignment: Alignment.bottomLeft,
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              "评论",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15.0,
+              ),
             ),
           ),
         ],
@@ -190,17 +210,16 @@ class InterAction extends StatefulWidget {
 class _InterActionState extends State<InterAction> {
   Widget _items(index) {
     MessageData _message = ModalRoute.of(context).settings.arguments;
-    print(_message.topComment[0].content);
     return Container(
       padding: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.only(bottom: 5.0),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: Colors.white70,
         border: Border(
           left: BorderSide(width: 0.5, color: Colors.black12),
           right: BorderSide(width: 0.5, color: Colors.black12),
-          top: BorderSide(width: 0.5, color: Colors.black12),
-          bottom: BorderSide(width: 0.5, color: Colors.black12),
+          bottom: BorderSide(width: 0.5, color: Colors.black38),
         ),
       ),
       child: Column(
@@ -313,12 +332,13 @@ class _BottomInterState extends State<BottomInter> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Material(
+            color: Colors.white,
             child: new Row(
               children: <Widget>[
                 new IconButton(
                   icon: Icon(_likeIcon),
                   color: Colors.red,
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       if (_likeIcon == Icons.favorite) {
                         _likeIcon = Icons.favorite_border;
@@ -328,6 +348,22 @@ class _BottomInterState extends State<BottomInter> {
                         _countLike++;
                       }
                     });
+                    if (_likeIcon == Icons.favorite) {
+                      final onValue = await likeService(_message.id);
+                      if (onValue['status'] != 'success') {
+                        _likeIcon = Icons.favorite_border;
+                        _countLike--;
+                      }
+                    } else {
+                      final onValue = await cancelLikeService(_message.id);
+                      if (onValue['status'] != 'success') {
+                        _likeIcon = Icons.favorite;
+                        _countLike++;
+                      }
+                    }
+                    Provider.of<MessageState>(context).updateRecommend();
+                    Provider.of<MessageState>(context).updateCollect();
+                    Provider.of<MessageState>(context).updateFollow();
                   },
                 ),
                 new Text(_countLike.toString()),
@@ -335,11 +371,12 @@ class _BottomInterState extends State<BottomInter> {
             ),
           ),
           Material(
+            color: Colors.white,
             child: new IconButton(
                 icon: Icon(_collectIcon),
                 color: Colors.yellow,
                 iconSize: 30,
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     if (_collectIcon == Icons.star) {
                       _collectIcon = Icons.star_border;
@@ -347,9 +384,24 @@ class _BottomInterState extends State<BottomInter> {
                       _collectIcon = Icons.star;
                     }
                   });
+                  if (_collectIcon == Icons.star) {
+                    final onValue = await collectService(_message.id);
+                    if (onValue['status'] != 'success') {
+                      _collectIcon = Icons.star_border;
+                    }
+                  } else {
+                    final onValue = await cancelCollectService(_message.id);
+                    if (onValue['status'] != 'success') {
+                      _collectIcon = Icons.star;
+                    }
+                  }
+                  Provider.of<MessageState>(context).updateRecommend();
+                  Provider.of<MessageState>(context).updateCollect();
+                  Provider.of<MessageState>(context).updateFollow();
                 }),
           ),
           Material(
+            color: Colors.white,
             child: new IconButton(icon: Icon(Icons.message), onPressed: null),
           )
         ],

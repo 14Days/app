@@ -10,14 +10,15 @@ class SetSex extends StatefulWidget {
 
 class _SetSexState extends State<SetSex> {
   int _sex;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       _sex = Provider.of<UserState>(context).sex;
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context);
@@ -25,9 +26,9 @@ class _SetSexState extends State<SetSex> {
     Widget sexForm() {
       return new StatefulBuilder(
         builder: (
-            context,
-            StateSetter setState,
-            ) {
+          context,
+          StateSetter setState,
+        ) {
           return Row(
             children: <Widget>[
               Flexible(
@@ -62,7 +63,7 @@ class _SetSexState extends State<SetSex> {
 
     void testSet() async {
       final onValue =
-      await postUserService(user.email, user.sex, user.nickname);
+          await postUserService(user.email, user.sex, user.nickname);
       if (onValue['status'] == 'success') {
         Navigator.pop(context);
       }

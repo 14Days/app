@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import '../service/serviceMethod.dart';
 
-
 class MessageState with ChangeNotifier {
   List<MessageData> _recommend = [];
   List<MessageData> _follow = [];
@@ -10,8 +9,11 @@ class MessageState with ChangeNotifier {
   List<MessageData> _collect = [];
 
   List<MessageData> get recommend => _recommend;
+
   List<MessageData> get follow => _follow;
+
   List<MessageData> get category => _category;
+
   List<MessageData> get collect => _collect;
 
   updateRecommend() async {
@@ -20,10 +22,14 @@ class MessageState with ChangeNotifier {
     if (onValue['status'] == 'success') {
       recommendModel = MessageModel.fromJson(onValue);
     }
-    _recommend = recommendModel.data;
+    if (recommendModel == null) {
+      _recommend.clear();
+    } else {
+      _recommend = recommendModel.data;
+    }
+
     notifyListeners();
   }
-
 
   updateFollow() async {
     MessageModel followModel;
@@ -31,7 +37,12 @@ class MessageState with ChangeNotifier {
     if (onValue['status'] == 'success') {
       followModel = MessageModel.fromJson(onValue);
     }
-    _follow = followModel.data;
+    if (followModel == null) {
+      _follow.clear();
+    } else {
+      _follow = followModel.data;
+    }
+
     notifyListeners();
   }
 
@@ -41,7 +52,12 @@ class MessageState with ChangeNotifier {
     if (onValue['status'] == 'success') {
       collectModel = MessageModel.fromJson(onValue);
     }
-    _collect = collectModel.data;
+    if (collectModel == null) {
+      _collect.clear();
+    } else {
+      _collect = collectModel.data;
+    }
+
     notifyListeners();
   }
 }

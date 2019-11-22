@@ -138,7 +138,6 @@ class _RegisterBodyState extends State<RegisterBody> {
       }
     }
 
-
     final snackBar = new SnackBar(
       content: new Text(_showText),
       backgroundColor: Colors.blue,
@@ -150,7 +149,7 @@ class _RegisterBodyState extends State<RegisterBody> {
     if (_ok == true) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginPage()),
-              (route) => route == null);
+          (route) => route == null);
     }
   }
 

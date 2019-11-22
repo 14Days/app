@@ -26,13 +26,12 @@ class _HomeClassState extends State<HomeClass>
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: TopClass()
+          child: TopClass(),
         ),
         Expanded(
           flex: 10,
           child: CategoryBody(),
         ),
-
       ],
     );
   }
@@ -45,7 +44,15 @@ class TopClass extends StatefulWidget {
 }
 
 class _TopClassState extends State<TopClass> {
-  List category = ['优美典雅', '古典幽默',"电压陈宇", '是的是的', '斯蒂法国', '刚刚的啊', ' 发生的啊',];
+  List category = [
+    '优美典雅',
+    '古典幽默',
+    "电压陈宇",
+    '是的是的',
+    '斯蒂法国',
+    '刚刚的啊',
+    ' 发生的啊',
+  ];
 
   @override
   Widget build(BuildContext context) {

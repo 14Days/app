@@ -192,7 +192,13 @@ class _CollectBodyState extends State<CollectBody> {
     }
 
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          "details",
+          arguments: _message.recommend[index],
+        );
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         padding: const EdgeInsets.all(10.0),

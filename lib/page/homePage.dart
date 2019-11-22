@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+
   //顶部导航列表
   List<Widget> topTabs = [
     new Tab(
@@ -42,6 +43,7 @@ class _HomePageState extends State<HomePage>
       ),
     ),
   ];
+
   @override
   void initState() {
     _tabController = new TabController(
