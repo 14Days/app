@@ -196,7 +196,7 @@ class _CollectBodyState extends State<CollectBody> {
         Navigator.pushNamed(
           context,
           "details",
-          arguments: _message.recommend[index],
+          arguments: _message.collect[index],
         );
       },
       child: Container(
