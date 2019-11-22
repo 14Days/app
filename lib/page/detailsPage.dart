@@ -1,62 +1,97 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
-import './setPage.dart';
+import 'package:furture/service/serviceMethod.dart';
+import 'package:furture/utils/utils.dart';
 
-class DetailsPage extends StatefulWidget {
-  @override
-  _DetailsPageState createState() => _DetailsPageState();
-}
-
-class _DetailsPageState extends State<DetailsPage>
-    with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState(); //无名无参需要调用
-  }
-
-  //当整个页面dispose时，dispose掉控制器，释放内存
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Column(
-      children: <Widget>[
-        TextDetails(),
-//        Interaction(),
-        BottomInter(),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "详情",
+        ),
+      ),
+      body: new Column(
+        children: <Widget>[
+          TextDetail(),
+          Expanded(
+            child: InterAction(),
+          ),
+        ],
+      ),
+      bottomSheet: BottomInter(),
     );
   }
 }
 
 //正文部分
-class TextDetails extends StatelessWidget {
+class TextDetail extends StatefulWidget {
+  @override
+  _TextDetailState createState() => _TextDetailState();
+}
+
+class _TextDetailState extends State<TextDetail> {
+  String _followIcon;
+
   @override
   Widget build(BuildContext context) {
+    MessageData _message = ModalRoute.of(context).settings.arguments;
+    if (_followIcon == null) {
+      _followIcon = _message.isFollowed ? "已关注" : "关注";
+    }
+    List<Widget> images = [];
+    for (var image in _message.imgsName) {
+      images.add(
+        new Container(
+          child: Image.network(
+            Utils.imgPath(image),
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+
     return Container(
-      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-      padding: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         color: Colors.white,
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.grey, //阴影颜色
+            blurRadius: 12.0, //阴影大小
+          ),
+        ],
+        border: Border(
+          top: BorderSide(color: Colors.white12, width: 1.0),
+          bottom: BorderSide(color: Colors.white30, width: 1.0),
+        ),
       ),
       child: Column(
         children: <Widget>[
           //发布者信息
           new Row(
             children: <Widget>[
+              //发布者头像
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.only(top: 30.0),
                   height: 70,
                   color: Colors.white,
-//                child: new Image(image: "111"),
+                  child: Image(
+                    image: new NetworkImage(
+                      Utils.imgPath(_message.avatar),
+                    ),
+                  ),
                 ),
                 flex: 1,
               ),
+              //发布者昵称
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.only(top: 30.0),
@@ -64,53 +99,59 @@ class TextDetails extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   color: Colors.white,
                   child: new Text(
-                    "11111111",
+                    _message.name,
                     maxLines: 1,
                     style: TextStyle(
                       decoration: TextDecoration.none,
                       fontSize: 20.0,
                       color: Colors.deepOrange,
-                      textBaseline: null,
                     ),
                   ),
                 ),
                 flex: 1,
               ),
+              //关注按钮
               Expanded(
                 child: new Container(
-                    width: 50.0,
-                    height: 40.0,
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(top: 20.0),
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        side: BorderSide(color: Colors.deepOrange),
+                  width: 50.0,
+                  height: 40.0,
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(top: 20.0),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      side: BorderSide(color: Colors.deepOrange),
+                    ),
+                    color: Colors.white,
+                    child: Text(
+                      _followIcon,
+                      style: TextStyle(
+                        decoration: TextDecoration.none,
+                        color: Colors.deepOrange,
+                        fontSize: 15.0,
                       ),
-                      color: Colors.white,
-//                      focusColor: Colors.white,
-//                      highlightColor: Colors.blue[700],
-//                      colorBrightness: Brightness.dark,
-//                      splashColor: Colors.white,
-                      child: Text(
-                        "关注",
-                        style: TextStyle(
-                          decoration: TextDecoration.none,
-                          color: Colors.deepOrange,
-                          fontSize: 15.0,
-                        ),
-                      ),
-                      onPressed: () {},
-                    )),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (_followIcon == "已关注") {
+                          _followIcon = "关注";
+                        } else {
+                          _followIcon = "已关注";
+                        }
+                      });
+                    },
+                  ),
+                ),
                 flex: 3,
               ),
             ],
           ),
           new Container(
             alignment: Alignment.topLeft,
+            margin: const EdgeInsets.only(top: 20.0),
             padding: const EdgeInsets.only(top: 10.0, left: 10.0),
             child: Text(
-              "地方回房间节哀吧就发就好哈嘎嘎阿济格哈卡结果卡吉尔啊哈二号哈哈酒啊后就会教大家啊",
+              _message.content != null ? _message.content : "无标题",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
@@ -123,24 +164,16 @@ class TextDetails extends StatelessWidget {
           ),
           new Container(
             color: Colors.white,
-//            child: Image.network('1111'),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-//互动栏目
-class Interaction extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(),
+            child: Row(
+              children: images.length != 0 ? images : Text("无图片"),
+            ),
+          ),
+          Text(
+            "评论",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15.0,
+            ),
           ),
         ],
       ),
@@ -148,31 +181,177 @@ class Interaction extends StatelessWidget {
   }
 }
 
-//点赞收藏按钮
-class BottomInter extends StatelessWidget {
+//互动栏目
+class InterAction extends StatefulWidget {
+  @override
+  _InterActionState createState() => _InterActionState();
+}
+
+class _InterActionState extends State<InterAction> {
+  Widget _items(index) {
+    MessageData _message = ModalRoute.of(context).settings.arguments;
+    print(_message.topComment[0].content);
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      alignment: Alignment.centerLeft,
+      decoration: BoxDecoration(
+        color: Colors.white70,
+        border: Border(
+          left: BorderSide(width: 0.5, color: Colors.black12),
+          right: BorderSide(width: 0.5, color: Colors.black12),
+          top: BorderSide(width: 0.5, color: Colors.black12),
+          bottom: BorderSide(width: 0.5, color: Colors.black12),
+        ),
+      ),
+      child: Column(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              _message.topComment[index].createBy != null
+                  ? _message.topComment[index].createBy
+                  : "无名",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 15.0,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              _message.topComment[index].content != null
+                  ? _message.topComment[index].content
+                  : "刚刚",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerRight,
+            child: Text(
+              _message.topComment[index].createAt != null
+                  ? _message.topComment[index].createAt
+                  : "刚刚",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 10.0,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    MessageData _message = ModalRoute.of(context).settings.arguments;
+    if (_message.topComment.length == 0) {
+      return Center(
+        child: Text("暂无评论"),
+      );
+    } else {
+      return ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: _message.topComment.length,
+        itemBuilder: (context, index) {
+          return _items(index);
+        },
+      );
+    }
+  }
+}
+
+//点赞收藏按钮
+class BottomInter extends StatefulWidget {
+  @override
+  _BottomInterState createState() => _BottomInterState();
+}
+
+class _BottomInterState extends State<BottomInter> {
+  MessageData _message;
+  IconData _likeIcon;
+  IconData _collectIcon;
+  int _countLike;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _message = ModalRoute.of(context).settings.arguments;
+    if (_likeIcon == null) {
+      //初次构建页面赋值
+      _likeIcon = _message.isLiked ? Icons.favorite : Icons.favorite_border;
+      _collectIcon = _message.isCollected ? Icons.star : Icons.star_border;
+      _countLike = _message.sumLikes;
+    }
     return Container(
       width: double.infinity,
       height: 50.0,
-      color: Colors.white,
-      margin: EdgeInsets.only(bottom: 0),
       padding: EdgeInsets.only(left: 10, right: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: new Border(
+          top: BorderSide(color: Colors.white10, width: 0.5),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Material(
-              child: new Row(
-            children: <Widget>[
-              new IconButton(icon: Icon(Icons.thumb_up), onPressed: null),
-              new Text("12"),
-            ],
-          )),
+            child: new Row(
+              children: <Widget>[
+                new IconButton(
+                  icon: Icon(_likeIcon),
+                  color: Colors.red,
+                  onPressed: () {
+                    setState(() {
+                      if (_likeIcon == Icons.favorite) {
+                        _likeIcon = Icons.favorite_border;
+                        _countLike--;
+                      } else {
+                        _likeIcon = Icons.favorite;
+                        _countLike++;
+                      }
+                    });
+                  },
+                ),
+                new Text(_countLike.toString()),
+              ],
+            ),
+          ),
           Material(
-              child: new IconButton(
-                  icon: Icon(Icons.star_border), onPressed: null)),
+            child: new IconButton(
+                icon: Icon(_collectIcon),
+                color: Colors.yellow,
+                iconSize: 30,
+                onPressed: () {
+                  setState(() {
+                    if (_collectIcon == Icons.star) {
+                      _collectIcon = Icons.star_border;
+                    } else {
+                      _collectIcon = Icons.star;
+                    }
+                  });
+                }),
+          ),
           Material(
-              child: new IconButton(icon: Icon(Icons.message), onPressed: null))
+            child: new IconButton(icon: Icon(Icons.message), onPressed: null),
+          )
         ],
       ),
     );

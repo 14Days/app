@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:furture/page/detailsPage.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:furture/provider/noticeState.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
             ),
             home: LoginPage(),
+            routes: {
+              "details" : (context) => DetailsPage(),
+            },
             onGenerateRoute: Application.router.generator,
           );
         },

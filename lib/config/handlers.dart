@@ -1,6 +1,7 @@
 import 'package:furture/component/comment.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:furture/page/detailsPage.dart';
 
 var rootHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -23,10 +24,6 @@ var btmNaHandler = new Handler(
       return new BottomNavigation();
     });
 
-var noticeHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return new NoticePage();
-    });
 
 var myHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -56,6 +53,10 @@ var setNicknameHandler = new Handler(
 var setAvatarHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return new SetAvatar();
+    });
+var detailHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return new DetailsPage();
     });
 
 

@@ -42,7 +42,7 @@ class _MyPageState extends State<MyPage> {
                 child: Text(
                   "我的收藏",
                   style: TextStyle(
-                    fontSize: 25.0,
+                    fontSize: 20.0,
                     color: Colors.black54,
                   ),
                 ),
@@ -72,11 +72,11 @@ class TopMessage extends StatelessWidget {
               color: Colors.blue,
               child: Container(
                 margin: const EdgeInsets.only(
-                    left: 20, right: 20, top: 5, bottom: 5),
+                    left: 30, right: 30, top: 15, bottom: 15),
                 child: CircleAvatar(
                   radius: 100,
                   backgroundColor: Colors.white70,
-                  backgroundImage: NetworkImage(Utils.imgPath(user.avatar)),
+                  backgroundImage: NetworkImage(Utils.myImgPath(user.avatar)),
                 ),
               ),
             ),
@@ -92,7 +92,7 @@ class TopMessage extends StatelessWidget {
                 user.nickname,
                 maxLines: 1,
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: 23.0,
                   color: Colors.white,
                   textBaseline: null,
                 ),
@@ -243,9 +243,9 @@ class _CollectBodyState extends State<CollectBody> {
   @override
   Widget build(BuildContext context) {
     final _message = Provider.of<MessageState>(context);
-    if (_message.collect == null) {
+    if (_message.collect.length == 0) {
       return Center(
-        child: Text("暂无消息"),
+        child: Text("你还没有收藏哦~"),
       );
     } else {
       return ListView.builder(

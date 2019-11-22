@@ -37,7 +37,7 @@ Future postUserService(String email, int sex, String nickname) async {
 }
 
 //用户关注请求
-Future followService(String id) async {
+Future followService( id) async {
   try {
     var followParam = {
       'id': id,
@@ -56,7 +56,7 @@ Future followService(String id) async {
 }
 
 //用户取消关注请求
-Future unfollowService(String id) async {
+Future cancelFollowService(int id) async {
   try {
     var followParam = {
       'id': id,
@@ -75,7 +75,7 @@ Future unfollowService(String id) async {
 }
 
 //用户收藏请求
-Future collectService(String id) async {
+Future collectService(int id) async {
   try {
     var collectParam = {
       'id': id,
@@ -94,7 +94,7 @@ Future collectService(String id) async {
 }
 
 //用户取消收藏请求
-Future notCollectService(String id) async {
+Future cancelCollectService(int id) async {
   try {
     var collectParam = {
       'id': id,
@@ -113,7 +113,7 @@ Future notCollectService(String id) async {
 }
 
 //用户点赞请求
-Future likeService(String id) async {
+Future likeService(int id) async {
   try {
     var likeParam = {
       'id': id,
@@ -132,7 +132,7 @@ Future likeService(String id) async {
 }
 
 //用户取消点赞请求
-Future unlikeService(String id) async {
+Future cancelLikeService(int id) async {
   try {
     var likeParam = {
       'id': id,

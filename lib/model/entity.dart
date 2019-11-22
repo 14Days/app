@@ -95,6 +95,7 @@ class MessageModel {
 }
 
 class MessageData {
+  String avatar;
   String content;
   String createAt;
   int designerId;
@@ -106,9 +107,11 @@ class MessageData {
   String name;
   int sumCollects;
   int sumLikes;
+  List<TopComment> topComment;
 
   MessageData(
-      {this.content,
+      {this.avatar,
+      this.content,
       this.createAt,
       this.designerId,
       this.id,
@@ -118,9 +121,11 @@ class MessageData {
       this.isLiked,
       this.name,
       this.sumCollects,
-      this.sumLikes});
+      this.sumLikes,
+      this.topComment});
 
   MessageData.fromJson(Map<String, dynamic> json) {
+    avatar = json['avatar'];
     content = json['content'];
     createAt = json['create_at'];
     designerId = json['designer_id'];
@@ -132,10 +137,17 @@ class MessageData {
     name = json['name'];
     sumCollects = json['sum_collects'];
     sumLikes = json['sum_likes'];
+    if (json['top_comment'] != null) {
+      topComment = new List<TopComment>();
+      json['top_comment'].forEach((v) {
+        topComment.add(new TopComment.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['avatar'] = this.avatar;
     data['content'] = this.content;
     data['create_at'] = this.createAt;
     data['designer_id'] = this.designerId;
@@ -147,6 +159,66 @@ class MessageData {
     data['name'] = this.name;
     data['sum_collects'] = this.sumCollects;
     data['sum_likes'] = this.sumLikes;
+    if (this.topComment != null) {
+      data['top_comment'] = this.topComment.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+//一级评论消息
+class TopComment {
+  String content;
+  String createAt;
+  String createBy;
+  List<SecondComment> secondComment;
+
+  TopComment({this.content, this.createAt, this.createBy, this.secondComment});
+
+  TopComment.fromJson(Map<String, dynamic> json) {
+    content = json['content'];
+    createAt = json['create_at'];
+    createBy = json['create_by'];
+    if (json['second_comment'] != null) {
+      secondComment = new List<SecondComment>();
+      json['second_comment'].forEach((v) {
+        secondComment.add(new SecondComment.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['content'] = this.content;
+    data['create_at'] = this.createAt;
+    data['create_by'] = this.createBy;
+    if (this.secondComment != null) {
+      data['second_comment'] =
+          this.secondComment.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+//二级评论
+class SecondComment {
+  String content;
+  String createAt;
+  String createBy;
+
+  SecondComment({this.content, this.createAt, this.createBy});
+
+  SecondComment.fromJson(Map<String, dynamic> json) {
+    content = json['content'];
+    createAt = json['create_at'];
+    createBy = json['create_by'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['content'] = this.content;
+    data['create_at'] = this.createAt;
+    data['create_by'] = this.createBy;
     return data;
   }
 }

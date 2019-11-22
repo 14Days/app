@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:furture/component/comment.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:provider/provider.dart';
 import 'package:furture/utils/utils.dart';
@@ -45,7 +46,6 @@ class _RecommendBodyState extends State<RecommendBody> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -70,7 +70,13 @@ class _RecommendBodyState extends State<RecommendBody> {
     }
 
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          "details",
+          arguments: _message.recommend[index],
+        );
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         padding: const EdgeInsets.all(10.0),

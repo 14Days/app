@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 
 class Utils {
-  static String imgPath(String name) {
+  static String myImgPath(String name) {
     return 'http://pull.wghtstudio.cn/avatar/app/$name';
+  }
+  static String imgPath(String name) {
+    return 'http://pull.wghtstudio.cn/avatar/web/$name';
   }
 }
 

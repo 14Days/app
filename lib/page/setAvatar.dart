@@ -122,7 +122,7 @@ class _SetAvatarState extends State<SetAvatar> {
             child: CircleAvatar(
               radius: 100,
               backgroundColor: Colors.white70,
-              backgroundImage: NetworkImage(Utils.imgPath(_avatar)),
+              backgroundImage: NetworkImage(Utils.myImgPath(_avatar)),
             ),
           ),
         );
