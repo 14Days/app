@@ -129,9 +129,9 @@ class _RecommendBodyState extends State<RecommendBody> {
   @override
   Widget build(BuildContext context) {
     final _message = Provider.of<MessageState>(context);
-    if (_message.recommend == null) {
+    if (_message.recommend.length == 0) {
       return Center(
-        child: Text("暂无消息"),
+        child: Text("暂无推荐消息"),
       );
     } else {
       return ListView.builder(

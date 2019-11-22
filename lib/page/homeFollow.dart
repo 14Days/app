@@ -127,7 +127,7 @@ class _FollowBodyState extends State<FollowBody> {
   @override
   Widget build(BuildContext context) {
     final _message = Provider.of<MessageState>(context);
-    if (_message.follow == null) {
+    if (_message.follow.length == 0) {
       return Center(
         child: Text("暂无消息"),
       );
