@@ -9,13 +9,16 @@ import 'package:provider/provider.dart';
 class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //显示标题栏目，主题内容，底部按钮
     return Scaffold(
+      //“详情”标题
       appBar: AppBar(
         centerTitle: true,
         title: Text(
           "详情",
         ),
       ),
+      //主题部分包含该消息内容，评论内容
       body: new Column(
         children: <Widget>[
           TextDetail(),
@@ -24,6 +27,7 @@ class DetailsPage extends StatelessWidget {
           ),
         ],
       ),
+      //底部按钮
       bottomSheet: BottomInter(),
     );
   }
@@ -44,6 +48,7 @@ class _TextDetailState extends State<TextDetail> {
     if (_followIcon == null) {
       _followIcon = _message.isFollowed ? "已关注" : "关注";
     }
+    //图片组件加载
     List<Widget> images = [];
     for (var image in _message.imgsName) {
       images.add(
@@ -133,6 +138,7 @@ class _TextDetailState extends State<TextDetail> {
                         fontSize: 15.0,
                       ),
                     ),
+                    //点击关注按钮的回调
                     onPressed: () async {
                       setState(() {
                         if (_followIcon == "已关注") {
@@ -142,19 +148,21 @@ class _TextDetailState extends State<TextDetail> {
                         }
                       });
                       if (_followIcon == "已关注") {
-                        final onValue = await followService(_message.designerId);
+                        final onValue =
+                            await followService(_message.designerId);
                         if (onValue['status'] != 'success') {
                           _followIcon = "关注";
                         }
                       } else {
-                        final onValue = await cancelFollowService(_message.designerId);
+                        final onValue =
+                            await cancelFollowService(_message.designerId);
                         if (onValue['status'] != 'success') {
                           _followIcon = "已关注";
                         }
                       }
+                      Provider.of<MessageState>(context).updateFollow();
                       Provider.of<MessageState>(context).updateRecommend();
                       Provider.of<MessageState>(context).updateCollect();
-                      Provider.of<MessageState>(context).updateFollow();
                     },
                   ),
                 ),
@@ -162,6 +170,7 @@ class _TextDetailState extends State<TextDetail> {
               ),
             ],
           ),
+          //消息文本内容
           new Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.only(top: 20.0),
@@ -178,21 +187,25 @@ class _TextDetailState extends State<TextDetail> {
               ),
             ),
           ),
+          //消息图片内容
           new Container(
+            margin: const EdgeInsets.only(top: 15.0),
             color: Colors.white,
-            child: Row(
+            child: Flex(
+              direction: Axis.horizontal,
               children: images.length != 0 ? images : Text("无图片"),
             ),
           ),
           new Container(
-            color: Color.fromARGB(255, 250, 250, 250),
+//            color: Color.fromARGB(125, 250, 250, 250),
             child: SizedBox(
-              height: 10.0,
+              height: 20.0,
             ),
           ),
+          //评论栏
           new Container(
-            alignment: Alignment.bottomLeft,
             padding: const EdgeInsets.only(left: 5.0),
+            alignment: Alignment.bottomLeft,
             child: Text(
               "评论",
               style: TextStyle(
@@ -214,9 +227,11 @@ class InterAction extends StatefulWidget {
 }
 
 class _InterActionState extends State<InterAction> {
+  //单条评论条目
   Widget _items(index) {
     MessageData _message = ModalRoute.of(context).settings.arguments;
     return Container(
+      //定义外部框
       padding: const EdgeInsets.only(
           left: 30.0, right: 15.0, top: 10.0, bottom: 10.0),
       margin: const EdgeInsets.only(bottom: 5.0),
@@ -231,6 +246,7 @@ class _InterActionState extends State<InterAction> {
       ),
       child: Column(
         children: <Widget>[
+          //评论者
           Container(
             padding: const EdgeInsets.only(left: 10.0),
             alignment: Alignment.centerLeft,
@@ -247,6 +263,7 @@ class _InterActionState extends State<InterAction> {
               ),
             ),
           ),
+          //评论时间
           Container(
             padding: const EdgeInsets.only(left: 10.0),
             alignment: Alignment.centerLeft,
@@ -263,6 +280,7 @@ class _InterActionState extends State<InterAction> {
               ),
             ),
           ),
+          //评论内容
           Container(
             padding: const EdgeInsets.only(left: 10.0),
             alignment: Alignment.centerLeft,
@@ -369,8 +387,8 @@ class _BottomInterState extends State<BottomInter> {
                         _countLike++;
                       }
                     }
-                    Provider.of<MessageState>(context).updateRecommend();
                     Provider.of<MessageState>(context).updateCollect();
+                    Provider.of<MessageState>(context).updateRecommend();
                     Provider.of<MessageState>(context).updateFollow();
                   },
                 ),
@@ -381,36 +399,40 @@ class _BottomInterState extends State<BottomInter> {
           Material(
             color: Colors.white,
             child: new IconButton(
-                icon: Icon(_collectIcon),
-                color: Colors.yellow,
-                iconSize: 30,
-                onPressed: () async {
-                  setState(() {
-                    if (_collectIcon == Icons.star) {
-                      _collectIcon = Icons.star_border;
-                    } else {
-                      _collectIcon = Icons.star;
-                    }
-                  });
+              icon: Icon(_collectIcon),
+              color: Colors.yellow,
+              iconSize: 30,
+              onPressed: () async {
+                setState(() {
                   if (_collectIcon == Icons.star) {
-                    final onValue = await collectService(_message.id);
-                    if (onValue['status'] != 'success') {
-                      _collectIcon = Icons.star_border;
-                    }
+                    _collectIcon = Icons.star_border;
                   } else {
-                    final onValue = await cancelCollectService(_message.id);
-                    if (onValue['status'] != 'success') {
-                      _collectIcon = Icons.star;
-                    }
+                    _collectIcon = Icons.star;
                   }
-                  Provider.of<MessageState>(context).updateRecommend();
-                  Provider.of<MessageState>(context).updateCollect();
-                  Provider.of<MessageState>(context).updateFollow();
-                }),
+                });
+                if (_collectIcon == Icons.star) {
+                  final onValue = await collectService(_message.id);
+                  if (onValue['status'] != 'success') {
+                    _collectIcon = Icons.star_border;
+                  }
+                } else {
+                  final onValue = await cancelCollectService(_message.id);
+                  if (onValue['status'] != 'success') {
+                    _collectIcon = Icons.star;
+                  }
+                }
+                Provider.of<MessageState>(context).updateRecommend();
+                Provider.of<MessageState>(context).updateCollect();
+                Provider.of<MessageState>(context).updateFollow();
+              },
+            ),
           ),
           Material(
             color: Colors.white,
-            child: new IconButton(icon: Icon(Icons.message), onPressed: null),
+            child: new IconButton(
+              icon: Icon(Icons.message),
+              onPressed: null,
+            ),
           )
         ],
       ),

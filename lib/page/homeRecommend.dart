@@ -63,7 +63,7 @@ class _RecommendBodyState extends State<RecommendBody> {
             Utils.imgPath(image),
             width: 100,
             height: 100,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ),
       );
@@ -105,18 +105,14 @@ class _RecommendBodyState extends State<RecommendBody> {
               ),
             ),
             new Container(
+              margin: const EdgeInsets.only(top: 10.0),
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: Colors.white70,
-                border: Border(
-                  left: BorderSide(width: 0.5, color: Colors.black12),
-                  right: BorderSide(width: 0.5, color: Colors.black12),
-                  top: BorderSide(width: 0.5, color: Colors.black12),
-                  bottom: BorderSide(width: 0.5, color: Colors.black12),
-                ),
               ),
-              child: Row(
+              child: Flex(
+                direction: Axis.horizontal,
                 children: images.length != 0 ? images : Text("无图片"),
               ),
             ),

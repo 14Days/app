@@ -103,16 +103,11 @@ class _FollowBodyState extends State<FollowBody> {
               ),
             ),
             new Container(
+              margin: const EdgeInsets.only(top: 10.0),
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: Colors.white70,
-                border: Border(
-                  left: BorderSide(width: 0.5, color: Colors.black12),
-                  right: BorderSide(width: 0.5, color: Colors.black12),
-                  top: BorderSide(width: 0.5, color: Colors.black12),
-                  bottom: BorderSide(width: 0.5, color: Colors.black12),
-                ),
               ),
               child: Row(
                 children: images == null ? Text(" ") : images,
