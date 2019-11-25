@@ -341,21 +341,13 @@ class _BottomInterState extends State<BottomInter> {
     _text.addListener(() {
       print("评论的监听方法：" + _text.text);
     });
-    _focusNode.addListener(_focusNodeListener);
+//    _focusNode.addListener(_focusNodeListener);
   }
 
-  Future<Null> _focusNodeListener() async {
-    // 用async的方式实现这个listener
-    if (_focusNode.hasFocus) {
-      print('TextField got the focus');
-    } else {
-      print('TextField lost the focus');
-    }
-  }
 
   @override
   void dispose() {
-    _focusNode.dispose();
+//    _focusNode.dispose();
     _text.dispose();
     super.dispose();
   }
@@ -415,6 +407,7 @@ class _BottomInterState extends State<BottomInter> {
                     Provider.of<MessageState>(context).updateCollect();
                     Provider.of<MessageState>(context).updateRecommend();
                     Provider.of<MessageState>(context).updateFollow();
+//                    Provider.of<MessageState>(context).updateCategory(0);
                   },
                 ),
                 new Text(_countLike.toString()),
@@ -449,6 +442,7 @@ class _BottomInterState extends State<BottomInter> {
                 Provider.of<MessageState>(context).updateRecommend();
                 Provider.of<MessageState>(context).updateCollect();
                 Provider.of<MessageState>(context).updateFollow();
+//                Provider.of<MessageState>(context).updateCategory(0);
               },
             ),
           ),
@@ -478,7 +472,7 @@ class _BottomInterState extends State<BottomInter> {
                                 createAt: "刚刚",
                               );
                               String _showText = '评论成功';
-                              commentService(1, _message.designerId, _text.text)
+                              commentService(1, _message.id, _text.text)
                                   .then((onValue) {
                                 print(onValue);
                                 if (onValue['status'] == 'success') {
@@ -486,6 +480,9 @@ class _BottomInterState extends State<BottomInter> {
                                   setState(() {
                                     _comments.add(_content);
                                   });
+                                  Provider.of<MessageState>(context).updateRecommend();
+                                  Provider.of<MessageState>(context).updateCollect();
+                                  Provider.of<MessageState>(context).updateFollow();
                                 }
                               });
                               final _snackBar = new SnackBar(
@@ -495,9 +492,7 @@ class _BottomInterState extends State<BottomInter> {
                                 duration: Duration(seconds: 1),
                               );
                               Scaffold.of(context).showSnackBar(_snackBar);
-                              Provider.of<MessageState>(context).updateRecommend();
-                              Provider.of<MessageState>(context).updateCollect();
-                              Provider.of<MessageState>(context).updateFollow();
+
                             },
                           ),
                         ),

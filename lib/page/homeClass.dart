@@ -34,7 +34,7 @@ class _HomeClassState extends State<HomeClass>
           child: TopClass(),
         ),
         Expanded(
-          flex: 10,
+          flex: 9,
           child: CategoryBody(),
         ),
       ],
@@ -49,6 +49,7 @@ class TopClass extends StatefulWidget {
 }
 
 class _TopClassState extends State<TopClass> {
+  int index;
   List category = [
     '优美典雅',
     '古典幽默',
@@ -56,27 +57,38 @@ class _TopClassState extends State<TopClass> {
     '是的是的',
     '斯蒂法国',
     '刚刚的啊',
-    ' 发生的啊',
+    '发生的啊',
   ];
+  @override
+  void initState() {
+    super.initState();
+    index = 0;
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      Provider.of<MessageState>(context).updateCategory(index);
+    });
 
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: category.length,
-        itemBuilder: (context, index) {
-          return _singleClass(index);
+        itemBuilder: (BuildContext context, int position) {
+          return _singleClass(position);
         },
       ),
     );
   }
 
   //单类别组件
-  Widget _singleClass(int index) {
-    return InkWell(
+  Widget _singleClass(int i) {
+    return GestureDetector(
       onTap: () {
-        Provider.of<MessageState>(context).updateCategory(index);
+        setState(() {
+          Provider.of<MessageState>(context).updateCategory(i);
+          index = i;
+        });
       },
       child: Container(
         width: 100.0,
@@ -90,10 +102,11 @@ class _TopClassState extends State<TopClass> {
           ),
         ),
         child: Text(
-          category[index],
+          category[i],
           maxLines: 1,
           style: TextStyle(
-            fontSize: 15.0,
+            fontSize:  index == i ? 20.0 : 15.0,
+            color: index == i ? Colors.blue : Colors.black,
           ),
         ),
       ),
