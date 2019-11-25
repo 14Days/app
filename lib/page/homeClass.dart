@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:furture/provider/messageState.dart';
+import 'package:furture/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class HomeClass extends StatefulWidget {
   @override
@@ -10,7 +13,10 @@ class _HomeClassState extends State<HomeClass>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    super.initState(); //无名无参需要调用
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      Provider.of<MessageState>(context).updateCategory(0);
+    });
   }
 
   @override
@@ -69,7 +75,9 @@ class _TopClassState extends State<TopClass> {
   //单类别组件
   Widget _singleClass(int index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provider.of<MessageState>(context).updateCategory(index);
+      },
       child: Container(
         width: 100.0,
         alignment: Alignment.topCenter,
@@ -95,53 +103,87 @@ class _TopClassState extends State<TopClass> {
 
 //分类内容
 // ignore: must_be_immutable
-class CategoryBody extends StatelessWidget {
-  final List<Map<String, dynamic>> category = [
-    {'img': '111', 'text': '222'},
-    {'img': '111', 'text': '333'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-    {'img': '111', 'text': '444'},
-  ];
 
-  //定义单条消息
-  Widget _item(index) {
+class CategoryBody extends StatefulWidget {
+  @override
+  _CategoryBodyState createState() => _CategoryBodyState();
+}
+
+class _CategoryBodyState extends State<CategoryBody> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Widget _items(index) {
+    final _message = Provider.of<MessageState>(context);
+    List<Widget> images = [];
+    for (var image in _message.category[index].imgsName) {
+      images.add(
+        new Container(
+          child: Image.network(
+            Utils.imgPath(image),
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          "details",
+          arguments: _message.category[index],
+        );
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-            color: Colors.white70,
-            border: Border(
-              left: BorderSide(width: 0.5, color: Colors.black12),
-              right: BorderSide(width: 0.5, color: Colors.black12),
-              top: BorderSide(width: 0.5, color: Colors.black12),
-              bottom: BorderSide(width: 0.5, color: Colors.black12),
-            )),
+          color: Colors.white70,
+          border: Border(
+            left: BorderSide(width: 0.5, color: Colors.black12),
+            right: BorderSide(width: 0.5, color: Colors.black12),
+            top: BorderSide(width: 0.5, color: Colors.black12),
+            bottom: BorderSide(width: 0.5, color: Colors.black12),
+          ),
+        ),
         child: Column(
           children: <Widget>[
-            new Text(
-              category[index]['text'],
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
+            new Container(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                _message.category[index].content != null
+                    ? _message.category[index].content
+                    : "无标题",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 15.0),
+              ),
             ),
-//            new Image.network(category[index]['img']),
+            new Container(
+              margin: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              width: double.infinity,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: Colors.white70,
+              ),
+              child: Flex(
+                direction: Axis.horizontal,
+                children: images.length != 0 ? images : Text("无图片"),
+              ),
+            ),
           ],
         ),
       ),
@@ -150,14 +192,21 @@ class CategoryBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: category.length,
-      itemBuilder: (context, index) {
-        return Material(
-          child: _item(index),
-        );
-      },
-    );
+    final _message = Provider.of<MessageState>(context);
+    if (_message.category.length == 0) {
+      return Center(
+        child: Text("暂无分类消息"),
+      );
+    } else {
+      return ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: _message.category.length,
+        itemBuilder: (context, index) {
+          return Material(
+            child: _items(index),
+          );
+        },
+      );
+    }
   }
 }

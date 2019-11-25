@@ -82,6 +82,7 @@ class _LoginBodyState extends State<LoginBody> {
         //验证登录
         if (onValue['status'] == 'success') {
           print("成功登录");
+          _showText = "正在登录";
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => BottomNavigation()),
               (route) => route == null);
@@ -150,30 +151,33 @@ class _LoginBodyState extends State<LoginBody> {
                       Application.router.navigateTo(context, Routes.register,
                           transition: TransitionType.inFromBottom);
                     },
-                    child: Text("快速注册",
-                        style: new TextStyle(
-                          color: Colors.grey,
-                        )),
+                    child: Text(
+                      "快速注册",
+                      style: new TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
                   Gaps.vGap15,
                 ],
               ),
               new Container(
-                  width: 200.0,
-                  height: 40.0,
-                  margin: EdgeInsets.only(top: 20.0),
-                  child: RaisedButton(
-                    color: Colors.blue,
-                    highlightColor: Colors.blue[700],
-                    colorBrightness: Brightness.dark,
-                    splashColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    child: Text("登录"),
-                    onPressed: () {
-                      testLogin();
-                    },
-                  )),
+                width: 200.0,
+                height: 40.0,
+                margin: EdgeInsets.only(top: 20.0),
+                child: RaisedButton(
+                  color: Colors.blue,
+                  highlightColor: Colors.blue[700],
+                  colorBrightness: Brightness.dark,
+                  splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Text("登录"),
+                  onPressed: () {
+                    testLogin();
+                  },
+                ),
+              ),
             ],
           ),
         ),

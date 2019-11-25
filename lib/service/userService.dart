@@ -212,3 +212,24 @@ Future setAvatarService(FormData image) async {
     return print('设置头像请求Error------------->$e');
   }
 }
+
+
+//提交评论请求
+Future commentService(int type, int id, String content) async {
+  try {
+    var commentParam = {
+      'type': type,
+      'id': id,
+      'content': content,
+    };
+    Response response =
+    await BaseRequest().post(servicePath[comment], data: commentParam);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw Exception("提交评论请求异常");
+    }
+  } catch (e) {
+    return print('提交评论请求Error------------->$e');
+  }
+}

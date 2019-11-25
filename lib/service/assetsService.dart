@@ -19,9 +19,14 @@ Future homeRecommendService() async {
 }
 
 //请求分类消息
-Future homeClassService() async {
+Future homeClassService(int tagId) async {
   try {
-    Response response = await BaseRequest().get(servicePath[homeClass]);
+    List tagsId = List();
+    tagsId.add(tagId);
+    var classParam = {
+      'tags_id': tagsId,
+    };
+    Response response = await BaseRequest().post(servicePath[homeClass], data: classParam);
     if (response.statusCode == 200) {
       return response.data;
     } else {

@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
@@ -5,6 +6,8 @@ import 'package:furture/provider/messageState.dart';
 import 'package:furture/service/serviceMethod.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
+
+List<TopComment> _comments;
 
 class DetailsPage extends StatelessWidget {
   @override
@@ -28,7 +31,7 @@ class DetailsPage extends StatelessWidget {
         ],
       ),
       //底部按钮
-      bottomSheet: BottomInter(),
+      bottomNavigationBar: BottomInter(),
     );
   }
 }
@@ -64,7 +67,7 @@ class _TextDetailState extends State<TextDetail> {
     }
 
     return Container(
-      margin: const EdgeInsets.only(top: 10.0),
+      margin: const EdgeInsets.only(top: 1.0),
       padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -92,7 +95,7 @@ class _TextDetailState extends State<TextDetail> {
                   color: Colors.white,
                   child: Image(
                     image: new NetworkImage(
-                      Utils.imgPath(_message.avatar),
+                      Utils.webImgPath(_message.avatar),
                     ),
                   ),
                 ),
@@ -229,7 +232,6 @@ class InterAction extends StatefulWidget {
 class _InterActionState extends State<InterAction> {
   //单条评论条目
   Widget _items(index) {
-    MessageData _message = ModalRoute.of(context).settings.arguments;
     return Container(
       //定义外部框
       padding: const EdgeInsets.only(
@@ -251,8 +253,8 @@ class _InterActionState extends State<InterAction> {
             padding: const EdgeInsets.only(left: 10.0),
             alignment: Alignment.centerLeft,
             child: Text(
-              _message.topComment[index].createBy != null
-                  ? _message.topComment[index].createBy
+              _comments[index].createBy != null
+                  ? _comments[index].createBy
                   : "无名",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -268,8 +270,8 @@ class _InterActionState extends State<InterAction> {
             padding: const EdgeInsets.only(left: 10.0),
             alignment: Alignment.centerLeft,
             child: Text(
-              _message.topComment[index].createAt != null
-                  ? _message.topComment[index].createAt
+              _comments[index].createAt != null
+                  ? _comments[index].createAt
                   : "刚刚",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -285,8 +287,8 @@ class _InterActionState extends State<InterAction> {
             padding: const EdgeInsets.only(left: 10.0),
             alignment: Alignment.centerLeft,
             child: Text(
-              _message.topComment[index].content != null
-                  ? _message.topComment[index].content
+              _comments[index].content != null
+                  ? _comments[index].content
                   : "刚刚",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -302,14 +304,15 @@ class _InterActionState extends State<InterAction> {
   @override
   Widget build(BuildContext context) {
     MessageData _message = ModalRoute.of(context).settings.arguments;
-    if (_message.topComment.length == 0) {
+    _comments = _message.topComment;
+    if (_comments.length == 0) {
       return Center(
         child: Text("暂无评论"),
       );
     } else {
       return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: _message.topComment.length,
+        itemCount: _comments.length,
         itemBuilder: (context, index) {
           return _items(index);
         },
@@ -329,10 +332,32 @@ class _BottomInterState extends State<BottomInter> {
   IconData _likeIcon;
   IconData _collectIcon;
   int _countLike;
+  TextEditingController _text = new TextEditingController();
+  FocusNode _focusNode = new FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _text.addListener(() {
+      print("评论的监听方法：" + _text.text);
+    });
+    _focusNode.addListener(_focusNodeListener);
+  }
+
+  Future<Null> _focusNodeListener() async {
+    // 用async的方式实现这个listener
+    if (_focusNode.hasFocus) {
+      print('TextField got the focus');
+    } else {
+      print('TextField lost the focus');
+    }
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _text.dispose();
+    super.dispose();
   }
 
   @override
@@ -431,7 +456,56 @@ class _BottomInterState extends State<BottomInter> {
             color: Colors.white,
             child: new IconButton(
               icon: Icon(Icons.message),
-              onPressed: null,
+              onPressed: () {
+                showBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Material(
+                      child: TextField(
+                        controller: _text,
+                        focusNode: _focusNode,
+                        decoration: InputDecoration(
+                          hintText: "输入想要说的话吧~",
+                          suffixIcon: new IconButton(
+                            icon: Icon(
+                              Icons.send,
+                              color: Colors.blue,
+                            ),
+                            onPressed: () async {
+                              TopComment _content = new TopComment(
+                                content: _text.text,
+                                createBy: "我",
+                                createAt: "刚刚",
+                              );
+                              String _showText = '评论成功';
+                              commentService(1, _message.designerId, _text.text)
+                                  .then((onValue) {
+                                print(onValue);
+                                if (onValue['status'] == 'success') {
+                                  Navigator.pop(context);
+                                  setState(() {
+                                    _comments.add(_content);
+                                  });
+                                }
+                              });
+                              final _snackBar = new SnackBar(
+                                content: new Text(_showText),
+                                backgroundColor: Colors.blue,
+                                behavior: SnackBarBehavior.floating,
+                                duration: Duration(seconds: 1),
+                              );
+                              Scaffold.of(context).showSnackBar(_snackBar);
+                              Provider.of<MessageState>(context).updateRecommend();
+                              Provider.of<MessageState>(context).updateCollect();
+                              Provider.of<MessageState>(context).updateFollow();
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           )
         ],

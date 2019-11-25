@@ -15,6 +15,7 @@ const String homeClass = 'homeClass';
 const String myCollect = 'myCollect';
 const String logout = 'logout';
 const String setAvatar = 'setAvatar';
+const String comment = 'comment';
 
 const servicePath = {
 //登录
@@ -40,11 +41,14 @@ const servicePath = {
 //关注消息
   homeFollow: '/assets/follow',
 //分类消息
-  homeClass: '/assets/class',
+  homeClass: '/assets/thing',
 //收藏消息
   myCollect: '/assets/collect',
 //退出登录
   logout: '/user/logout',
 //设置头像
   setAvatar: '/user/avatar',
+  //提交评论
+  comment: 'user/comment',
+
 };

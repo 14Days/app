@@ -60,4 +60,19 @@ class MessageState with ChangeNotifier {
 
     notifyListeners();
   }
+
+  updateCategory(int index) async {
+    MessageModel categoryModel;
+    final onValue = await homeClassService(index);
+    if (onValue['status'] == 'success') {
+      categoryModel = MessageModel.fromJson(onValue);
+    }
+    if (categoryModel == null) {
+      _category.clear();
+    } else {
+      _category = categoryModel.data;
+    }
+
+    notifyListeners();
+  }
 }

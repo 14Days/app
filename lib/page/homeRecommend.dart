@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:furture/component/comment.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:provider/provider.dart';
 import 'package:furture/utils/utils.dart';
@@ -63,7 +62,7 @@ class _RecommendBodyState extends State<RecommendBody> {
             Utils.imgPath(image),
             width: 100,
             height: 100,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
           ),
         ),
       );
@@ -107,6 +106,7 @@ class _RecommendBodyState extends State<RecommendBody> {
             new Container(
               margin: const EdgeInsets.only(top: 10.0),
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              width: double.infinity,
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 color: Colors.white70,
