@@ -6,6 +6,7 @@ import 'package:furture/service/serviceMethod.dart';
 
 import '../component/comment.dart';
 import '../utils/utils.dart';
+import 'firstSetColor.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -79,10 +80,16 @@ class _LoginBodyState extends State<LoginBody> {
           _controllerAcc.text.toString(), _controllerPwd.text.toString());
       if (onValue['status'] == 'success') {
         _showText = "正在登录";
-
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => BottomNavigation()),
-                (route) => route == null);
+        final toColor = await getUserService();
+        if (toColor['status'] == 'success') {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => BottomNavigation()),
+                  (route) => route == null);
+        } else {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => FirstSetColor()),
+                  (route) => route == null);
+        }
       } else {
         if (onValue['err_msg'] == '用户不存在') {
           _showText = "用户不存在";
