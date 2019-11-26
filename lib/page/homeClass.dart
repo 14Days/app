@@ -105,7 +105,7 @@ class _TopClassState extends State<TopClass> {
           category[i],
           maxLines: 1,
           style: TextStyle(
-            fontSize:  index == i ? 20.0 : 15.0,
+            fontSize:  index == i ? 17.0 : 15.0,
             color: index == i ? Colors.blue : Colors.black,
           ),
         ),
@@ -192,8 +192,10 @@ class _CategoryBodyState extends State<CategoryBody> {
               decoration: BoxDecoration(
                 color: Colors.white70,
               ),
-              child: Flex(
+              child: Wrap(
+                spacing: 5.0,
                 direction: Axis.horizontal,
+                alignment: WrapAlignment.start,
                 children: images.length != 0 ? images : Text("无图片"),
               ),
             ),

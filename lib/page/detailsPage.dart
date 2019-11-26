@@ -194,8 +194,10 @@ class _TextDetailState extends State<TextDetail> {
           new Container(
             margin: const EdgeInsets.only(top: 15.0),
             color: Colors.white,
-            child: Flex(
+            child: Wrap(
+              spacing: 5.0,
               direction: Axis.horizontal,
+              alignment: WrapAlignment.start,
               children: images.length != 0 ? images : Text("无图片"),
             ),
           ),

@@ -111,8 +111,10 @@ class _RecommendBodyState extends State<RecommendBody> {
               decoration: BoxDecoration(
                 color: Colors.white70,
               ),
-              child: Flex(
+              child: Wrap(
+                spacing: 5.0,
                 direction: Axis.horizontal,
+                alignment: WrapAlignment.start,
                 children: images.length != 0 ? images : Text("无图片"),
               ),
             ),
