@@ -72,7 +72,7 @@ class TopMessage extends StatelessWidget {
               color: Colors.blue,
               child: Container(
                 margin: const EdgeInsets.only(
-                    left: 30, right: 30, top: 15, bottom: 15),
+                    left: 36, right: 32, top: 15, bottom: 15),
                 child: CircleAvatar(
                   radius: 100,
                   backgroundColor: Colors.white70,
