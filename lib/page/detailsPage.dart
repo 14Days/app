@@ -180,7 +180,7 @@ class _TextDetailState extends State<TextDetail> {
             padding: const EdgeInsets.only(top: 10.0, left: 5.0),
             child: Text(
               _message.content != null ? _message.content : "无标题",
-              maxLines: 2,
+              maxLines: 10,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -332,8 +332,8 @@ class _BottomInterState extends State<BottomInter> {
   IconData _likeIcon;
   IconData _collectIcon;
   int _countLike;
+  int _iconState;
   TextEditingController _text = new TextEditingController();
-  FocusNode _focusNode = new FocusNode();
 
   @override
   void initState() {
@@ -341,9 +341,9 @@ class _BottomInterState extends State<BottomInter> {
     _text.addListener(() {
       print("评论的监听方法：" + _text.text);
     });
+    _iconState = 0;
 //    _focusNode.addListener(_focusNodeListener);
   }
-
 
   @override
   void dispose() {
@@ -418,7 +418,7 @@ class _BottomInterState extends State<BottomInter> {
             color: Colors.white,
             child: new IconButton(
               icon: Icon(_collectIcon),
-              color: Colors.yellow,
+              color: Colors.amber,
               iconSize: 30,
               onPressed: () async {
                 setState(() {
@@ -449,57 +449,80 @@ class _BottomInterState extends State<BottomInter> {
           Material(
             color: Colors.white,
             child: new IconButton(
-              icon: Icon(Icons.message),
+              icon: Icon(
+                Icons.message,
+                color: Colors.grey,
+              ),
               onPressed: () {
-                showBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Material(
-                      child: TextField(
-                        controller: _text,
-                        focusNode: _focusNode,
-                        decoration: InputDecoration(
-                          hintText: "输入想要说的话吧~",
-                          suffixIcon: new IconButton(
-                            icon: Icon(
-                              Icons.send,
-                              color: Colors.blue,
+                switch (_iconState) {
+                  case 0:
+                    {
+                      _iconState = 1;
+                      showBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Material(
+                            child: TextField(
+                              controller: _text,
+                              decoration: InputDecoration(
+                                hintText: "输入想要说的话吧~",
+                                suffixIcon: new IconButton(
+                                  icon: Icon(
+                                    Icons.send,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () async {
+                                    String _showText = '评论成功';
+                                    if (_text.text != '') {
+                                      TopComment _content = new TopComment(
+                                        content: _text.text,
+                                        createBy: "我",
+                                        createAt: "刚刚",
+                                      );
+                                      _showText = '评论成功';
+                                      commentService(1, _message.id, _text.text)
+                                          .then((onValue) {
+                                        print(onValue);
+                                        if (onValue['status'] == 'success') {
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            _comments.add(_content);
+                                          });
+                                          Provider.of<MessageState>(context)
+                                              .updateRecommend();
+                                          Provider.of<MessageState>(context)
+                                              .updateCollect();
+                                          Provider.of<MessageState>(context)
+                                              .updateFollow();
+                                        }
+                                      });
+                                    } else {
+                                      _showText = "评论内容不能为空";
+                                    }
+                                    final _snackBar = new SnackBar(
+                                      content: new Text(_showText),
+                                      backgroundColor: Colors.blue,
+                                      behavior: SnackBarBehavior.floating,
+                                      duration: Duration(seconds: 1),
+                                    );
+                                    Scaffold.of(context)
+                                        .showSnackBar(_snackBar);
+                                  },
+                                ),
+                              ),
                             ),
-                            onPressed: () async {
-                              TopComment _content = new TopComment(
-                                content: _text.text,
-                                createBy: "我",
-                                createAt: "刚刚",
-                              );
-                              String _showText = '评论成功';
-                              commentService(1, _message.id, _text.text)
-                                  .then((onValue) {
-                                print(onValue);
-                                if (onValue['status'] == 'success') {
-                                  Navigator.pop(context);
-                                  setState(() {
-                                    _comments.add(_content);
-                                  });
-                                  Provider.of<MessageState>(context).updateRecommend();
-                                  Provider.of<MessageState>(context).updateCollect();
-                                  Provider.of<MessageState>(context).updateFollow();
-                                }
-                              });
-                              final _snackBar = new SnackBar(
-                                content: new Text(_showText),
-                                backgroundColor: Colors.blue,
-                                behavior: SnackBarBehavior.floating,
-                                duration: Duration(seconds: 1),
-                              );
-                              Scaffold.of(context).showSnackBar(_snackBar);
-
-                            },
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                );
+                          );
+                        },
+                      );
+                    }
+                    break;
+                  case 1:
+                    {
+                      _iconState = 0;
+                      Navigator.pop(context);
+                    }
+                    break;
+                }
               },
             ),
           )
