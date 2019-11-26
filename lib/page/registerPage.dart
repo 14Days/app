@@ -98,7 +98,6 @@ class _RegisterBodyState extends State<RegisterBody> {
       } else {
         if (onValue['err_msg'] == '手机号已存在') {
           _showText = "手机号已存在";
-          print(_showText);
         } else {
           _showText = "发送失败,请稍后尝试";
         }
@@ -133,7 +132,7 @@ class _RegisterBodyState extends State<RegisterBody> {
         } else if (onValue['err_msg'] == "用户名已存在") {
           _showText = "用户名已存在";
         } else {
-          _showText = "注册失败请重新尝试";
+          _showText = "注册失败请检查注册信息";
         }
       }
     }

@@ -2,8 +2,9 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../component/comment.dart';
 import 'package:furture/service/serviceMethod.dart';
+
+import '../component/comment.dart';
 import '../utils/utils.dart';
 
 class LoginPage extends StatelessWidget {
@@ -67,33 +68,28 @@ class _LoginBodyState extends State<LoginBody> {
   String _showText = "正在登录";
 
   //验证登录
-  void testLogin() {
-    print(_controllerAcc.text.toString());
+  void testLogin() async {
     if (_controllerAcc.text.toString() == '') {
       _showText = '请输入用户名或手机号';
     } else if (_controllerPwd.text.toString() == '') {
       _showText = "请输入密码";
     } else {
       //获取账户信息
-      loginService(
-              _controllerAcc.text.toString(), _controllerPwd.text.toString())
-          .then((onValue) {
-        print(onValue.toString());
-        //验证登录
-        if (onValue['status'] == 'success') {
-          print("成功登录");
-          _showText = "正在登录";
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => BottomNavigation()),
-              (route) => route == null);
-        } else {
-          if (onValue['err_msg'] == '用户不存在') {
-            _showText = "用户不存在";
-          } else if (onValue['err_msg'] == '密码不正确') {
-            _showText = "密码不正确";
-          }
+      final onValue = await loginService(
+          _controllerAcc.text.toString(), _controllerPwd.text.toString());
+      if (onValue['status'] == 'success') {
+        _showText = "正在登录";
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BottomNavigation()),
+                (route) => route == null);
+      } else {
+        if (onValue['err_msg'] == '用户不存在') {
+          _showText = "用户不存在";
+        } else if (onValue['err_msg'] == '密码不正确') {
+          _showText = "密码不正确";
         }
-      });
+      }
     }
     final _snackBar = new SnackBar(
       content: new Text(_showText),

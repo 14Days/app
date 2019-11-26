@@ -107,26 +107,22 @@ class _SetAvatarState extends State<SetAvatar> {
   /*图片控件*/
   Widget imageView(_image) {
     if (_image == null) {
-      if (_avatar == null) {
-        return Center(
-          child: Text("图片会在这里显示"),
-        );
-      } else {
-        return Container(
-          height: 90,
-          width: 90,
-          color: Colors.white,
-          child: Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-            child: CircleAvatar(
-              radius: 100,
-              backgroundColor: Colors.white70,
-              backgroundImage: NetworkImage(Utils.myImgPath(_avatar)),
-            ),
+      return Container(
+        height: 90,
+        width: 90,
+        color: Colors.white,
+        child: Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+          child: CircleAvatar(
+            radius: 100,
+            backgroundColor: Colors.white70,
+            backgroundImage: _avatar != null
+                ? NetworkImage(Utils.myImgPath(_avatar))
+                : AssetImage('assets/images/logo.png'),
           ),
-        );
-      }
+        ),
+      );
     } else {
       return Container(
         height: 90,

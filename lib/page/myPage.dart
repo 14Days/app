@@ -42,8 +42,8 @@ class _MyPageState extends State<MyPage> {
                 child: Text(
                   "我的收藏",
                   style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black54,
+                    fontSize: 16.0,
+                    color: Colors.black87,
                   ),
                 ),
               ),
@@ -76,7 +76,9 @@ class TopMessage extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 100,
                   backgroundColor: Colors.white70,
-                  backgroundImage: NetworkImage(Utils.myImgPath(user.avatar)),
+                  backgroundImage: user.avatar != null
+                      ? NetworkImage(Utils.myImgPath(user.avatar))
+                      : AssetImage('assets/images/logo.png'),
                 ),
               ),
             ),
