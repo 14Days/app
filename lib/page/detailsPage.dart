@@ -213,8 +213,8 @@ class _TextDetailState extends State<TextDetail> {
             child: Text(
               "评论",
               style: TextStyle(
-                color: Colors.black87,
-                fontSize: 20.0,
+                color: Colors.black54,
+                fontSize: 16.0,
               ),
             ),
           ),

@@ -167,14 +167,16 @@ class TopComment {
   String content;
   String createAt;
   String createBy;
+  int id;
   List<SecondComment> secondComment;
 
-  TopComment({this.content, this.createAt, this.createBy, this.secondComment});
+  TopComment({this.content, this.createAt, this.createBy, this.secondComment, this.id});
 
   TopComment.fromJson(Map<String, dynamic> json) {
     content = json['content'];
     createAt = json['create_at'];
     createBy = json['create_by'];
+    id = json['id'];
     if (json['second_comment'] != null) {
       secondComment = new List<SecondComment>();
       json['second_comment'].forEach((v) {

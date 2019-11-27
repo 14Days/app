@@ -73,14 +73,17 @@ class _SetPasswordState extends State<SetPassword> {
                         Container(
                           padding: const EdgeInsets.all(5.0),
                           alignment: Alignment.center,
-                          height: 160,
-                          width: 190,
-                          color:Colors.white,
+                          height: 140,
+                          width: 170,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.white,
+                          ),
                           child: Text(
                             _showText,
                             style: TextStyle(
                               decoration: TextDecoration.none,
-                              fontSize: 20.0,
+                              fontSize: 17.0,
                               fontFamily: "Rock Salt",
                               fontWeight: FontWeight.w100,
                               color: Colors.black,
