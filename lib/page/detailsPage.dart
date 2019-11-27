@@ -233,6 +233,7 @@ class InterAction extends StatefulWidget {
 class _InterActionState extends State<InterAction> {
   int _iconState;
   TextEditingController _text = new TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -253,93 +254,28 @@ class _InterActionState extends State<InterAction> {
     return Material(
       child: InkWell(
         onTap: () {
-//          showDialog(
-//            context: context,
-//            builder: (BuildContext context) {
-//              return Column(
-//                mainAxisAlignment: MainAxisAlignment.center,
-//                children: <Widget>[
-//                  Material(
-//                    child: ListTile(
-//                      title: Text("回复"),
-//                      leading: Icon(Icons.message),
-//                      onTap: () {
-//                        showBottomSheet(
-//                          context: context,
-//                          builder: (BuildContext context) {
-//                            return Material(
-//                              child: TextField(
-//                                controller: _text,
-//                                decoration: InputDecoration(
-//                                  hintText: "输入想要说的话吧~",
-//                                  suffixIcon: new IconButton(
-//                                    icon: Icon(
-//                                      Icons.send,
-//                                      color: Colors.blue,
-//                                    ),
-//                                    onPressed: () async {
-//                                      String _showText = '评论成功';
-//                                      if (_text.text != '') {
-//                                        TopComment _content = new TopComment(
-//                                          content: _text.text,
-//                                          createBy: "我",
-//                                          createAt: "刚刚",
-//                                        );
-//                                        _showText = '评论成功';
-//                                        commentService(1, _comments[index]., _text.text)
-//                                            .then((onValue) {
-//                                          print(onValue);
-//                                          if (onValue['status'] == 'success') {
-//                                            Navigator.pop(context);
-//                                            setState(() {
-//                                              _comments.add(_content);
-//                                            });
-//                                            Provider.of<MessageState>(context)
-//                                                .updateRecommend();
-//                                            Provider.of<MessageState>(context)
-//                                                .updateCollect();
-//                                            Provider.of<MessageState>(context)
-//                                                .updateFollow();
-//                                          }
-//                                        });
-//                                      } else {
-//                                        _showText = "评论内容不能为空";
-//                                      }
-//                                      final _snackBar = new SnackBar(
-//                                        content: new Text(_showText),
-//                                        backgroundColor: Colors.blue,
-//                                        behavior: SnackBarBehavior.floating,
-//                                        duration: Duration(seconds: 1),
-//                                      );
-//                                      Scaffold.of(context)
-//                                          .showSnackBar(_snackBar);
-//                                    },
-//                                  ),
-//                                ),
-//                              ),
-//                            );
-//                          },
-//                        );
-//                      },
-//                    ),
-//                  ),
-//                  Material(
-//                    child: ListTile(
-//                      title: Text("查看回复"),
-//                      leading: Icon(Icons.speaker_notes),
-//                      onTap: () {
-//                        Navigator.pushNamed(
-//                          context,
-//                          "details",
-//                          arguments: _comments[index].secondComment,
-//                        );
-//                      },
-//                    ),
-//                  ),
-//                ],
-//              );
-//            },
-//          );
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return Material(
+                child: ListTile(
+                  title: Text("查看回复"),
+                  leading: Icon(Icons.speaker_notes),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(
+                      context,
+                      "replys",
+                      arguments: [
+                        _comments[index],
+                        _comments[index].secondComment,
+                      ],
+                    );
+                  },
+                ),
+              );
+            },
+          );
         },
         child: Container(
           //定义外部框
@@ -576,7 +512,7 @@ class _BottomInterState extends State<BottomInter> {
                             child: TextField(
                               controller: _text,
                               decoration: InputDecoration(
-                                hintText: "输入想要说的话吧~",
+                                hintText: "  输入想要说的话吧~",
                                 suffixIcon: new IconButton(
                                   icon: Icon(
                                     Icons.send,
@@ -593,7 +529,6 @@ class _BottomInterState extends State<BottomInter> {
                                       _showText = '评论成功';
                                       commentService(1, _message.id, _text.text)
                                           .then((onValue) {
-                                        print(onValue);
                                         if (onValue['status'] == 'success') {
                                           Navigator.pop(context);
                                           setState(() {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:furture/component/comment.dart';
 import 'package:furture/page/detailsPage.dart';
+import 'package:furture/page/secondComment.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:furture/provider/noticeState.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
             home: LoginPage(),
             routes: {
               "details" : (context) => DetailsPage(),
+              "replys" : (context) => SecondCommentPage(),
             },
             onGenerateRoute: Application.router.generator,
           );
