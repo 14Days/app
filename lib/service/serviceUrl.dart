@@ -1,6 +1,7 @@
 const baseUrl = "https://wghtstudio.cn/app";
 const String login = 'login';
 const String register = 'register';
+const String changePass = 'changePassword';
 const String code = 'code';
 const String findPwd = 'findPwd';
 const String user = 'user';
@@ -24,6 +25,8 @@ const servicePath = {
   register: '/start/register',
 //验证码
   code: '/start/code',
+//修改密码
+  changePass: '/user/password',
 //用户信息 get post
   user: '/user/info',
 //是否关注
@@ -50,5 +53,4 @@ const servicePath = {
   setAvatar: '/user/avatar',
   //提交评论
   comment: 'user/comment',
-
 };

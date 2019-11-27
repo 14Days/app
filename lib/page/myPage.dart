@@ -91,7 +91,7 @@ class TopMessage extends StatelessWidget {
               alignment: Alignment.centerLeft,
               color: Colors.blue,
               child: Text(
-                user.nickname,
+                user.nickname == null ? "快去更改昵称吧" : user.nickname,
                 maxLines: 1,
                 style: TextStyle(
                   fontSize: 23.0,

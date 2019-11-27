@@ -78,6 +78,12 @@ var setAvatarHandler = new Handler(
     return new SetAvatar();
   },
 );
+//跳转修改密码
+var setPasswordHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return new SetPassword();
+  },
+);
 
 //跳转详情
 var detailHandler = new Handler(

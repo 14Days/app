@@ -137,17 +137,6 @@ class _LoginBodyState extends State<LoginBody> {
               new Row(
                 children: <Widget>[
                   Gaps.vGap15,
-//                    new InkWell(
-//                      onTap: () {
-//                        Application.router.navigateTo(
-//                            context, Routes.findPassword,
-//                            transition: TransitionType.inFromBottom);
-//                      },
-//                      child: Text("忘记密码?",
-//                          style: new TextStyle(
-//                            color: Colors.grey,
-//                          )),
-//                    ),
                   new Expanded(child: Container()),
                   new InkWell(
                     onTap: () {

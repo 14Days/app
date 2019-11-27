@@ -233,3 +233,23 @@ Future commentService(int type, int id, String content) async {
     return print('提交评论请求Error------------->$e');
   }
 }
+
+//修改密码
+//用户信息请求
+Future changePasswordService(String oldPassword, String newPassword) async {
+  try {
+    var changePwdParam = {
+      'old_password': oldPassword,
+      'new_password': newPassword,
+    };
+    //获取请求
+    Response response = await BaseRequest().post(servicePath[changePass], data: changePwdParam);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw Exception("修改请求异常");
+    }
+  } catch (e) {
+    return print('修改密码请求异常Error------------->$e');
+  }
+}

@@ -74,7 +74,7 @@ class SetItems extends StatefulWidget {
 }
 
 class _SetItemsState extends State<SetItems> {
-  final List<String> items = ['头像', '昵称', '性别', '邮箱', '颜色'];
+  final List<String> items = ['头像', '昵称', '性别', '邮箱', '颜色', '修改密码'];
 
   //定义单条设置栏目
   Widget _item(context, index) {
@@ -104,6 +104,11 @@ class _SetItemsState extends State<SetItems> {
           case 4:
             {
               Application.router.navigateTo(context, Routes.setColor);
+            }
+            break;
+          case 5:
+            {
+              Application.router.navigateTo(context, Routes.setPassword);
             }
             break;
         }

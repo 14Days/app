@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//封装的请求
 class BaseRequest {
   final _baseUrl = "https://wghtstudio.cn/app";
   final String _token = 'token';

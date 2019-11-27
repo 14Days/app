@@ -8,13 +8,14 @@ class Routes {
   static String register = "/register";
   static String bottomNavigator = "/btmNavigator";
   static String my = "/my";
-  static String set = "my/set";
-  static String setSex = "my/set/sex";
-  static String setEmail = "my/set/email";
-  static String setColor = "my/set/color";
-  static String setNickname = "my/set/nickname";
-  static String setAvatar = "my/set/avatar";
-  static String detail = "detail";
+  static String set = "/my/set";
+  static String setSex = "/my/set/sex";
+  static String setEmail = "/my/set/email";
+  static String setColor = "/my/set/color";
+  static String setNickname = "/my/set/nickname";
+  static String setAvatar = "/my/set/avatar";
+  static String setPassword = "/my/set/password";
+  static String detail = "/detail";
 
   static void configureRoutes(Router router) {
     //跳转至登录
@@ -37,6 +38,8 @@ class Routes {
     router.define(setNickname, handler: setNicknameHandler);
     //跳转至我的/设置/性别
     router.define(setAvatar, handler: setAvatarHandler);
+    //跳转至我的/设置/密码
+    router.define(setPassword, handler: setPasswordHandler);
     //跳转至详情
     router.define(detail, handler: detailHandler);
   }
