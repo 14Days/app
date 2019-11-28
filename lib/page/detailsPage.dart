@@ -7,30 +7,39 @@ import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 List<TopComment> _comments;
-
+int _iconState;
 class DetailsPage extends StatelessWidget {
+  Future<bool> _requestPop() {
+    return new Future.value(_iconState == 0);
+  }
   @override
   Widget build(BuildContext context) {
     //显示标题栏目，主题内容，底部按钮
-    return Scaffold(
-      //“详情”标题
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "详情",
-        ),
-      ),
-      //主题部分包含该消息内容，评论内容
-      body: new Column(
-        children: <Widget>[
-          TextDetail(),
-          Expanded(
-            child: InterAction(),
+    return WillPopScope(
+      child: Scaffold(
+        //“详情”标题
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            "详情",
           ),
-        ],
+        ),
+        //主题部分包含该消息内容，评论内容
+        body: new Column(
+          children: <Widget>[
+            TextDetail(),
+            SizedBox(
+              height: 1.0,
+            ),
+            Expanded(
+              child: InterAction(),
+            ),
+          ],
+        ),
+        //底部按钮
+        bottomNavigationBar: BottomInter(),
       ),
-      //底部按钮
-      bottomNavigationBar: BottomInter(),
+      onWillPop: _requestPop,
     );
   }
 }
@@ -192,6 +201,7 @@ class _TextDetailState extends State<TextDetail> {
           //消息图片内容
           new Container(
             margin: const EdgeInsets.only(top: 15.0),
+            alignment: Alignment.centerLeft,
             color: Colors.white,
             child: Wrap(
               spacing: 5.0,
@@ -231,7 +241,6 @@ class InterAction extends StatefulWidget {
 }
 
 class _InterActionState extends State<InterAction> {
-  int _iconState;
   TextEditingController _text = new TextEditingController();
 
   @override
@@ -379,7 +388,7 @@ class _BottomInterState extends State<BottomInter> {
   IconData _likeIcon;
   IconData _collectIcon;
   int _countLike;
-  int _iconState;
+//  int _iconState;
   TextEditingController _text = new TextEditingController();
 
   @override

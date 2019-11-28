@@ -7,41 +7,57 @@ import 'package:provider/provider.dart';
 
 TopComment _topComment;
 List<SecondComment> _comments;
+int _iconState;
 
-class SecondCommentPage extends StatelessWidget {
+class SecondCommentPage extends StatefulWidget {
+  @override
+  _SecondCommentPageState createState() => _SecondCommentPageState();
+}
+
+class _SecondCommentPageState extends State<SecondCommentPage> {
+  Future<bool> _requestPop() {
+    return new Future.value(_iconState == 0);
+  }
   @override
   Widget build(BuildContext context) {
     //显示标题栏目，主题内容，底部按钮
-    return Scaffold(
-      //“详情”标题
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "回复",
+    return WillPopScope(
+      child: Scaffold(
+        //“详情”标题
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            "回复",
+          ),
         ),
-      ),
 
-      body: new Column(
-        children: <Widget>[
-          MainPost(),
-          Container(
-            padding: const EdgeInsets.only(left: 25.0, top: 5.0),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "他的回复",
-              style: TextStyle(
-                color: Colors.grey,
+        body: new Column(
+          children: <Widget>[
+            MainPost(),
+            Container(
+              padding: const EdgeInsets.only(left: 25.0, top: 5.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "他的回复",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: ReplyAction(),
-          ),
-        ],
+            Expanded(
+              child: ReplyAction(),
+            ),
+          ],
+        ),
       ),
+      onWillPop: _requestPop,
     );
   }
 }
+
+//class SecondCommentPage extends StatelessWidget {
+//
+//}
 
 class MainPost extends StatefulWidget {
   @override
@@ -49,7 +65,6 @@ class MainPost extends StatefulWidget {
 }
 
 class _MainPostState extends State<MainPost> {
-  int _iconState;
   TextEditingController _text = new TextEditingController();
 
   @override
