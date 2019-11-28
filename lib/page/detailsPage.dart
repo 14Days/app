@@ -7,6 +7,7 @@ import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 List<TopComment> _comments;
+MessageData _message;
 
 class DetailsPage extends StatelessWidget {
   @override
@@ -237,19 +238,13 @@ class InterAction extends StatefulWidget {
 }
 
 class _InterActionState extends State<InterAction> {
-  TextEditingController _text = new TextEditingController();
-
   @override
   void initState() {
     super.initState();
-    _text.addListener(() {
-      print("评论的监听方法：" + _text.text);
-    });
   }
 
   @override
   void dispose() {
-    _text.dispose();
     super.dispose();
   }
 
@@ -361,7 +356,7 @@ class _InterActionState extends State<InterAction> {
   /*评论的构建 listView 滚动组件*/
   @override
   Widget build(BuildContext context) {
-    MessageData _message = ModalRoute.of(context).settings.arguments;
+    _message = ModalRoute.of(context).settings.arguments;
     _comments = _message.topComment;
     if (_comments.length == 0) {
       return Center(
@@ -386,26 +381,11 @@ class BottomInter extends StatefulWidget {
 }
 
 class _BottomInterState extends State<BottomInter> {
-  MessageData _message;
+//  MessageData _message;
   IconData _likeIcon;
   IconData _collectIcon;
   int _countLike;
 
-  TextEditingController _text = new TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _text.addListener(() {
-      print("评论的监听方法：" + _text.text);
-    });
-  }
-
-  @override
-  void dispose() {
-    _text.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -510,61 +490,96 @@ class _BottomInterState extends State<BottomInter> {
                 color: Colors.grey,
               ),
               onPressed: () {
-                showBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Material(
-                      child: TextField(
-                        controller: _text,
-                        decoration: InputDecoration(
-                          hintText: "  输入想要说的话吧~",
-                          suffixIcon: new IconButton(
-                            icon: Icon(
-                              Icons.send,
-                              color: Colors.blue,
-                            ),
-                            onPressed: () async {
-                              String _showText = '评论成功';
-                              if (_text.text != '') {
-                                TopComment _content = new TopComment(
-                                  content: _text.text,
-                                  createBy: "我",
-                                  createAt: "刚刚",
-                                );
-                                _showText = '评论成功';
-                                commentService(1, _message.id, _text.text)
-                                    .then((onValue) {
-                                  if (onValue['status'] == 'success') {
-                                    Navigator.pop(context);
-                                    setState(() {
-                                      _comments.add(_content);
-                                    });
-                                    Provider.of<MessageState>(context)
-                                        .updateRecommend();
-                                    Provider.of<MessageState>(context)
-                                        .updateCollect();
-                                    Provider.of<MessageState>(context)
-                                        .updateFollow();
-                                  }
-                                });
-                              } else {
-                                _showText = "评论内容不能为空";
-                              }
-                              final _snackBar = new SnackBar(
-                                content: new Text(_showText),
-                                backgroundColor: Colors.blue,
-                                behavior: SnackBarBehavior.floating,
-                                duration: Duration(seconds: 1),
-                              );
-                              Scaffold.of(context).showSnackBar(_snackBar);
-                            },
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                Navigator.push(
+                  context,
+                  PopRoute(
+                    child: BottomInput(),
+                  ),
                 );
               },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class BottomInput extends StatefulWidget {
+  @override
+  _BottomInputState createState() => _BottomInputState();
+}
+
+class _BottomInputState extends State<BottomInput> {
+  TextEditingController _text = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _text.addListener(() {
+      print("评论的监听方法：" + _text.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _message = ModalRoute.of(context).settings.arguments;
+    return new Scaffold(
+      backgroundColor: Colors.transparent,
+      body: new Column(
+        children: <Widget>[
+          Expanded(
+            child: new GestureDetector(
+              child: new Container(
+                color: Colors.black54,
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          new Container(
+            height: 50,
+            color: Colors.white,
+            child: TextField(
+              autofocus: true,
+              maxLines: 100,
+              controller: _text,
+              decoration: InputDecoration(
+                hintText: "  输入想要说的话吧~",
+                suffixIcon: new IconButton(
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.blue,
+                  ),
+                  onPressed: () async {
+                    if (_text.text != '') {
+                      TopComment _content = new TopComment(
+                        content: _text.text,
+                        createBy: "我",
+                        createAt: "刚刚",
+                      );
+                      final onValue =
+                          await commentService(1, _message.id, _text.text);
+                      if (onValue['status'] == 'success') {
+                        Navigator.pop(context);
+                        setState(() {
+                          _comments.add(_content);
+                        });
+                        Provider.of<MessageState>(context).updateRecommend();
+                        Provider.of<MessageState>(context).updateCollect();
+                        Provider.of<MessageState>(context).updateFollow();
+                      }
+                    }
+                  },
+                ),
+              ),
             ),
           )
         ],

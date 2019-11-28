@@ -5,6 +5,7 @@ import 'package:furture/provider/messageState.dart';
 import 'package:furture/service/serviceMethod.dart';
 import 'package:provider/provider.dart';
 
+List _message;
 TopComment _topComment;
 List<SecondComment> _comments;
 
@@ -48,15 +49,12 @@ class _SecondCommentPageState extends State<SecondCommentPage> {
   }
 }
 
-//class SecondCommentPage extends StatelessWidget {
-//
-//}
 
+//主帖内容显示
 class MainPost extends StatefulWidget {
   @override
   _MainPostState createState() => _MainPostState();
 }
-
 class _MainPostState extends State<MainPost> {
   TextEditingController _text = new TextEditingController();
 
@@ -76,62 +74,16 @@ class _MainPostState extends State<MainPost> {
 
   @override
   Widget build(BuildContext context) {
-    List _message = ModalRoute.of(context).settings.arguments;
+    _message = ModalRoute.of(context).settings.arguments;
     _topComment = _message[0];
     return Material(
       child: InkWell(
         onTap: () {
-          showBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return Material(
-                child: TextField(
-                  controller: _text,
-                  decoration: InputDecoration(
-                    hintText: "  输入想要说的话吧~",
-                    suffixIcon: new IconButton(
-                      icon: Icon(
-                        Icons.send,
-                        color: Colors.blue,
-                      ),
-                      onPressed: () async {
-                        String _showText = '评论成功';
-                        if (_text.text != '') {
-                          SecondComment _content = new SecondComment(
-                            content: _text.text,
-                            createBy: "我",
-                            createAt: "刚刚",
-                          );
-                          _showText = '评论成功';
-                          final _onValue = await commentService(
-                              2, _topComment.id, _text.text);
-
-                          if (_onValue['status'] == 'success') {
-                            Navigator.pop(context);
-                            setState(() {
-                              _comments.add(_content);
-                            });
-                            Provider.of<MessageState>(context)
-                                .updateRecommend();
-                            Provider.of<MessageState>(context).updateCollect();
-                            Provider.of<MessageState>(context).updateFollow();
-                          }
-                        } else {
-                          _showText = "评论内容不能为空";
-                        }
-                        final _snackBar = new SnackBar(
-                          content: new Text(_showText),
-                          backgroundColor: Colors.blue,
-                          behavior: SnackBarBehavior.floating,
-                          duration: Duration(seconds: 1),
-                        );
-                        Scaffold.of(context).showSnackBar(_snackBar);
-                      },
-                    ),
-                  ),
-                ),
-              );
-            },
+          Navigator.push(
+            context,
+            PopRoute(
+              child: BottomInput(),
+            ),
           );
         },
         child: Container(
@@ -205,7 +157,6 @@ class ReplyAction extends StatefulWidget {
   @override
   _ReplyActionState createState() => _ReplyActionState();
 }
-
 class _ReplyActionState extends State<ReplyAction> {
   TextEditingController _text = new TextEditingController();
 
@@ -301,7 +252,7 @@ class _ReplyActionState extends State<ReplyAction> {
 
   @override
   Widget build(BuildContext context) {
-    List _message = ModalRoute.of(context).settings.arguments;
+    _message = ModalRoute.of(context).settings.arguments;
     _comments = _message[1];
     if (_comments == null || _comments.length == 0) {
       return Center(
@@ -316,5 +267,88 @@ class _ReplyActionState extends State<ReplyAction> {
         },
       );
     }
+  }
+}
+
+
+//底部评论文本弹出框
+class BottomInput extends StatefulWidget {
+  @override
+  _BottomInputState createState() => _BottomInputState();
+}
+class _BottomInputState extends State<BottomInput> {
+  TextEditingController _text = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _text.addListener(() {
+      print("评论的监听方法：" + _text.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      backgroundColor: Colors.transparent,
+      body: new Column(
+        children: <Widget>[
+          Expanded(
+            child: new GestureDetector(
+              child: new Container(
+                color: Colors.black54,
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          new Container(
+            height: 50,
+            color: Colors.white,
+            child: TextField(
+              autofocus: true,
+              maxLines: 100,
+              controller: _text,
+              decoration: InputDecoration(
+                hintText: "  输入想要说的话吧~",
+                suffixIcon: new IconButton(
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.blue,
+                  ),
+                  onPressed: () async {
+                    if (_text.text != '') {
+                      SecondComment _content = new SecondComment(
+                        content: _text.text,
+                        createBy: "我",
+                        createAt: "刚刚",
+                      );
+                      final onValue =
+                      await commentService(2, _topComment.id, _text.text);
+                      if (onValue['status'] == 'success') {
+                        Navigator.pop(context);
+                        setState(() {
+                          _comments.add(_content);
+                        });
+                        Provider.of<MessageState>(context).updateRecommend();
+                        Provider.of<MessageState>(context).updateCollect();
+                        Provider.of<MessageState>(context).updateFollow();
+                      }
+                    }
+                  },
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
