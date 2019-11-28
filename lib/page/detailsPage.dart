@@ -45,15 +45,17 @@ class TextDetail extends StatefulWidget {
 }
 
 class _TextDetailState extends State<TextDetail> {
+  //关注按钮的文本状态改变
   String _followIcon;
 
   @override
   Widget build(BuildContext context) {
+    //接收参数
     MessageData _message = ModalRoute.of(context).settings.arguments;
     if (_followIcon == null) {
       _followIcon = _message.isFollowed ? "已关注" : "关注";
     }
-    //图片组件加载
+    //图片组件列表化组合
     List<Widget> images = [];
     for (var image in _message.imgsName) {
       images.add(
@@ -84,9 +86,10 @@ class _TextDetailState extends State<TextDetail> {
           bottom: BorderSide(color: Colors.white30, width: 1.0),
         ),
       ),
+      /*列元素控制 / 顶部发布者 / 文本信息 / 评论区 / */
       child: Column(
         children: <Widget>[
-          //发布者信息
+          /*发布者信息*/
           new Row(
             children: <Widget>[
               //发布者头像
@@ -175,7 +178,7 @@ class _TextDetailState extends State<TextDetail> {
               ),
             ],
           ),
-          //消息文本内容
+          /*消息文本内容*/
           new Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.only(top: 20.0),
@@ -192,7 +195,7 @@ class _TextDetailState extends State<TextDetail> {
               ),
             ),
           ),
-          //消息图片内容
+          /*消息图片内容*/
           new Container(
             margin: const EdgeInsets.only(top: 15.0),
             alignment: Alignment.centerLeft,
@@ -205,12 +208,11 @@ class _TextDetailState extends State<TextDetail> {
             ),
           ),
           new Container(
-//            color: Color.fromARGB(125, 250, 250, 250),
             child: SizedBox(
               height: 20.0,
             ),
           ),
-          //评论栏
+          //"评论"字样栏
           new Container(
             padding: const EdgeInsets.only(left: 5.0),
             alignment: Alignment.bottomLeft,
@@ -256,6 +258,7 @@ class _InterActionState extends State<InterAction> {
     return Material(
       child: InkWell(
         onTap: () {
+          //点击评论文本弹出回复框
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
@@ -279,10 +282,15 @@ class _InterActionState extends State<InterAction> {
             },
           );
         },
+        /* 评论内容 */
         child: Container(
           //定义外部框
           padding: const EdgeInsets.only(
-              left: 30.0, right: 15.0, top: 10.0, bottom: 10.0),
+            left: 30.0,
+            right: 15.0,
+            top: 10.0,
+            bottom: 10.0,
+          ),
           margin: const EdgeInsets.only(bottom: 5.0),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
@@ -350,6 +358,7 @@ class _InterActionState extends State<InterAction> {
     );
   }
 
+  /*评论的构建 listView 滚动组件*/
   @override
   Widget build(BuildContext context) {
     MessageData _message = ModalRoute.of(context).settings.arguments;
@@ -390,12 +399,10 @@ class _BottomInterState extends State<BottomInter> {
     _text.addListener(() {
       print("评论的监听方法：" + _text.text);
     });
-//    _focusNode.addListener(_focusNodeListener);
   }
 
   @override
   void dispose() {
-//    _focusNode.dispose();
     _text.dispose();
     super.dispose();
   }
@@ -403,8 +410,8 @@ class _BottomInterState extends State<BottomInter> {
   @override
   Widget build(BuildContext context) {
     _message = ModalRoute.of(context).settings.arguments;
+    //初次构建页面赋值
     if (_likeIcon == null) {
-      //初次构建页面赋值
       _likeIcon = _message.isLiked ? Icons.favorite : Icons.favorite_border;
       _collectIcon = _message.isCollected ? Icons.star : Icons.star_border;
       _countLike = _message.sumLikes;
@@ -423,6 +430,7 @@ class _BottomInterState extends State<BottomInter> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Material(
+            //点赞按钮
             color: Colors.white,
             child: new Row(
               children: <Widget>[
@@ -455,7 +463,6 @@ class _BottomInterState extends State<BottomInter> {
                     Provider.of<MessageState>(context).updateCollect();
                     Provider.of<MessageState>(context).updateRecommend();
                     Provider.of<MessageState>(context).updateFollow();
-//                    Provider.of<MessageState>(context).updateCategory(0);
                   },
                 ),
                 new Text(_countLike.toString()),
@@ -463,6 +470,7 @@ class _BottomInterState extends State<BottomInter> {
             ),
           ),
           Material(
+            //收藏按钮
             color: Colors.white,
             child: new IconButton(
               icon: Icon(_collectIcon),
@@ -490,11 +498,11 @@ class _BottomInterState extends State<BottomInter> {
                 Provider.of<MessageState>(context).updateRecommend();
                 Provider.of<MessageState>(context).updateCollect();
                 Provider.of<MessageState>(context).updateFollow();
-//                Provider.of<MessageState>(context).updateCategory(0);
               },
             ),
           ),
           Material(
+            //评论按钮
             color: Colors.white,
             child: new IconButton(
               icon: Icon(
