@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 List<TopComment> _comments;
 MessageData _message;
 
+//主体部分由三部分构成 正文 互动评论 点赞等按钮 （底部评论抽离出来形成一个组件）
 class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -505,11 +506,11 @@ class _BottomInterState extends State<BottomInter> {
   }
 }
 
+//底部评论弹出框
 class BottomInput extends StatefulWidget {
   @override
   _BottomInputState createState() => _BottomInputState();
 }
-
 class _BottomInputState extends State<BottomInput> {
   TextEditingController _text = new TextEditingController();
 

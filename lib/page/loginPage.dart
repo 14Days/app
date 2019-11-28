@@ -80,15 +80,23 @@ class _LoginBodyState extends State<LoginBody> {
           _controllerAcc.text.toString(), _controllerPwd.text.toString());
       if (onValue['status'] == 'success') {
         _showText = "正在登录";
+        Scaffold.of(context).showSnackBar(
+          new SnackBar(
+            content: new Text(_showText),
+            backgroundColor: Colors.blue,
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 1),
+          ),
+        );
         final toColor = await getUserService();
         if (toColor['status'] == 'success') {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => BottomNavigation()),
-                  (route) => route == null);
+              (route) => route == null);
         } else {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => FirstSetColor()),
-                  (route) => route == null);
+              (route) => route == null);
         }
       } else {
         if (onValue['err_msg'] == '用户不存在') {
