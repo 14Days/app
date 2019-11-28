@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 TopComment _topComment;
 List<SecondComment> _comments;
-int _iconState;
 
 class SecondCommentPage extends StatefulWidget {
   @override
@@ -15,42 +14,36 @@ class SecondCommentPage extends StatefulWidget {
 }
 
 class _SecondCommentPageState extends State<SecondCommentPage> {
-  Future<bool> _requestPop() {
-    return new Future.value(_iconState == 0);
-  }
   @override
   Widget build(BuildContext context) {
     //显示标题栏目，主题内容，底部按钮
-    return WillPopScope(
-      child: Scaffold(
-        //“详情”标题
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "回复",
-          ),
-        ),
-
-        body: new Column(
-          children: <Widget>[
-            MainPost(),
-            Container(
-              padding: const EdgeInsets.only(left: 25.0, top: 5.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "他的回复",
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            Expanded(
-              child: ReplyAction(),
-            ),
-          ],
+    return Scaffold(
+      //“详情”标题
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "回复",
         ),
       ),
-      onWillPop: _requestPop,
+
+      body: new Column(
+        children: <Widget>[
+          MainPost(),
+          Container(
+            padding: const EdgeInsets.only(left: 25.0, top: 5.0),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "他的回复",
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ReplyAction(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -73,7 +66,6 @@ class _MainPostState extends State<MainPost> {
     _text.addListener(() {
       print("评论的监听方法：" + _text.text);
     });
-    _iconState = 0;
   }
 
   @override
@@ -89,73 +81,58 @@ class _MainPostState extends State<MainPost> {
     return Material(
       child: InkWell(
         onTap: () {
-          switch (_iconState) {
-            case 0:
-              {
-                _iconState = 1;
-                showBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Material(
-                      child: TextField(
-                        controller: _text,
-                        decoration: InputDecoration(
-                          hintText: "  输入想要说的话吧~",
-                          suffixIcon: new IconButton(
-                            icon: Icon(
-                              Icons.send,
-                              color: Colors.blue,
-                            ),
-                            onPressed: () async {
-                              String _showText = '评论成功';
-                              if (_text.text != '') {
-                                SecondComment _content = new SecondComment(
-                                  content: _text.text,
-                                  createBy: "我",
-                                  createAt: "刚刚",
-                                );
-                                _showText = '评论成功';
-                                final _onValue = await commentService(
-                                    2, _topComment.id, _text.text);
-
-                                if (_onValue['status'] == 'success') {
-                                  Navigator.pop(context);
-                                  setState(() {
-                                    _comments.add(_content);
-                                  });
-                                  Provider.of<MessageState>(context)
-                                      .updateRecommend();
-                                  Provider.of<MessageState>(context)
-                                      .updateCollect();
-                                  Provider.of<MessageState>(context)
-                                      .updateFollow();
-                                }
-                              } else {
-                                _showText = "评论内容不能为空";
-                              }
-                              final _snackBar = new SnackBar(
-                                content: new Text(_showText),
-                                backgroundColor: Colors.blue,
-                                behavior: SnackBarBehavior.floating,
-                                duration: Duration(seconds: 1),
-                              );
-                              Scaffold.of(context).showSnackBar(_snackBar);
-                            },
-                          ),
-                        ),
+          showBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return Material(
+                child: TextField(
+                  controller: _text,
+                  decoration: InputDecoration(
+                    hintText: "  输入想要说的话吧~",
+                    suffixIcon: new IconButton(
+                      icon: Icon(
+                        Icons.send,
+                        color: Colors.blue,
                       ),
-                    );
-                  },
-                );
-              }
-              break;
-            case 1:
-              {
-                _iconState = 0;
-                Navigator.pop(context);
-              }
-              break;
-          }
+                      onPressed: () async {
+                        String _showText = '评论成功';
+                        if (_text.text != '') {
+                          SecondComment _content = new SecondComment(
+                            content: _text.text,
+                            createBy: "我",
+                            createAt: "刚刚",
+                          );
+                          _showText = '评论成功';
+                          final _onValue = await commentService(
+                              2, _topComment.id, _text.text);
+
+                          if (_onValue['status'] == 'success') {
+                            Navigator.pop(context);
+                            setState(() {
+                              _comments.add(_content);
+                            });
+                            Provider.of<MessageState>(context)
+                                .updateRecommend();
+                            Provider.of<MessageState>(context).updateCollect();
+                            Provider.of<MessageState>(context).updateFollow();
+                          }
+                        } else {
+                          _showText = "评论内容不能为空";
+                        }
+                        final _snackBar = new SnackBar(
+                          content: new Text(_showText),
+                          backgroundColor: Colors.blue,
+                          behavior: SnackBarBehavior.floating,
+                          duration: Duration(seconds: 1),
+                        );
+                        Scaffold.of(context).showSnackBar(_snackBar);
+                      },
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
         },
         child: Container(
           //定义外部框

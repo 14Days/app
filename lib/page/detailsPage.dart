@@ -7,39 +7,33 @@ import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 List<TopComment> _comments;
-int _iconState;
+
 class DetailsPage extends StatelessWidget {
-  Future<bool> _requestPop() {
-    return new Future.value(_iconState == 0);
-  }
   @override
   Widget build(BuildContext context) {
     //显示标题栏目，主题内容，底部按钮
-    return WillPopScope(
-      child: Scaffold(
-        //“详情”标题
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "详情",
-          ),
+    return Scaffold(
+      //“详情”标题
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "详情",
         ),
-        //主题部分包含该消息内容，评论内容
-        body: new Column(
-          children: <Widget>[
-            TextDetail(),
-            SizedBox(
-              height: 1.0,
-            ),
-            Expanded(
-              child: InterAction(),
-            ),
-          ],
-        ),
-        //底部按钮
-        bottomNavigationBar: BottomInter(),
       ),
-      onWillPop: _requestPop,
+      //主题部分包含该消息内容，评论内容
+      body: new Column(
+        children: <Widget>[
+          TextDetail(),
+          SizedBox(
+            height: 1.0,
+          ),
+          Expanded(
+            child: InterAction(),
+          ),
+        ],
+      ),
+      //底部按钮
+      bottomNavigationBar: BottomInter(),
     );
   }
 }
@@ -249,7 +243,6 @@ class _InterActionState extends State<InterAction> {
     _text.addListener(() {
       print("评论的监听方法：" + _text.text);
     });
-    _iconState = 0;
   }
 
   @override
@@ -388,7 +381,7 @@ class _BottomInterState extends State<BottomInter> {
   IconData _likeIcon;
   IconData _collectIcon;
   int _countLike;
-//  int _iconState;
+
   TextEditingController _text = new TextEditingController();
 
   @override
@@ -397,7 +390,6 @@ class _BottomInterState extends State<BottomInter> {
     _text.addListener(() {
       print("评论的监听方法：" + _text.text);
     });
-    _iconState = 0;
 //    _focusNode.addListener(_focusNodeListener);
   }
 
@@ -510,74 +502,60 @@ class _BottomInterState extends State<BottomInter> {
                 color: Colors.grey,
               ),
               onPressed: () {
-                switch (_iconState) {
-                  case 0:
-                    {
-                      _iconState = 1;
-                      showBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Material(
-                            child: TextField(
-                              controller: _text,
-                              decoration: InputDecoration(
-                                hintText: "  输入想要说的话吧~",
-                                suffixIcon: new IconButton(
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () async {
-                                    String _showText = '评论成功';
-                                    if (_text.text != '') {
-                                      TopComment _content = new TopComment(
-                                        content: _text.text,
-                                        createBy: "我",
-                                        createAt: "刚刚",
-                                      );
-                                      _showText = '评论成功';
-                                      commentService(1, _message.id, _text.text)
-                                          .then((onValue) {
-                                        if (onValue['status'] == 'success') {
-                                          Navigator.pop(context);
-                                          setState(() {
-                                            _comments.add(_content);
-                                          });
-                                          Provider.of<MessageState>(context)
-                                              .updateRecommend();
-                                          Provider.of<MessageState>(context)
-                                              .updateCollect();
-                                          Provider.of<MessageState>(context)
-                                              .updateFollow();
-                                        }
-                                      });
-                                    } else {
-                                      _showText = "评论内容不能为空";
-                                    }
-                                    final _snackBar = new SnackBar(
-                                      content: new Text(_showText),
-                                      backgroundColor: Colors.blue,
-                                      behavior: SnackBarBehavior.floating,
-                                      duration: Duration(seconds: 1),
-                                    );
-                                    Scaffold.of(context)
-                                        .showSnackBar(_snackBar);
-                                  },
-                                ),
-                              ),
+                showBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Material(
+                      child: TextField(
+                        controller: _text,
+                        decoration: InputDecoration(
+                          hintText: "  输入想要说的话吧~",
+                          suffixIcon: new IconButton(
+                            icon: Icon(
+                              Icons.send,
+                              color: Colors.blue,
                             ),
-                          );
-                        },
-                      );
-                    }
-                    break;
-                  case 1:
-                    {
-                      _iconState = 0;
-                      Navigator.pop(context);
-                    }
-                    break;
-                }
+                            onPressed: () async {
+                              String _showText = '评论成功';
+                              if (_text.text != '') {
+                                TopComment _content = new TopComment(
+                                  content: _text.text,
+                                  createBy: "我",
+                                  createAt: "刚刚",
+                                );
+                                _showText = '评论成功';
+                                commentService(1, _message.id, _text.text)
+                                    .then((onValue) {
+                                  if (onValue['status'] == 'success') {
+                                    Navigator.pop(context);
+                                    setState(() {
+                                      _comments.add(_content);
+                                    });
+                                    Provider.of<MessageState>(context)
+                                        .updateRecommend();
+                                    Provider.of<MessageState>(context)
+                                        .updateCollect();
+                                    Provider.of<MessageState>(context)
+                                        .updateFollow();
+                                  }
+                                });
+                              } else {
+                                _showText = "评论内容不能为空";
+                              }
+                              final _snackBar = new SnackBar(
+                                content: new Text(_showText),
+                                backgroundColor: Colors.blue,
+                                behavior: SnackBarBehavior.floating,
+                                duration: Duration(seconds: 1),
+                              );
+                              Scaffold.of(context).showSnackBar(_snackBar);
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
               },
             ),
           )
