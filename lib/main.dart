@@ -11,6 +11,7 @@ import './config/routes.dart';
 import './page/loginPage.dart';
 import 'provider/userState.dart';
 
+//学习使用
 void main() {
   runApp(MyApp());
 }

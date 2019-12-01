@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import 'package:furture/provider/messageState.dart';
@@ -83,7 +84,7 @@ class TopMessage extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Application.router.navigateTo(context, Routes.setAvatar);
+                  Application.router.navigateTo(context, Routes.setAvatar, transition: TransitionType.cupertino);
                 },
               ),
             ),
@@ -107,7 +108,7 @@ class TopMessage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Application.router.navigateTo((context), Routes.setNickname);
+                Application.router.navigateTo((context), Routes.setNickname, transition: TransitionType.cupertino);
               },
             ),
             flex: 3,

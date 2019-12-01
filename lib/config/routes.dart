@@ -46,7 +46,7 @@ class Routes {
   }
 }
 
-class PopRoute extends PopupRoute{
+class PopRoute extends PopupRoute {
   final Duration _duration = Duration(milliseconds: 300);
   Widget child;
 
@@ -62,11 +62,32 @@ class PopRoute extends PopupRoute{
   String get barrierLabel => null;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     return child;
   }
 
   @override
   Duration get transitionDuration => _duration;
+}
 
+class FadeRoute extends PageRouteBuilder {
+  final Widget page;
+
+  FadeRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(opacity: animation, child: child),
+        );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
+import 'package:furture/page/PhotoView.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:furture/service/serviceMethod.dart';
 import 'package:furture/utils/utils.dart';
@@ -61,13 +62,26 @@ class _TextDetailState extends State<TextDetail> {
     List<Widget> images = [];
     for (var image in _message.imgsName) {
       images.add(
-        new Container(
-          child: Image.network(
-            Utils.imgPath(image),
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+        new GestureDetector(
+          child: Container(
+            child: Image.network(
+              Utils.imgPath(image),
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
+          onTap: () {
+            Navigator.of(context).push(
+              new FadeRoute(
+                page: PhotoViewPage(
+                  imageProvider: NetworkImage(Utils.imgPath(image)),
+                  maxScale: 2.0,
+                  minScale: 0.5,
+                ),
+              ),
+            );
+          },
         ),
       );
     }
@@ -387,7 +401,6 @@ class _BottomInterState extends State<BottomInter> {
   IconData _collectIcon;
   int _countLike;
 
-
   @override
   Widget build(BuildContext context) {
     _message = ModalRoute.of(context).settings.arguments;
@@ -511,6 +524,7 @@ class BottomInput extends StatefulWidget {
   @override
   _BottomInputState createState() => _BottomInputState();
 }
+
 class _BottomInputState extends State<BottomInput> {
   TextEditingController _text = new TextEditingController();
 

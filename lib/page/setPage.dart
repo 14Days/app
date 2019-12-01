@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import '../service/serviceMethod.dart';
@@ -83,32 +84,32 @@ class _SetItemsState extends State<SetItems> {
         switch (index) {
           case 0:
             {
-              Application.router.navigateTo(context, Routes.setAvatar);
+              Application.router.navigateTo(context, Routes.setAvatar, transition: TransitionType.cupertino);
             }
             break;
           case 1:
             {
-              Application.router.navigateTo(context, Routes.setNickname);
+              Application.router.navigateTo(context, Routes.setNickname, transition: TransitionType.cupertino);
             }
             break;
           case 2:
             {
-              Application.router.navigateTo(context, Routes.setSex);
+              Application.router.navigateTo(context, Routes.setSex, transition: TransitionType.cupertino);
             }
             break;
           case 3:
             {
-              Application.router.navigateTo(context, Routes.setEmail);
+              Application.router.navigateTo(context, Routes.setEmail, transition: TransitionType.cupertino);
             }
             break;
           case 4:
             {
-              Application.router.navigateTo(context, Routes.setColor);
+              Application.router.navigateTo(context, Routes.setColor, transition: TransitionType.cupertino);
             }
             break;
           case 5:
             {
-              Application.router.navigateTo(context, Routes.setPassword);
+              Application.router.navigateTo(context, Routes.setPassword, transition: TransitionType.cupertino);
             }
             break;
         }
