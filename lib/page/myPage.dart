@@ -70,35 +70,45 @@ class TopMessage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 25.0),
               height: 125.0,
               color: Colors.blue,
-              child: Container(
-                margin: const EdgeInsets.only(
-                    left: 36, right: 32, top: 15, bottom: 15),
-                child: CircleAvatar(
-                  radius: 100,
-                  backgroundColor: Colors.white70,
-                  backgroundImage: user.avatar != null
-                      ? NetworkImage(Utils.myImgPath(user.avatar))
-                      : AssetImage('assets/images/logo.png'),
+              child: GestureDetector(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      left: 36, right: 32, top: 15, bottom: 15),
+                  child: CircleAvatar(
+                    radius: 100,
+                    backgroundColor: Colors.white70,
+                    backgroundImage: user.avatar != null
+                        ? NetworkImage(Utils.myImgPath(user.avatar))
+                        : AssetImage('assets/images/logo.png'),
+                  ),
                 ),
+                onTap: () {
+                  Application.router.navigateTo(context, Routes.setAvatar);
+                },
               ),
             ),
             flex: 2,
           ),
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(top: 25.0),
-              height: 125.0,
-              alignment: Alignment.centerLeft,
-              color: Colors.blue,
-              child: Text(
-                user.nickname == null ? "快去更改昵称吧" : user.nickname,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 23.0,
-                  color: Colors.white,
-                  textBaseline: null,
+            child: GestureDetector(
+              child: Container(
+                padding: const EdgeInsets.only(top: 25.0),
+                height: 125.0,
+                alignment: Alignment.centerLeft,
+                color: Colors.blue,
+                child: Text(
+                  user.nickname == null ? "快去更改昵称吧" : user.nickname,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 23.0,
+                    color: Colors.white,
+                    textBaseline: null,
+                  ),
                 ),
               ),
+              onTap: () {
+                Application.router.navigateTo((context), Routes.setNickname);
+              },
             ),
             flex: 3,
           ),

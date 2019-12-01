@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:furture/utils/utils.dart';
@@ -33,8 +32,8 @@ class _SetAvatarState extends State<SetAvatar> {
       });
       final onValue = await setAvatarService(image);
       if (onValue['status'] == 'success') {
-        user.getUserInfo();
         Navigator.pop(context);
+        user.getUserInfo();
       } else {
         _showText = "设置失败";
         final _snackBar = new SnackBar(
@@ -90,7 +89,8 @@ class _SetAvatarState extends State<SetAvatar> {
                     colorBrightness: Brightness.dark,
                     splashColor: Colors.grey,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                     onPressed: _openGallery,
                     child: Text("选择照片"),
                   ),
