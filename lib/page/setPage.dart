@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../service/serviceMethod.dart';
 
 class SetPage extends StatelessWidget {
@@ -35,6 +36,8 @@ class Logout extends StatefulWidget {
 class _LogoutState extends State<Logout> {
   //退出登录
   void testLogout() async {
+    var setUser = await SharedPreferences.getInstance();
+    setUser.setString('username', '');
     final onValue = await logoutService();
     setState(() {
       if (onValue['status'] == 'success') {

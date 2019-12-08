@@ -38,7 +38,10 @@ class _MyPageState extends State<MyPage> {
                 alignment: Alignment.center,
                 decoration: new BoxDecoration(
                   color: Colors.white,
-                  border: new Border.all(width: 1.0, color: Colors.grey),
+                  border: Border(
+                    top: BorderSide(color: Colors.white12, width: 1.0),
+                    bottom: BorderSide(color: Colors.black12, width: 1.0),
+                  ),
                 ),
                 child: Text(
                   "我的收藏",
@@ -53,7 +56,7 @@ class _MyPageState extends State<MyPage> {
         ),
         Expanded(
           child: CollectItem(),
-        )
+        ),
       ],
     );
   }
@@ -84,7 +87,8 @@ class TopMessage extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Application.router.navigateTo(context, Routes.setAvatar, transition: TransitionType.cupertino);
+                  Application.router.navigateTo(context, Routes.setAvatar,
+                      transition: TransitionType.cupertino);
                 },
               ),
             ),
@@ -108,7 +112,8 @@ class TopMessage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Application.router.navigateTo((context), Routes.setNickname, transition: TransitionType.cupertino);
+                Application.router.navigateTo((context), Routes.setNickname,
+                    transition: TransitionType.cupertino);
               },
             ),
             flex: 3,

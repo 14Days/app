@@ -5,7 +5,10 @@ import 'package:furture/page/detailsPage.dart';
 import 'package:furture/page/secondComment.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:furture/provider/noticeState.dart';
+import 'package:furture/service/startService.dart';
+import 'package:furture/service/userService.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './config/application.dart';
 import './config/routes.dart';
 import './page/loginPage.dart';
@@ -23,26 +26,54 @@ class MyApp extends StatelessWidget {
     Application.router = router;
   }
 
+  var username;
+  var password;
+  bool _ok = false;
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    void choose() async {
+      var getUser = await SharedPreferences.getInstance();
+      username = getUser.get('username');
+      password = getUser.get('password');
+      if (username == '') {
+        return;
+      } else {
+        final onValue = await loginService(username, password);
+        if (onValue['status'] == 'success') {
+          final toColor = await getUserService();
+          if (toColor['status'] == 'success') {
+            _ok = true;
+          }
+        }
+      }
+    }
+
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (_) => UserState(),),
-        ChangeNotifierProvider(builder: (_) => MessageState(),),
-        ChangeNotifierProvider(builder: (_) => NoticeState(),),
+        ChangeNotifierProvider(
+          builder: (_) => UserState(),
+        ),
+        ChangeNotifierProvider(
+          builder: (_) => MessageState(),
+        ),
+        ChangeNotifierProvider(
+          builder: (_) => NoticeState(),
+        ),
       ],
       child: Consumer<UserState>(
-        builder: (context,userState, _){
+        builder: (context, userState, _) {
+          choose();
           return MaterialApp(
             title: 'FurtureApp',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: LoginPage(),
+            home: _ok == true ? BottomNavigation() : LoginPage(),
             routes: {
-              "details" : (context) => DetailsPage(),
-              "replys" : (context) => SecondCommentPage(),
+              "details": (context) => DetailsPage(),
+              "replys": (context) => SecondCommentPage(),
             },
             onGenerateRoute: Application.router.generator,
           );

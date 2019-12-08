@@ -250,18 +250,21 @@ class NoticeModel {
 class NoticeData {
   String content;
   String createAt;
+  String avatar;
 
-  NoticeData({this.content, this.createAt});
+  NoticeData({this.content, this.createAt, this.avatar});
 
   NoticeData.fromJson(Map<String, dynamic> json) {
     content = json['content'];
     createAt = json['create_at'];
+    avatar = json['avatar'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['content'] = this.content;
     data['create_at'] = this.createAt;
+    data['avatar'] = this.avatar;
     return data;
   }
 }

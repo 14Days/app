@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:furture/component/comment.dart';
 import 'package:furture/provider/noticeState.dart';
-import 'package:furture/service/serviceMethod.dart';
+import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class NoticePage extends StatefulWidget {
@@ -62,6 +61,7 @@ class _NoticeBodyState extends State<NoticeBody> {
   }
 
   //定义通知消息
+  // ignore: missing_return
   Widget _item(index) {
     final notice = Provider.of<NoticeState>(context);
     if (notice.items[index].content != null) {
@@ -78,29 +78,55 @@ class _NoticeBodyState extends State<NoticeBody> {
             bottom: BorderSide(width: 0.5, color: Colors.black12),
           ),
         ),
-        child: Column(
+        child: Row(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-              alignment: Alignment.centerLeft,
-              child: new Text(
-                notice.items[index].createAt,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 15.0),
+              height: 55.0,
+              width: 55.0,
+              color: Colors.white,
+              child: GestureDetector(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    bottom: 5,
+                    right: 5,
+                  ),
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.grey,
+                    backgroundImage: NetworkImage(
+                      Utils.webImgPath(notice.items[index].avatar),
+                    ),
+                  ),
+                ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-              alignment: Alignment.centerLeft,
-              child: new Text(
-                notice.items[index].content,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 20.0),
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                    alignment: Alignment.centerLeft,
+                    child: new Text(
+                      notice.items[index].createAt,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                    alignment: Alignment.centerLeft,
+                    child: new Text(
+                      notice.items[index].content,
+                      maxLines: 10,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                ],
               ),
-            ),
+            )
           ],
         ),
       );

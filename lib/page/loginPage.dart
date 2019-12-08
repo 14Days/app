@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:furture/service/serviceMethod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../component/comment.dart';
 import '../utils/utils.dart';
@@ -98,6 +99,9 @@ class _LoginBodyState extends State<LoginBody> {
               MaterialPageRoute(builder: (context) => FirstSetColor()),
               (route) => route == null);
         }
+        var setUser = await SharedPreferences.getInstance();
+        setUser.setString('username', _controllerAcc.text);
+        setUser.setString('password', _controllerPwd.text);
       } else {
         if (onValue['err_msg'] == '用户不存在') {
           _showText = "用户不存在";

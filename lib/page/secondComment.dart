@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import 'package:furture/provider/messageState.dart';
+import 'package:furture/provider/userState.dart';
 import 'package:furture/service/serviceMethod.dart';
 import 'package:provider/provider.dart';
 
@@ -49,12 +50,12 @@ class _SecondCommentPageState extends State<SecondCommentPage> {
   }
 }
 
-
 //主帖内容显示
 class MainPost extends StatefulWidget {
   @override
   _MainPostState createState() => _MainPostState();
 }
+
 class _MainPostState extends State<MainPost> {
   TextEditingController _text = new TextEditingController();
 
@@ -76,15 +77,20 @@ class _MainPostState extends State<MainPost> {
   Widget build(BuildContext context) {
     _message = ModalRoute.of(context).settings.arguments;
     _topComment = _message[0];
+
     return Material(
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            PopRoute(
-              child: BottomInput(),
-            ),
-          );
+          if (Provider.of<UserState>(context).nickname !=
+                  _topComment.createBy &&
+              _topComment.createBy != '我') {
+            Navigator.push(
+              context,
+              PopRoute(
+                child: BottomInput(),
+              ),
+            );
+          }
         },
         child: Container(
           //定义外部框
@@ -138,7 +144,7 @@ class _MainPostState extends State<MainPost> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   _topComment.content != null ? _topComment.content : "刚刚",
-                  maxLines: 2,
+                  maxLines: 10,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 20.0),
@@ -157,6 +163,7 @@ class ReplyAction extends StatefulWidget {
   @override
   _ReplyActionState createState() => _ReplyActionState();
 }
+
 class _ReplyActionState extends State<ReplyAction> {
   TextEditingController _text = new TextEditingController();
 
@@ -270,12 +277,12 @@ class _ReplyActionState extends State<ReplyAction> {
   }
 }
 
-
 //底部评论文本弹出框
 class BottomInput extends StatefulWidget {
   @override
   _BottomInputState createState() => _BottomInputState();
 }
+
 class _BottomInputState extends State<BottomInput> {
   TextEditingController _text = new TextEditingController();
 
@@ -331,7 +338,7 @@ class _BottomInputState extends State<BottomInput> {
                         createAt: "刚刚",
                       );
                       final onValue =
-                      await commentService(2, _topComment.id, _text.text);
+                          await commentService(2, _topComment.id, _text.text);
                       if (onValue['status'] == 'success') {
                         Navigator.pop(context);
                         setState(() {

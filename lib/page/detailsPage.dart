@@ -24,13 +24,37 @@ class DetailsPage extends StatelessWidget {
         ),
       ),
       //主题部分包含该消息内容，评论内容
-      body: new Column(
-        children: <Widget>[
-          TextDetail(),
-          SizedBox(
-            height: 1.0,
+      body: new CustomScrollView(
+        physics: ScrollPhysics(),
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: new Column(
+              children: <Widget>[
+                TextDetail(),
+                SizedBox(
+                  height: 1.0,
+                ),
+              ],
+            ),
           ),
-          Expanded(
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: MyDelegate(
+              child: new Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(left: 20.0),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "评论",
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverFillRemaining(
             child: InterAction(),
           ),
         ],
@@ -91,12 +115,12 @@ class _TextDetailState extends State<TextDetail> {
       padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: <BoxShadow>[
-          new BoxShadow(
-            color: Colors.grey, //阴影颜色
-            blurRadius: 5.0, //阴影大小
-          ),
-        ],
+//        boxShadow: <BoxShadow>[
+//          new BoxShadow(
+//            color: Colors.grey, //阴影颜色
+//            blurRadius: 5.0, //阴影大小
+//          ),
+//        ],
         border: Border(
           top: BorderSide(color: Colors.white12, width: 1.0),
           bottom: BorderSide(color: Colors.white30, width: 1.0),
@@ -109,22 +133,30 @@ class _TextDetailState extends State<TextDetail> {
           new Row(
             children: <Widget>[
               //发布者头像
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  height: 70,
-                  color: Colors.white,
-                  child: Image(
-                    image: new NetworkImage(
-                      Utils.webImgPath(_message.avatar),
+              Container(
+                height: 60.0,
+                width: 60.0,
+                color: Colors.white,
+                child: GestureDetector(
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                      top: 10,
+                      right: 10,
+                    ),
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.grey,
+                      backgroundImage: NetworkImage(
+                        Utils.webImgPath(_message.avatar),
+                      ),
                     ),
                   ),
                 ),
-                flex: 1,
               ),
               //发布者昵称
               Expanded(
                 child: Container(
+                  margin: const EdgeInsets.only(left: 15),
                   padding: const EdgeInsets.only(top: 30.0),
                   height: 70.0,
                   alignment: Alignment.centerLeft,
@@ -228,18 +260,18 @@ class _TextDetailState extends State<TextDetail> {
               height: 20.0,
             ),
           ),
-          //"评论"字样栏
-          new Container(
-            padding: const EdgeInsets.only(left: 5.0),
-            alignment: Alignment.bottomLeft,
-            child: Text(
-              "评论",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
+//          //"评论"字样栏
+//          new Container(
+//            padding: const EdgeInsets.only(left: 5.0),
+//            alignment: Alignment.bottomLeft,
+//            child: Text(
+//              "评论",
+//              style: TextStyle(
+//                color: Colors.black54,
+//                fontSize: 16.0,
+//              ),
+//            ),
+//          ),
         ],
       ),
     );
@@ -298,7 +330,7 @@ class _InterActionState extends State<InterAction> {
           padding: const EdgeInsets.only(
             left: 30.0,
             right: 15.0,
-            top: 10.0,
+            top: 20.0,
             bottom: 10.0,
           ),
           margin: const EdgeInsets.only(bottom: 5.0),
@@ -378,6 +410,14 @@ class _InterActionState extends State<InterAction> {
         child: Text("暂无评论"),
       );
     } else {
+//      return SliverFixedExtentList(
+//        // SliverList的语法，用于每个item固定高度的List
+//        delegate: SliverChildBuilderDelegate(
+//          (context, index) => _items(index),
+//          childCount: _comments.length,
+//        ),
+//        itemExtent: 100,
+//      );
       return ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: _comments.length,
@@ -600,5 +640,28 @@ class _BottomInputState extends State<BottomInput> {
         ],
       ),
     );
+  }
+}
+
+class MyDelegate extends SliverPersistentHeaderDelegate {
+  final Container child;
+
+  MyDelegate({@required this.child});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return this.child;
+  }
+
+  @override
+  double get maxExtent => 20;
+
+  @override
+  double get minExtent => 20;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }
