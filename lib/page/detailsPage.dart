@@ -32,7 +32,7 @@ class DetailsPage extends StatelessWidget {
               children: <Widget>[
                 TextDetail(),
                 SizedBox(
-                  height: 1.0,
+                  height: 5.0,
                 ),
               ],
             ),
@@ -112,15 +112,20 @@ class _TextDetailState extends State<TextDetail> {
 
     return Container(
       margin: const EdgeInsets.only(top: 1.0),
-      padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+      padding: const EdgeInsets.only(
+        top: 15.0,
+        left: 15.0,
+        right: 15.0,
+        bottom: 10,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
-//        boxShadow: <BoxShadow>[
-//          new BoxShadow(
-//            color: Colors.grey, //阴影颜色
-//            blurRadius: 5.0, //阴影大小
-//          ),
-//        ],
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.grey, //阴影颜色
+            blurRadius: 3.0, //阴影大小
+          ),
+        ],
         border: Border(
           top: BorderSide(color: Colors.white12, width: 1.0),
           bottom: BorderSide(color: Colors.white30, width: 1.0),
@@ -328,19 +333,26 @@ class _InterActionState extends State<InterAction> {
         child: Container(
           //定义外部框
           padding: const EdgeInsets.only(
-            left: 30.0,
+            left: 15.0,
             right: 15.0,
             top: 20.0,
             bottom: 10.0,
           ),
-          margin: const EdgeInsets.only(bottom: 5.0),
+          margin: const EdgeInsets.only(bottom: 6.0),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Colors.white70,
+            color: Colors.white,
+//            boxShadow: <BoxShadow>[
+//              new BoxShadow(
+//                color: Colors.grey, //阴影颜色
+//                offset: Offset(0, 1),
+//                blurRadius: 3.0, //阴影大小
+//              ),
+//            ],
             border: Border(
               left: BorderSide(width: 0.5, color: Colors.black12),
               right: BorderSide(width: 0.5, color: Colors.black12),
-              bottom: BorderSide(width: 0.5, color: Colors.black38),
+              bottom: BorderSide(width: 2, color: Colors.grey[300]),
             ),
           ),
           child: Column(
@@ -410,14 +422,6 @@ class _InterActionState extends State<InterAction> {
         child: Text("暂无评论"),
       );
     } else {
-//      return SliverFixedExtentList(
-//        // SliverList的语法，用于每个item固定高度的List
-//        delegate: SliverChildBuilderDelegate(
-//          (context, index) => _items(index),
-//          childCount: _comments.length,
-//        ),
-//        itemExtent: 100,
-//      );
       return ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: _comments.length,

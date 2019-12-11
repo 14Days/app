@@ -58,17 +58,11 @@ android {
             storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
         }
-        debug {
-
-        }
     }
 
     buildTypes {
         release {
             signingConfig signingConfigs.release
-        }
-        debug {
-            signingConfig signingConfigs.debug
         }
     }
 }
