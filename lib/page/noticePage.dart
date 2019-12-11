@@ -92,7 +92,7 @@ class _NoticeBodyState extends State<NoticeBody> {
                   ),
                   child: CircleAvatar(
                     radius: 25,
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.white70,
                     backgroundImage: NetworkImage(
                       Utils.webImgPath(notice.items[index].avatar),
                     ),
@@ -148,7 +148,9 @@ class _NoticeBodyState extends State<NoticeBody> {
         scrollDirection: Axis.vertical,
         itemCount: notice.items.length,
         itemBuilder: (context, index) {
-          return Material(child: _item(index));
+          return Material(
+            child: _item(index),
+          );
         },
       );
     }
