@@ -14,11 +14,31 @@ import './config/routes.dart';
 import './page/loginPage.dart';
 import 'provider/userState.dart';
 
+bool _ok = false;
 //学习使用
-void main() {
+void main() async {
+  var getUser = await SharedPreferences.getInstance();
+  var username = getUser.get('username');
+  var password = getUser.get('password');
+  if (username == '' || username == null) {
+    _ok = false;
+  } else {
+    final onValue = await loginService(username, password);
+    if (onValue['status'] == 'success') {
+      final toColor = await getUserService();
+      if (toColor['status'] == 'success') {
+        _ok = true;
+      } else {
+        _ok = false;
+      }
+    } else {
+      _ok = false;
+    }
+  }
   runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   MyApp() {
     final router = new Router();
@@ -26,30 +46,9 @@ class MyApp extends StatelessWidget {
     Application.router = router;
   }
 
-  var username;
-  var password;
-  bool _ok = false;
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    void choose() async {
-      var getUser = await SharedPreferences.getInstance();
-      username = getUser.get('username');
-      password = getUser.get('password');
-      if (username == '') {
-        return;
-      } else {
-        final onValue = await loginService(username, password);
-        if (onValue['status'] == 'success') {
-          final toColor = await getUserService();
-          if (toColor['status'] == 'success') {
-            _ok = true;
-          }
-        }
-      }
-    }
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -64,9 +63,8 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<UserState>(
         builder: (context, userState, _) {
-          choose();
           return MaterialApp(
-            title: 'FurtureApp',
+            title: 'i deer',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),

@@ -37,13 +37,13 @@ class _LogoutState extends State<Logout> {
   //退出登录
   void testLogout() async {
     final onValue = await logoutService();
-    setState(() {
-      if (onValue['status'] == 'success') {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LoginPage()),
-            (route) => route == null);
-      }
-    });
+    if (onValue['status'] == 'success') {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoginPage()),
+          (route) => route == null);
+      var setUser = await SharedPreferences.getInstance();
+      setUser.setString('username', '');
+    }
   }
 
   @override
@@ -85,32 +85,38 @@ class _SetItemsState extends State<SetItems> {
         switch (index) {
           case 0:
             {
-              Application.router.navigateTo(context, Routes.setAvatar, transition: TransitionType.cupertino);
+              Application.router.navigateTo(context, Routes.setAvatar,
+                  transition: TransitionType.cupertino);
             }
             break;
           case 1:
             {
-              Application.router.navigateTo(context, Routes.setNickname, transition: TransitionType.cupertino);
+              Application.router.navigateTo(context, Routes.setNickname,
+                  transition: TransitionType.cupertino);
             }
             break;
           case 2:
             {
-              Application.router.navigateTo(context, Routes.setSex, transition: TransitionType.cupertino);
+              Application.router.navigateTo(context, Routes.setSex,
+                  transition: TransitionType.cupertino);
             }
             break;
           case 3:
             {
-              Application.router.navigateTo(context, Routes.setEmail, transition: TransitionType.cupertino);
+              Application.router.navigateTo(context, Routes.setEmail,
+                  transition: TransitionType.cupertino);
             }
             break;
           case 4:
             {
-              Application.router.navigateTo(context, Routes.setColor, transition: TransitionType.cupertino);
+              Application.router.navigateTo(context, Routes.setColor,
+                  transition: TransitionType.cupertino);
             }
             break;
           case 5:
             {
-              Application.router.navigateTo(context, Routes.setPassword, transition: TransitionType.cupertino);
+              Application.router.navigateTo(context, Routes.setPassword,
+                  transition: TransitionType.cupertino);
             }
             break;
         }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furture/service/serviceMethod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SetPassword extends StatefulWidget {
   @override
@@ -59,6 +60,9 @@ class _SetPasswordState extends State<SetPassword> {
                   final _onValue = await changePasswordService(
                       _old.text.toString(), _new.text.toString());
                   if (_onValue['status'] == 'success') {
+                    var setUser = await SharedPreferences.getInstance();
+                    setUser.setString('password', _new.text);
+                    Navigator.pop(context);
                     _showText = "修改成功!";
                   } else {
                     _showText = "旧密码不正确";
