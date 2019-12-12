@@ -194,6 +194,7 @@ class _CategoryBodyState extends State<CategoryBody> {
               ),
               child: Wrap(
                 spacing: 5.0,
+                runSpacing: 5.0,
                 direction: Axis.horizontal,
                 alignment: WrapAlignment.start,
                 children: images.length != 0 ? images : Text("无图片"),
