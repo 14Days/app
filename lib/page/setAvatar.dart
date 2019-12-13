@@ -51,12 +51,12 @@ class _SetAvatarState extends State<SetAvatar> {
         centerTitle: true,
         title: Text("设置头像"),
         actions: <Widget>[
-          RaisedButton(
-            color: Colors.blue,
+          FlatButton(
+            color: MyColors.colorWhite,
             child: Text(
               "完成",
               style: TextStyle(
-                color: Colors.white,
+                color: MyColors.colorBlack,
               ),
             ),
             onPressed: () {

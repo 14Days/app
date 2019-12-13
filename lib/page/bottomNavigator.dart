@@ -29,37 +29,37 @@ class _BottomNavigationState extends State<BottomNavigation>
   Widget build(BuildContext context) {
     return new Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color.fromARGB(255, 249, 249, 249),
         //创建底部导航栏
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.home,
-              color: Colors.white,
+              _currentIndex == 0 ? Icons.home : CupertinoIcons.home,
+              color: Color.fromARGB(255, 50, 50, 50),
             ),
             title: new Text(
               '首页',
-              style: new TextStyle(color: Colors.white),
+              style: new TextStyle(color: Color.fromARGB(255, 50, 50, 50)),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.mail,
-              color: Colors.white,
+              _currentIndex == 1? Icons.mail : CupertinoIcons.mail,
+              color: Color.fromARGB(255, 50, 50, 50),
             ),
             title: new Text(
               '通知',
-              style: new TextStyle(color: Colors.white),
+              style: new TextStyle(color: Color.fromARGB(255, 50, 50, 50)),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.person,
-              color: Colors.white,
+              _currentIndex == 2 ? Icons.person : CupertinoIcons.person,
+              color: Color.fromARGB(255, 50, 50, 50),
             ),
             title: new Text(
               '我的',
-              style: new TextStyle(color: Colors.white),
+              style: new TextStyle(color: Color.fromARGB(255, 50, 50, 50)),
             ),
           ),
         ],

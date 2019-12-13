@@ -36,6 +36,7 @@ class _MyPageState extends State<MyPage> {
             Expanded(
               child: Container(
                 height: 50.0,
+                margin: const EdgeInsets.only(top: 2.0),
                 alignment: Alignment.center,
                 decoration: new BoxDecoration(
                   color: Colors.white,
@@ -74,14 +75,14 @@ class TopMessage extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.only(top: 25.0),
               height: 125.0,
-              color: Colors.blue,
+              color: Colors.white,
               child: GestureDetector(
                 child: Container(
                   margin: const EdgeInsets.only(
                       left: 36, right: 32, top: 15, bottom: 15),
                   child: CircleAvatar(
                     radius: 100,
-                    backgroundColor: Colors.white70,
+                    backgroundColor: Colors.white,
                     backgroundImage: user.avatar != null
                         ? NetworkImage(Utils.myImgPath(user.avatar))
                         : AssetImage('assets/images/logo.png'),
@@ -101,13 +102,13 @@ class TopMessage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 25.0),
                 height: 125.0,
                 alignment: Alignment.centerLeft,
-                color: Colors.blue,
+                color: Colors.white,
                 child: Text(
                   user.nickname == null ? "快去更改昵称吧" : user.nickname,
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: 23.0,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 50, 50, 50),
                     textBaseline: null,
                   ),
                 ),
@@ -123,19 +124,16 @@ class TopMessage extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.only(top: 25.0),
               height: 125.0,
-              color: Colors.blue,
-              child: Material(
-                color: Colors.blue,
-                child: new IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                    size: 30.0,
-                  ),
-                  onPressed: () {
-                    Application.router.navigateTo(context, Routes.set);
-                  },
+              color: Colors.white,
+              child: new IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: MyColors.colorBlack,
+                  size: 30.0,
                 ),
+                onPressed: () {
+                  Application.router.navigateTo(context, Routes.set);
+                },
               ),
             ),
             flex: 1,

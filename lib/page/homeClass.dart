@@ -110,7 +110,7 @@ class _TopClassState extends State<TopClass> {
           maxLines: 1,
           style: TextStyle(
             fontSize: index == i ? 17.0 : 15.0,
-            color: index == i ? Colors.blue : Colors.black,
+            color: index == i ? MyColors.colorOrange : MyColors.colorBlack,
           ),
         ),
       ),

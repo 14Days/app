@@ -43,3 +43,9 @@ class Gaps {
   static Widget hGap10 = new SizedBox(width: 10.0);
   static Widget hGap15 = new SizedBox(width: 15.0);
 }
+
+class MyColors {
+  static Color colorWhite = Color.fromARGB(255, 249, 249, 249);
+  static Color colorBlack = Color.fromARGB(255, 50, 50, 50);
+  static Color colorOrange = Color.fromARGB(255, 255, 57, 0);
+}

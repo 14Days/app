@@ -1,3 +1,4 @@
+import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../provider/userState.dart';
@@ -48,6 +49,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 1,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -72,6 +74,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 2,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -96,6 +99,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 3,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -120,6 +124,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 4,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -144,6 +149,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 5,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -168,6 +174,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 6,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -192,6 +199,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 7,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -216,6 +224,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 8,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -240,6 +249,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 9,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -264,6 +274,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 10,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -288,6 +299,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 11,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -312,6 +324,7 @@ class _SetColorState extends State<SetColor> {
               Flexible(
                 child: RadioListTile<int>(
                   value: 12,
+                  activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -352,12 +365,12 @@ class _SetColorState extends State<SetColor> {
         centerTitle: true,
         title: Text("设置颜色"),
         actions: <Widget>[
-          RaisedButton(
-            color: Colors.blue,
+          FlatButton(
+            color: MyColors.colorWhite,
             child: Text(
               "完成",
               style: TextStyle(
-                color: Colors.white,
+                color: MyColors.colorBlack,
               ),
             ),
             onPressed: () {

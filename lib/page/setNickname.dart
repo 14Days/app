@@ -1,3 +1,4 @@
+import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../provider/userState.dart';
@@ -55,12 +56,12 @@ class _SetNicknameState extends State<SetNickname> {
           centerTitle: true,
           title: Text("设置昵称"),
           actions: <Widget>[
-            RaisedButton(
-              color: Colors.blue,
+            FlatButton(
+              color: MyColors.colorWhite,
               child: Text(
                 "完成",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: MyColors.colorBlack,
                 ),
               ),
               onPressed: () {

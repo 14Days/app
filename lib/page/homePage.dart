@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:furture/component/comment.dart';
 import 'package:furture/page/homeClass.dart';
 import 'package:furture/page/homeFollow.dart';
 import 'package:furture/page/homeRecommend.dart';
@@ -11,6 +12,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  static Color _pickColor = Color.fromARGB(255, 61, 61, 61);
+  static Color _notPickColor = Color.fromARGB(255, 146, 146, 146);
   TabController _tabController;
 
   //顶部导航列表
@@ -19,7 +22,7 @@ class _HomePageState extends State<HomePage>
       child: Text(
         "推荐",
         style: new TextStyle(
-          color: Colors.white,
+          color: _pickColor,
           fontSize: 20.0,
         ),
       ),
@@ -28,7 +31,7 @@ class _HomePageState extends State<HomePage>
       child: Text(
         "关注",
         style: new TextStyle(
-          color: Colors.white,
+          color: _pickColor,
           fontSize: 20.0,
         ),
       ),
@@ -37,7 +40,7 @@ class _HomePageState extends State<HomePage>
       child: Text(
         "分类",
         style: new TextStyle(
-          color: Colors.white,
+          color: _pickColor,
           fontSize: 20.0,
         ),
       ),
@@ -68,9 +71,9 @@ class _HomePageState extends State<HomePage>
           labelStyle: TextStyle(
             letterSpacing: 3.0,
           ),
-          labelPadding: EdgeInsets.only(bottom: 10),
+          labelPadding: EdgeInsets.only(bottom: 9),
           indicatorSize: TabBarIndicatorSize.tab,
-          indicatorColor: Colors.white,
+          indicatorColor: Color.fromARGB(255, 255, 57, 0),
           tabs: topTabs,
           controller: _tabController,
         ),

@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
+import 'package:furture/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../service/serviceMethod.dart';
 
@@ -51,15 +52,16 @@ class _LogoutState extends State<Logout> {
     return new Container(
       width: double.infinity,
       height: 50.0,
-      margin: EdgeInsets.only(bottom: 0),
       child: RaisedButton(
-        color: Colors.blue,
+        color: Color.fromARGB(255, 254, 254, 254),
         highlightColor: Colors.blue[700],
         colorBrightness: Brightness.dark,
         splashColor: Colors.grey,
         child: Text(
           "退出登录",
-          style: TextStyle(),
+          style: TextStyle(
+            color: MyColors.colorOrange,
+          ),
         ),
         onPressed: () {
           testLogout();

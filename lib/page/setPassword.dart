@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furture/service/serviceMethod.dart';
+import 'package:furture/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetPassword extends StatefulWidget {
@@ -43,12 +44,12 @@ class _SetPasswordState extends State<SetPassword> {
           centerTitle: true,
           title: Text("修改密码"),
           actions: <Widget>[
-            RaisedButton(
-              color: Colors.blue,
+            FlatButton(
+              color: MyColors.colorWhite,
               child: Text(
                 "完成",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: MyColors.colorBlack,
                 ),
               ),
               onPressed: () async {

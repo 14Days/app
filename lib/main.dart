@@ -14,9 +14,14 @@ import './config/routes.dart';
 import './page/loginPage.dart';
 import 'provider/userState.dart';
 
+import 'package:flutter/services.dart';
+
 bool _ok = false;
 //学习使用
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   var getUser = await SharedPreferences.getInstance();
   var username = getUser.get('username');
   var password = getUser.get('password');
@@ -66,7 +71,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'i deer',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primaryColor: Color.fromARGB(255, 249, 249, 249),
             ),
             home: _ok == true ? BottomNavigation() : LoginPage(),
             routes: {
