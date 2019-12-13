@@ -149,7 +149,6 @@ class _CategoryBodyState extends State<CategoryBody> {
         ),
       );
     }
-    noImage.add(Text("无配图哦"));
     return InkWell(
       onTap: () {
         Navigator.pushNamed(

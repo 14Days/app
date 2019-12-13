@@ -72,7 +72,6 @@ class _FollowBodyState extends State<FollowBody> {
         ),
       );
     }
-    noImage.add(new Text("无配图哦"));
     return InkWell(
       onTap: () {
         Navigator.pushNamed(

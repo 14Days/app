@@ -19,17 +19,11 @@ class _HomeRecommendState extends State<HomeRecommend>
   @override
   bool get wantKeepAlive => true;
 
-  void getRecommend() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    _recommend = Provider.of<MessageState>(context).recommend;
-  }
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       Provider.of<MessageState>(context).updateRecommend();
-      getRecommend();
     });
   }
 
@@ -59,9 +53,6 @@ class _RecommendBodyState extends State<RecommendBody> {
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000), () async {
       await Provider.of<MessageState>(context).updateRecommend();
-      setState(() {
-        _recommend = Provider.of<MessageState>(context).recommend;
-      });
     });
     _refreshController.refreshCompleted();
   }
@@ -101,7 +92,6 @@ class _RecommendBodyState extends State<RecommendBody> {
         ),
       );
     }
-    noImage.add(new Text("无配图哦"));
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -161,6 +151,7 @@ class _RecommendBodyState extends State<RecommendBody> {
 
   @override
   Widget build(BuildContext context) {
+    _recommend = Provider.of<MessageState>(context).recommend;
     return SmartRefresher(
       controller: _refreshController,
       enablePullDown: true,

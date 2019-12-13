@@ -94,7 +94,9 @@ class _NoticeBodyState extends State<NoticeBody> {
                     radius: 25,
                     backgroundColor: Colors.white70,
                     backgroundImage: NetworkImage(
-                      Utils.webImgPath(notice.items[index].avatar),
+                      Utils.webImgPath(notice.items[index].avatar == null
+                          ? 'avatar.png'
+                          : notice.items[index].avatar),
                     ),
                   ),
                 ),
@@ -136,23 +138,21 @@ class _NoticeBodyState extends State<NoticeBody> {
   @override
   Widget build(BuildContext context) {
     final notice = Provider.of<NoticeState>(context);
-    if (notice.items == null) {
-      return Center(
-        child: Text(
-          "暂无通知",
-          style: TextStyle(color: Colors.black, fontSize: 30),
-        ),
-      );
-    } else {
-      return ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: notice.items.length,
-        itemBuilder: (context, index) {
-          return Material(
-            child: _item(index),
+    return notice.items == null
+        ? Center(
+            child: Text(
+              "暂无通知",
+              style: TextStyle(color: Colors.black, fontSize: 30),
+            ),
+          )
+        : ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: notice.items.length,
+            itemBuilder: (context, index) {
+              return Material(
+                child: _item(index),
+              );
+            },
           );
-        },
-      );
-    }
   }
 }
