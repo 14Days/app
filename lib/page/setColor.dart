@@ -1,4 +1,3 @@
-import 'package:furture/provider/messageState.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../provider/userState.dart';
@@ -48,7 +47,7 @@ class _SetColorState extends State<SetColor> {
             children: <Widget>[
               Flexible(
                 child: RadioListTile<int>(
-                  value: 0,
+                  value: 1,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -72,7 +71,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 1,
+                  value: 2,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -96,7 +95,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 2,
+                  value: 3,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -120,7 +119,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 3,
+                  value: 4,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -144,7 +143,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 4,
+                  value: 5,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -168,7 +167,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 5,
+                  value: 6,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -192,7 +191,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 6,
+                  value: 7,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -216,7 +215,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 7,
+                  value: 8,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -240,7 +239,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 8,
+                  value: 9,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -264,7 +263,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 9,
+                  value: 10,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -288,7 +287,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 10,
+                  value: 11,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -312,7 +311,7 @@ class _SetColorState extends State<SetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 11,
+                  value: 12,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
@@ -343,7 +342,7 @@ class _SetColorState extends State<SetColor> {
     void testSet() async {
       final onValue = await postColorService(user.color);
       if (onValue['status'] == 'success') {
-        Provider.of<MessageState>(context).updateRecommend();
+//        Provider.of<MessageState>(context).updateRecommend();
         Navigator.pop(context);
       }
     }

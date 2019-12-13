@@ -15,7 +15,7 @@ class _HomeClassState extends State<HomeClass>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateCategory(0);
+      Provider.of<MessageState>(context).updateCategory(1);
     });
   }
 
@@ -64,7 +64,7 @@ class _TopClassState extends State<TopClass> {
     super.initState();
     index = 0;
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateCategory(index);
+      Provider.of<MessageState>(context).updateCategory(index + 1);
     });
 
   }
@@ -86,7 +86,7 @@ class _TopClassState extends State<TopClass> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          Provider.of<MessageState>(context).updateCategory(i);
+          Provider.of<MessageState>(context).updateCategory(i + 1);
           index = i;
         });
       },

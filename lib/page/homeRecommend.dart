@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/model/entity.dart';
@@ -56,19 +57,12 @@ class _RecommendBodyState extends State<RecommendBody> {
       RefreshController(initialRefresh: true);
 
   void _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    Provider.of<MessageState>(context).updateFollow();
-    List<MessageData> newRecommend = [];
-    var random = Utils.myRandom(_recommend.length);
-    for (var i = 0; i < _recommend.length; i++) {
-      newRecommend.add(_recommend[random[i]]);
-    }
-    await Future.delayed(Duration(milliseconds: 1000), () {
+    await Future.delayed(Duration(milliseconds: 1000), () async {
+      await Provider.of<MessageState>(context).updateRecommend();
       setState(() {
-        _recommend = newRecommend;
+        _recommend = Provider.of<MessageState>(context).recommend;
       });
     });
-
     _refreshController.refreshCompleted();
   }
 
@@ -77,7 +71,7 @@ class _RecommendBodyState extends State<RecommendBody> {
 //    await Future.delayed(Duration(milliseconds: 1000));
 //
 ////     if failed,use loadFailed(),if no data return,use LoadNodata()
-//    items.add((items.length + 1).toString());
+//
 //    if (mounted) setState(() {});
 //    _refreshController.loadComplete();
 //  }
@@ -185,7 +179,7 @@ class _RecommendBodyState extends State<RecommendBody> {
 //            body = Text("No more Data");
 //          }
 //          return Container(
-//            height: 55.0,
+//            height: 10,
 //            child: Center(child: body),
 //          );
 //        },
