@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class Utils {
@@ -11,6 +13,21 @@ class Utils {
 
   static String imgPath(String name) {
     return 'http://pull.wghtstudio.cn/img/$name';
+  }
+
+  static List<int> myRandom(int topValue) {
+    List<int> yourList = [];
+    List<int> myList = [];
+    for (int i = 0; i < topValue; i++) {
+      yourList.add(i);
+    }
+    while (yourList.length != 0) {
+      int top = yourList.length;
+      int my = Random().nextInt(top);
+      myList.add(yourList[my]);
+      yourList.remove(yourList[my]);
+    }
+    return myList;
   }
 }
 

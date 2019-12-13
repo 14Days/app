@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:furture/component/comment.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:provider/provider.dart';
 import 'package:furture/utils/utils.dart';
@@ -17,9 +19,6 @@ class _HomeFollowState extends State<HomeFollow>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateFollow();
-    });
   }
 
   @override
@@ -42,9 +41,14 @@ class FollowBody extends StatefulWidget {
 }
 
 class _FollowBodyState extends State<FollowBody> {
+  List<MessageData> _follow = [];
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      Provider.of<MessageState>(context).updateFollow();
+    });
   }
 
   @override
@@ -53,9 +57,9 @@ class _FollowBodyState extends State<FollowBody> {
   }
 
   Widget _items(index) {
-    final _message = Provider.of<MessageState>(context);
+    _follow = Provider.of<MessageState>(context).follow;
     List<Widget> images = [];
-    for (var image in _message.follow[index].imgsName) {
+    for (var image in _follow[index].imgsName) {
       images.add(
         new Container(
           child: Image.network(
@@ -72,7 +76,7 @@ class _FollowBodyState extends State<FollowBody> {
         Navigator.pushNamed(
           context,
           "details",
-          arguments: _message.follow[index],
+          arguments: _follow[index],
         );
       },
       child: Container(
@@ -93,9 +97,7 @@ class _FollowBodyState extends State<FollowBody> {
               padding: const EdgeInsets.only(left: 5.0, right: 5.0),
               alignment: Alignment.centerLeft,
               child: Text(
-                _message.follow[index].content == null
-                    ? " "
-                    : _message.follow[index].content,
+                _follow[index].content == null ? " " : _follow[index].content,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
@@ -126,21 +128,19 @@ class _FollowBodyState extends State<FollowBody> {
 
   @override
   Widget build(BuildContext context) {
-    final _message = Provider.of<MessageState>(context);
-    if (_message.follow.length == 0) {
-      return Center(
-        child: Text("暂无消息"),
-      );
-    } else {
-      return ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: _message.follow.length,
-        itemBuilder: (context, index) {
-          return Material(
-            child: _items(index),
+    _follow = Provider.of<MessageState>(context).follow;
+    return _follow.length == 0
+        ? Center(
+            child: Text("暂无消息"),
+          )
+        : ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: _follow.length,
+            itemBuilder: (context, index) {
+              return Material(
+                child: _items(index),
+              );
+            },
           );
-        },
-      );
-    }
   }
 }
