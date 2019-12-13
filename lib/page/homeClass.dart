@@ -136,6 +136,7 @@ class _CategoryBodyState extends State<CategoryBody> {
   Widget _items(index) {
     final _message = Provider.of<MessageState>(context);
     List<Widget> images = [];
+    List<Widget> noImage = [];
     for (var image in _message.category[index].imgsName) {
       images.add(
         new Container(
@@ -148,7 +149,7 @@ class _CategoryBodyState extends State<CategoryBody> {
         ),
       );
     }
-
+    noImage.add(Text("无配图哦"));
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -197,7 +198,7 @@ class _CategoryBodyState extends State<CategoryBody> {
                 runSpacing: 5.0,
                 direction: Axis.horizontal,
                 alignment: WrapAlignment.start,
-                children: images.length != 0 ? images : Text("无图片"),
+                children: images.length != 0 ? images : noImage,
               ),
             ),
           ],

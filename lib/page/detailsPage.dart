@@ -84,6 +84,7 @@ class _TextDetailState extends State<TextDetail> {
     }
     //图片组件列表化组合
     List<Widget> images = [];
+    List<Widget> noImage = [];
     for (var image in _message.imgsName) {
       images.add(
         new GestureDetector(
@@ -109,7 +110,7 @@ class _TextDetailState extends State<TextDetail> {
         ),
       );
     }
-
+    noImage.add(new Text("无配图哦"));
     return Container(
       margin: const EdgeInsets.only(top: 1.0),
       padding: const EdgeInsets.only(
@@ -258,7 +259,7 @@ class _TextDetailState extends State<TextDetail> {
               runSpacing: 5.0,
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
-              children: images.length != 0 ? images : Text("无图片"),
+              children: images.length != 0 ? images : noImage,
             ),
           ),
           new Container(

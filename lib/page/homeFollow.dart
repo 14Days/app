@@ -59,6 +59,7 @@ class _FollowBodyState extends State<FollowBody> {
   Widget _items(index) {
     _follow = Provider.of<MessageState>(context).follow;
     List<Widget> images = [];
+    List<Widget> noImage = [];
     for (var image in _follow[index].imgsName) {
       images.add(
         new Container(
@@ -71,6 +72,7 @@ class _FollowBodyState extends State<FollowBody> {
         ),
       );
     }
+    noImage.add(new Text("无配图哦"));
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -117,7 +119,7 @@ class _FollowBodyState extends State<FollowBody> {
                 runSpacing: 5.0,
                 direction: Axis.horizontal,
                 alignment: WrapAlignment.start,
-                children: images.length != 0 ? images : Text("无图片"),
+                children: images.length != 0 ? images : noImage,
               ),
             ),
           ],

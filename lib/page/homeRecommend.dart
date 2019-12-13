@@ -88,6 +88,7 @@ class _RecommendBodyState extends State<RecommendBody> {
 
   Widget _items(index) {
     List<Widget> images = [];
+    List<Widget> noImage = [];
     for (var image in _recommend[index].imgsName) {
       images.add(
         new Container(
@@ -100,7 +101,7 @@ class _RecommendBodyState extends State<RecommendBody> {
         ),
       );
     }
-
+    noImage.add(new Text("无配图哦"));
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -149,7 +150,7 @@ class _RecommendBodyState extends State<RecommendBody> {
                 runSpacing: 5.0,
                 direction: Axis.horizontal,
                 alignment: WrapAlignment.start,
-                children: images.length != 0 ? images : Text("无图片"),
+                children: images.length != 0 ? images : noImage,
               ),
             ),
           ],
