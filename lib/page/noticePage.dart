@@ -46,6 +46,13 @@ class NoticeBody extends StatefulWidget {
 }
 
 class _NoticeBodyState extends State<NoticeBody> {
+
+  Future<Null> _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000), () async {
+      await Provider.of<NoticeState>(context).updateNotice();
+    });
+
+  }
   @override
   void initState() {
     super.initState();
@@ -138,21 +145,24 @@ class _NoticeBodyState extends State<NoticeBody> {
   @override
   Widget build(BuildContext context) {
     final notice = Provider.of<NoticeState>(context);
-    return notice.items == null
-        ? Center(
-            child: Text(
-              "暂无通知",
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-          )
-        : ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: notice.items.length,
-            itemBuilder: (context, index) {
-              return Material(
-                child: _item(index),
-              );
-            },
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      child: notice.items == null
+          ? Center(
+        child: Text(
+          "暂无通知",
+          style: TextStyle(color: Colors.black, fontSize: 30),
+        ),
+      )
+          : ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: notice.items.length,
+        itemBuilder: (context, index) {
+          return Material(
+            child: _item(index),
           );
+        },
+      ),
+    );
   }
 }
