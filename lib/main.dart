@@ -19,9 +19,8 @@ import 'package:flutter/services.dart';
 bool _ok = false;
 //学习使用
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-  );
+  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   var getUser = await SharedPreferences.getInstance();
   var username = getUser.get('username');
   var password = getUser.get('password');

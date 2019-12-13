@@ -70,33 +70,51 @@ class _SetAvatarState extends State<SetAvatar> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(
-                    color: Colors.blue,
-                    highlightColor: Colors.blue[700],
-                    colorBrightness: Brightness.dark,
-                    splashColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    onPressed: _takePhoto,
-                    child: Text("拍照"),
-                  ),
-                  RaisedButton(
-                    color: Colors.blue,
-                    highlightColor: Colors.blue[700],
-                    colorBrightness: Brightness.dark,
-                    splashColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    onPressed: _openGallery,
-                    child: Text("选择照片"),
-                  ),
-                ],
+              SizedBox(
+                height: 50.0,
               ),
-              imageView(_image),
+              GestureDetector(
+                child: imageView(_image),
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            new GestureDetector(
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 10),
+                                height: 50.0,
+                                alignment: Alignment.topCenter,
+                                child: Text("拍照"),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                                _takePhoto();
+                              },
+                            ),
+                            new GestureDetector(
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 10),
+                                height: 50.0,
+                                alignment: Alignment.topCenter,
+                                child: Text("从相册中选择"),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                                _openGallery();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -110,7 +128,7 @@ class _SetAvatarState extends State<SetAvatar> {
       return Container(
         height: 90,
         width: 90,
-        color: Colors.white,
+        color: MyColors.colorWhite,
         child: Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
