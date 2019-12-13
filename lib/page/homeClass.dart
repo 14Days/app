@@ -1,8 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:furture/config/routes.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
+
+import 'PhotoView.dart';
 
 class HomeClass extends StatefulWidget {
   @override
@@ -59,6 +62,7 @@ class _TopClassState extends State<TopClass> {
     '欧式轻奢',
     '新古典',
   ];
+
   @override
   void initState() {
     super.initState();
@@ -66,8 +70,8 @@ class _TopClassState extends State<TopClass> {
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       Provider.of<MessageState>(context).updateCategory(index + 1);
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -105,7 +109,7 @@ class _TopClassState extends State<TopClass> {
           category[i],
           maxLines: 1,
           style: TextStyle(
-            fontSize:  index == i ? 17.0 : 15.0,
+            fontSize: index == i ? 17.0 : 15.0,
             color: index == i ? Colors.blue : Colors.black,
           ),
         ),
@@ -139,13 +143,26 @@ class _CategoryBodyState extends State<CategoryBody> {
     List<Widget> noImage = [];
     for (var image in _message.category[index].imgsName) {
       images.add(
-        new Container(
-          child: Image.network(
-            Utils.imgPath(image),
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+        new GestureDetector(
+          child: new Container(
+            child: Image.network(
+              Utils.imgPath(image),
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
+          onTap: () {
+            Navigator.of(context).push(
+              new FadeRoute(
+                page: PhotoViewPage(
+                  imageProvider: NetworkImage(Utils.imgPath(image)),
+                  maxScale: 2.0,
+                  minScale: 0.5,
+                ),
+              ),
+            );
+          },
         ),
       );
     }

@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:furture/config/routes.dart';
 import 'package:furture/model/entity.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:provider/provider.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'PhotoView.dart';
 
 List<MessageData> _recommend = [];
 
@@ -82,13 +85,26 @@ class _RecommendBodyState extends State<RecommendBody> {
     List<Widget> noImage = [];
     for (var image in _recommend[index].imgsName) {
       images.add(
-        new Container(
-          child: Image.network(
-            Utils.imgPath(image),
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+        new GestureDetector(
+          child: new Container(
+            child: Image.network(
+              Utils.imgPath(image),
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
+          onTap: () {
+            Navigator.of(context).push(
+              new FadeRoute(
+                page: PhotoViewPage(
+                  imageProvider: NetworkImage(Utils.imgPath(image)),
+                  maxScale: 2.0,
+                  minScale: 0.5,
+                ),
+              ),
+            );
+          },
         ),
       );
     }

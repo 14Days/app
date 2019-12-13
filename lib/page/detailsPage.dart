@@ -110,7 +110,6 @@ class _TextDetailState extends State<TextDetail> {
         ),
       );
     }
-    noImage.add(new Text("无配图哦"));
     return Container(
       margin: const EdgeInsets.only(top: 1.0),
       padding: const EdgeInsets.only(

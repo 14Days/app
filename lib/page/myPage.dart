@@ -5,6 +5,7 @@ import 'package:furture/provider/messageState.dart';
 import '../provider/userState.dart';
 import 'package:provider/provider.dart';
 import '../utils/utils.dart';
+import 'PhotoView.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -199,13 +200,26 @@ class _CollectBodyState extends State<CollectBody> {
     List<Widget> noImage = [];
     for (var image in _message.collect[index].imgsName) {
       images.add(
-        new Container(
-          child: Image.network(
-            Utils.imgPath(image),
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+        new GestureDetector(
+          child: new Container(
+            child: Image.network(
+              Utils.imgPath(image),
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
+          onTap: () {
+            Navigator.of(context).push(
+              new FadeRoute(
+                page: PhotoViewPage(
+                  imageProvider: NetworkImage(Utils.imgPath(image)),
+                  maxScale: 2.0,
+                  minScale: 0.5,
+                ),
+              ),
+            );
+          },
         ),
       );
     }
