@@ -71,30 +71,32 @@ class TopMessage extends StatelessWidget {
     return Container(
       child: new Row(
         children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(top: 25.0),
-              height: 125.0,
-              color: Colors.white,
-              child: GestureDetector(
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      left: 36, right: 32, top: 15, bottom: 15),
-                  child: CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Colors.white,
-                    backgroundImage: user.avatar != null
-                        ? NetworkImage(Utils.myImgPath(user.avatar))
-                        : AssetImage('assets/images/logo.png'),
-                  ),
-                ),
-                onTap: () {
-                  Application.router.navigateTo(context, Routes.setAvatar,
-                      transition: TransitionType.cupertino);
-                },
-              ),
+          Container(
+            height: 125.0,
+            width: 125.0,
+            padding: const EdgeInsets.only(
+              left: 30,
+              right: 20,
+              top: 30,
+              bottom: 20,
             ),
-            flex: 2,
+            color: Colors.white,
+            child: GestureDetector(
+              child: Container(
+                color: Colors.white,
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.white,
+                  backgroundImage: user.avatar != null
+                      ? NetworkImage(Utils.myImgPath(user.avatar))
+                      : AssetImage('assets/images/logo.png'),
+                ),
+              ),
+              onTap: () {
+                Application.router.navigateTo(context, Routes.setAvatar,
+                    transition: TransitionType.cupertino);
+              },
+            ),
           ),
           Expanded(
             child: GestureDetector(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +53,7 @@ class RecommendBody extends StatefulWidget {
 
 class _RecommendBodyState extends State<RecommendBody> {
   RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000), () async {
@@ -195,7 +197,8 @@ class _RecommendBodyState extends State<RecommendBody> {
 //      onLoading: _onLoading,
 
       child: _recommend.length == 0
-          ? Center(
+          ? Container(
+              alignment: Alignment.center,
               child: Text("暂无推荐消息"),
             )
           : ListView.builder(
