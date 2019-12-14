@@ -74,11 +74,17 @@ class _SetEmailState extends State<SetEmail> {
         ),
         body: Container(
           margin: const EdgeInsets.all(20.0),
-          child: TextField(
-            controller: _email,
-            decoration: InputDecoration(
-              hintText: user.email,
+          child: Theme(
+            data: ThemeData(
+              primaryColor: MyColors.colorBlack,
             ),
+            child: TextField(
+              controller: _email,
+              decoration: InputDecoration(
+                hintText: user.email,
+              ),
+            ),
+
           ),
         ),
       ),

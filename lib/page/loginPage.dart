@@ -18,12 +18,13 @@ class LoginPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: MyColors.colorWhite,
           title: new Text(
-            "用户登录",
+            "I deer",
             textAlign: TextAlign.center,
             style: new TextStyle(
-              color: Colors.white,
+              fontSize: 27,
+              color: MyColors.colorBlack,
             ),
           ),
         ),
@@ -84,7 +85,7 @@ class _LoginBodyState extends State<LoginBody> {
         Scaffold.of(context).showSnackBar(
           new SnackBar(
             content: new Text(_showText),
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.black87,
             behavior: SnackBarBehavior.floating,
             duration: Duration(seconds: 1),
           ),
@@ -112,7 +113,7 @@ class _LoginBodyState extends State<LoginBody> {
     }
     final _snackBar = new SnackBar(
       content: new Text(_showText),
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.black87,
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 1),
     );
@@ -125,24 +126,39 @@ class _LoginBodyState extends State<LoginBody> {
       children: <Widget>[
         new Container(
           margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
+          decoration: BoxDecoration(
+            color: MyColors.colorWhite,
+          ),
           child: new Column(
             children: <Widget>[
               Gaps.vGap15,
               Gaps.vGap15,
-              TextField(
-                controller: _controllerAcc,
-                decoration: InputDecoration(
-                  hintText: "用户名或手机",
-                  icon: Icon(Icons.person),
+              Theme(
+                data: ThemeData(
+                  primaryColor: MyColors.colorBlack,
+                ),
+                child: TextField(
+                  controller: _controllerAcc,
+                  decoration: InputDecoration(
+                    hintText: "用户名",
+                    icon: Icon(
+                      Icons.person,
+                    ),
+                  ),
                 ),
               ),
               Gaps.vGap15,
-              TextFormField(
-                controller: _controllerPwd,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: "密码",
-                  icon: Icon(Icons.lock),
+              Theme(
+                data: ThemeData(
+                  primaryColor: MyColors.colorBlack,
+                ),
+                child: TextFormField(
+                  controller: _controllerPwd,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: "密码",
+                    icon: Icon(Icons.lock),
+                  ),
                 ),
               ),
               Gaps.vGap15,
@@ -170,13 +186,18 @@ class _LoginBodyState extends State<LoginBody> {
                 height: 40.0,
                 margin: EdgeInsets.only(top: 20.0),
                 child: RaisedButton(
-                  color: Colors.blue,
-                  highlightColor: Colors.blue[700],
+                  color: MyColors.colorWhite,
                   colorBrightness: Brightness.dark,
                   splashColor: Colors.grey,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
-                  child: Text("登录"),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Text(
+                    "登录",
+                    style: TextStyle(
+                      color: MyColors.colorOrange,
+                    ),
+                  ),
                   onPressed: () {
                     testLogin();
                   },

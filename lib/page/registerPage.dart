@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:furture/service/serviceMethod.dart';
+import 'package:furture/utils/utils.dart';
 import '../component/comment.dart';
 import 'loginPage.dart';
 
@@ -14,12 +16,12 @@ class RegisterPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: MyColors.colorWhite,
           title: new Text(
             "注册",
             textAlign: TextAlign.left,
             style: new TextStyle(
-              color: Colors.white,
+              color: MyColors.colorBlack,
             ),
           ),
         ),
@@ -49,6 +51,28 @@ class _RegisterBodyState extends State<RegisterBody> {
       r'^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]{8,16}$');
   RegExp _phone = RegExp(r'^1[35678]\d{9}$');
 
+  //定义变量
+  Timer _timer;
+
+  //倒计时数值
+  var countdownTime = 0;
+  bool _canDown = false;
+
+  //倒计时方法
+  startCountdown() {
+    countdownTime = 60;
+    final call = (timer) {
+      setState(() {
+        if (countdownTime < 1) {
+          _timer.cancel();
+        } else {
+          countdownTime -= 1;
+        }
+      });
+    };
+    _timer = Timer.periodic(Duration(seconds: 1), call);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +95,9 @@ class _RegisterBodyState extends State<RegisterBody> {
 
   @override
   void dispose() {
+    if (_timer != null) {
+      _timer.cancel();
+    }
     _controllerName.dispose();
     _controllerPwd.dispose();
     _controllerTel.dispose();
@@ -81,19 +108,20 @@ class _RegisterBodyState extends State<RegisterBody> {
 
   void sendCode() async {
     String _showText = "111";
+    _canDown = false;
     //验证注册
-    if (!_name.hasMatch(_controllerName.text.toString())) {
-      _showText = "用户名不能为中文";
-    } else if (!_phone.hasMatch(_controllerTel.text.toString())) {
+    if (!_name.hasMatch(_controllerName.text) || _controllerName.text == '') {
+      _showText = "请输入正确用户名";
+    } else if (!_phone.hasMatch(_controllerTel.text)) {
       _showText = "手机号格式不正确";
-    } else if (!_password.hasMatch(_controllerPwd.text.toString())) {
+    } else if (!_password.hasMatch(_controllerPwd.text)) {
       _showText = "密码应包含大小写字母，数字，符号中的任意三种";
-    } else if (_controllerPwd.text.toString() !=
-        _controllerRepwd.text.toString()) {
+    } else if (_controllerPwd.text != _controllerRepwd.text) {
       _showText = "两次密码不一致";
     } else {
-      final onValue = await codeService(_controllerTel.text.toString());
+      final onValue = await codeService(_controllerTel.text);
       if (onValue['status'] == 'success') {
+        _canDown = true;
         _showText = "验证码已发送";
       } else {
         if (onValue['err_msg'] == '手机号已存在') {
@@ -158,55 +186,79 @@ class _RegisterBodyState extends State<RegisterBody> {
       children: <Widget>[
         new Container(
           margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
-          child: new Column(
-            children: <Widget>[
-              TextField(
-                controller: _controllerName,
-                decoration:
-                    InputDecoration(hintText: "用户名", icon: Icon(Icons.person)),
-              ),
-              TextField(
-                controller: _controllerTel,
-                decoration:
-                    InputDecoration(hintText: "手机号", icon: Icon(Icons.phone)),
-              ),
-              TextField(
-                controller: _controllerPwd,
-                obscureText: true,
-                decoration:
-                    InputDecoration(hintText: "密码", icon: Icon(Icons.lock)),
-              ),
-              TextField(
-                controller: _controllerRepwd,
-                obscureText: true,
-                decoration:
-                    InputDecoration(hintText: "重复密码", icon: Icon(Icons.lock)),
-              ),
-              TextField(
-                controller: _controllerVerif,
-                decoration: InputDecoration(
-                    hintText: "验证码",
-                    icon: Icon(Icons.verified_user),
-                    suffixIcon: new IconButton(
-                        icon: Icon(Icons.send), onPressed: sendCode)),
-              ),
-              new Container(
+          child: Theme(
+            data: ThemeData(
+              primaryColor: MyColors.colorBlack,
+            ),
+            child: new Column(
+              children: <Widget>[
+                TextField(
+                  controller: _controllerName,
+                  decoration: InputDecoration(
+                      hintText: "用户名", icon: Icon(Icons.person)),
+                ),
+                TextField(
+                  controller: _controllerTel,
+                  decoration:
+                      InputDecoration(hintText: "手机号", icon: Icon(Icons.phone)),
+                ),
+                TextField(
+                  controller: _controllerPwd,
+                  obscureText: true,
+                  decoration:
+                      InputDecoration(hintText: "密码", icon: Icon(Icons.lock)),
+                ),
+                TextField(
+                  controller: _controllerRepwd,
+                  obscureText: true,
+                  decoration:
+                      InputDecoration(hintText: "重复密码", icon: Icon(Icons.lock)),
+                ),
+                TextField(
+                  controller: _controllerVerif,
+                  decoration: InputDecoration(
+                      hintText: "验证码",
+                      icon: Icon(Icons.verified_user),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(top: 15, right: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (countdownTime == 0) {
+                              sendCode();
+                              if (_canDown) {
+                                startCountdown();
+                              }
+                            }
+                          },
+                          child: Text(
+                            countdownTime > 0
+                                ? '${countdownTime}s后重新发送'
+                                : "发送验证码",
+                          ),
+                        ),
+                      )),
+                ),
+                new Container(
                   width: 200.0,
                   height: 40.0,
                   margin: EdgeInsets.only(top: 20.0),
                   child: RaisedButton(
-                    color: Colors.blue,
-                    highlightColor: Colors.blue[700],
+                    color: MyColors.colorWhite,
                     colorBrightness: Brightness.dark,
                     splashColor: Colors.grey,
-                    child: Text("注册"),
+                    child: Text(
+                      "注册",
+                      style: TextStyle(color: MyColors.colorOrange),
+                    ),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                     onPressed: () {
                       testRegister();
                     },
-                  )),
-            ],
+                  ),
+                ),
+              ],
+            ),
           ),
         )
       ],

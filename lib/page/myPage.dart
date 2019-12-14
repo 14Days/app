@@ -36,7 +36,7 @@ class _MyPageState extends State<MyPage> {
             Expanded(
               child: Container(
                 height: 50.0,
-                margin: const EdgeInsets.only(top: 2.0),
+                margin: const EdgeInsets.only(top: 3.0),
                 alignment: Alignment.center,
                 decoration: new BoxDecoration(
                   color: Colors.white,
