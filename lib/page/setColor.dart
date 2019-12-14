@@ -1,3 +1,4 @@
+import 'package:furture/provider/messageState.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -355,7 +356,7 @@ class _SetColorState extends State<SetColor> {
     void testSet() async {
       final onValue = await postColorService(user.color);
       if (onValue['status'] == 'success') {
-//        Provider.of<MessageState>(context).updateRecommend();
+        Provider.of<MessageState>(context).updateRecommend();
         Navigator.pop(context);
       }
     }
