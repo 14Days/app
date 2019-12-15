@@ -237,8 +237,8 @@ class _TextDetailState extends State<TextDetail> {
             margin: const EdgeInsets.only(top: 20.0),
             padding: const EdgeInsets.only(top: 10.0, left: 5.0),
             child: Text(
-              _message.content != null ? _message.content : "无标题",
-              maxLines: 10,
+              _message.content != null ? _message.content : " ",
+              maxLines: 100,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -266,18 +266,6 @@ class _TextDetailState extends State<TextDetail> {
               height: 20.0,
             ),
           ),
-//          //"评论"字样栏
-//          new Container(
-//            padding: const EdgeInsets.only(left: 5.0),
-//            alignment: Alignment.bottomLeft,
-//            child: Text(
-//              "评论",
-//              style: TextStyle(
-//                color: Colors.black54,
-//                fontSize: 16.0,
-//              ),
-//            ),
-//          ),
         ],
       ),
     );

@@ -139,6 +139,7 @@ class _LoginBodyState extends State<LoginBody> {
                 ),
                 child: TextField(
                   controller: _controllerAcc,
+                  cursorColor: MyColors.colorBlack,
                   decoration: InputDecoration(
                     hintText: "用户名",
                     icon: Icon(
@@ -155,6 +156,7 @@ class _LoginBodyState extends State<LoginBody> {
                 child: TextFormField(
                   controller: _controllerPwd,
                   obscureText: true,
+                  cursorColor: MyColors.colorBlack,
                   decoration: InputDecoration(
                     hintText: "密码",
                     icon: Icon(Icons.lock),

@@ -56,7 +56,6 @@ class _RegisterBodyState extends State<RegisterBody> {
 
   //倒计时数值
   var countdownTime = 0;
-  bool _canDown = false;
 
   //倒计时方法
   startCountdown() {
@@ -108,7 +107,6 @@ class _RegisterBodyState extends State<RegisterBody> {
 
   void sendCode() async {
     String _showText = "111";
-    _canDown = false;
     //验证注册
     if (!_name.hasMatch(_controllerName.text) || _controllerName.text == '') {
       _showText = "请输入正确用户名";
@@ -121,19 +119,20 @@ class _RegisterBodyState extends State<RegisterBody> {
     } else {
       final onValue = await codeService(_controllerTel.text);
       if (onValue['status'] == 'success') {
-        _canDown = true;
+        startCountdown();
         _showText = "验证码已发送";
       } else {
         if (onValue['err_msg'] == '手机号已存在') {
           _showText = "手机号已存在";
         } else {
+          startCountdown();
           _showText = "发送失败,请稍后尝试";
         }
       }
     }
     final _snackBar = new SnackBar(
       content: new Text(_showText),
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.black87,
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 1),
     );
@@ -194,49 +193,53 @@ class _RegisterBodyState extends State<RegisterBody> {
               children: <Widget>[
                 TextField(
                   controller: _controllerName,
+                  cursorColor: MyColors.colorBlack,
                   decoration: InputDecoration(
                       hintText: "用户名", icon: Icon(Icons.person)),
                 ),
                 TextField(
                   controller: _controllerTel,
+                  cursorColor: MyColors.colorBlack,
                   decoration:
                       InputDecoration(hintText: "手机号", icon: Icon(Icons.phone)),
                 ),
                 TextField(
                   controller: _controllerPwd,
                   obscureText: true,
+                  cursorColor: MyColors.colorBlack,
                   decoration:
                       InputDecoration(hintText: "密码", icon: Icon(Icons.lock)),
                 ),
                 TextField(
                   controller: _controllerRepwd,
                   obscureText: true,
+                  cursorColor: MyColors.colorBlack,
                   decoration:
                       InputDecoration(hintText: "重复密码", icon: Icon(Icons.lock)),
                 ),
                 TextField(
                   controller: _controllerVerif,
+                  autofocus: false,
+                  cursorColor: MyColors.colorBlack,
                   decoration: InputDecoration(
-                      hintText: "验证码",
-                      icon: Icon(Icons.verified_user),
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.only(top: 15, right: 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            if (countdownTime == 0) {
-                              sendCode();
-                              if (_canDown) {
-                                startCountdown();
-                              }
-                            }
-                          },
-                          child: Text(
-                            countdownTime > 0
-                                ? '${countdownTime}s后重新发送'
-                                : "发送验证码",
-                          ),
+                    hintText: "验证码",
+                    icon: Icon(Icons.verified_user),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(top: 15, right: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (countdownTime == 0) {
+                            sendCode();
+                          }
+                        },
+                        child: Text(
+                          countdownTime > 0
+                              ? '${countdownTime}s后重新发送'
+                              : "发送验证码",
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
                 new Container(
                   width: 200.0,

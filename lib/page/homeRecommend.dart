@@ -173,7 +173,18 @@ class _RecommendBodyState extends State<RecommendBody> {
     return SmartRefresher(
       controller: _refreshController,
       enablePullDown: true,
-      header: WaterDropHeader(),
+      header: WaterDropHeader(
+        refresh: CupertinoActivityIndicator(),
+        complete: Center(
+          child: Text(
+            "刷新完成",
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 15
+            ),
+          ),
+        ),
+      ),
       onRefresh: _onRefresh,
 //      enablePullUp: true,
 //      footer: CustomFooter(
