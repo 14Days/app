@@ -26,18 +26,16 @@ class _SetColorState extends State<SetColor> {
     final user = Provider.of<UserState>(context);
     _color = user.color;
     List<String> colors = [
-      "red",
-      "yellow",
-      "green",
-      "black",
-      "brown",
-      "orange",
-      "purple",
-      "grey",
-      "white",
-      "pink",
-      "golden",
-      "silvery",
+      "红色",
+      "绿色",
+      "蓝色",
+      "紫色",
+      "橙色",
+      "粉色",
+      "黄色",
+      "灰色",
+      "褐色",
+      "肉色",
     ];
     Widget colorForm() {
       return new StatefulBuilder(
@@ -81,7 +79,7 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.yellow,
+                        color: Colors.green,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -106,7 +104,7 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.green,
+                        color: Colors.blue,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -131,7 +129,7 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.black,
+                        color: Colors.purple,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -156,7 +154,7 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.brown,
+                        color: Colors.orangeAccent,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -181,7 +179,7 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.orange,
+                        color: Colors.pinkAccent,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -206,7 +204,7 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.purple,
+                        color: Colors.yellowAccent,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -256,7 +254,7 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.white,
+                        color: Colors.brown,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -281,63 +279,13 @@ class _SetColorState extends State<SetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.pink,
+                        color: Color.fromARGB(255, 243, 208, 177),
                         child: SizedBox(
                           height: 20,
                           width: 30,
                         ),
                       ),
                       Text(colors[9]),
-                    ],
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _color = value;
-                    });
-                  },
-                ),
-              ),
-              Flexible(
-                child: RadioListTile<int>(
-                  value: 11,
-                  activeColor: MyColors.colorOrange,
-                  groupValue: _color,
-                  title: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(right: 10.0),
-                        color: Color.fromARGB(255, 255, 215, 0),
-                        child: SizedBox(
-                          height: 20,
-                          width: 30,
-                        ),
-                      ),
-                      Text(colors[10]),
-                    ],
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _color = value;
-                    });
-                  },
-                ),
-              ),
-              Flexible(
-                child: RadioListTile<int>(
-                  value: 12,
-                  activeColor: MyColors.colorOrange,
-                  groupValue: _color,
-                  title: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(right: 10.0),
-                        color: Color.fromARGB(125, 192, 192, 192),
-                        child: SizedBox(
-                          height: 20,
-                          width: 30,
-                        ),
-                      ),
-                      Text(colors[11]),
                     ],
                   ),
                   onChanged: (value) {

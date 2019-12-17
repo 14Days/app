@@ -76,8 +76,8 @@ class TopMessage extends StatelessWidget {
             width: 125.0,
             padding: const EdgeInsets.only(
               left: 30,
-              right: 20,
-              top: 30,
+              right: 30,
+              top: 40,
               bottom: 20,
             ),
             color: Colors.white,

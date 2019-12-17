@@ -54,13 +54,20 @@ class TopClass extends StatefulWidget {
 class _TopClassState extends State<TopClass> {
   int index;
   List category = [
-    '高贵典雅',
+    '动感',
+    '豪华',
+    "粗狂",
+    '浪漫',
+    '自然',
+    '古典',
     '古典考究',
-    "恬静休闲",
-    '自然田园',
-    '地中海',
-    '欧式轻奢',
-    '新古典',
+    '雅致',
+    '精致',
+    "考究",
+    '高贵',
+    '清爽',
+    '冷休闲',
+    '现代'
   ];
 
   @override
