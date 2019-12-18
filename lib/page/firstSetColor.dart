@@ -23,14 +23,14 @@ class _FirstSetColorState extends State<FirstSetColor> {
     final user = Provider.of<UserState>(context);
     List<String> colors = [
       "红色",
-      "绿色",
-      "蓝色",
-      "紫色",
-      "橙色",
-      "粉色",
       "黄色",
-      "灰色",
+      "绿色",
       "褐色",
+      "橙色",
+      "紫色",
+      "灰色",
+      "粉色",
+      "蓝色",
       "肉色",
     ];
     Widget colorForm() {
@@ -75,7 +75,7 @@ class _FirstSetColorState extends State<FirstSetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.green,
+                        color: Colors.yellowAccent,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -100,7 +100,7 @@ class _FirstSetColorState extends State<FirstSetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.blue,
+                        color: Colors.green,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -118,14 +118,14 @@ class _FirstSetColorState extends State<FirstSetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 4,
+                  value: 5,
                   activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.purple,
+                        color: Colors.brown,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -143,7 +143,7 @@ class _FirstSetColorState extends State<FirstSetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 5,
+                  value: 6,
                   activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
@@ -168,31 +168,6 @@ class _FirstSetColorState extends State<FirstSetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 6,
-                  activeColor: MyColors.colorOrange,
-                  groupValue: _color,
-                  title: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.pinkAccent,
-                        child: SizedBox(
-                          height: 20,
-                          width: 30,
-                        ),
-                      ),
-                      Text(colors[5]),
-                    ],
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _color = value;
-                    });
-                  },
-                ),
-              ),
-              Flexible(
-                child: RadioListTile<int>(
                   value: 7,
                   activeColor: MyColors.colorOrange,
                   groupValue: _color,
@@ -200,13 +175,13 @@ class _FirstSetColorState extends State<FirstSetColor> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.yellowAccent,
+                        color: Colors.purpleAccent,
                         child: SizedBox(
                           height: 20,
                           width: 30,
                         ),
                       ),
-                      Text(colors[6]),
+                      Text(colors[5]),
                     ],
                   ),
                   onChanged: (value) {
@@ -231,6 +206,31 @@ class _FirstSetColorState extends State<FirstSetColor> {
                           width: 30,
                         ),
                       ),
+                      Text(colors[6]),
+                    ],
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _color = value;
+                    });
+                  },
+                ),
+              ),
+              Flexible(
+                child: RadioListTile<int>(
+                  value: 10,
+                  activeColor: MyColors.colorOrange,
+                  groupValue: _color,
+                  title: Row(
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsets.only(right: 10.0),
+                        color: Colors.pinkAccent,
+                        child: SizedBox(
+                          height: 20,
+                          width: 30,
+                        ),
+                      ),
                       Text(colors[7]),
                     ],
                   ),
@@ -243,14 +243,14 @@ class _FirstSetColorState extends State<FirstSetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 9,
+                  value: 13,
                   activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.only(right: 10.0),
-                        color: Colors.brown,
+                        color: Colors.blue,
                         child: SizedBox(
                           height: 20,
                           width: 30,
@@ -268,7 +268,7 @@ class _FirstSetColorState extends State<FirstSetColor> {
               ),
               Flexible(
                 child: RadioListTile<int>(
-                  value: 10,
+                  value: 14,
                   activeColor: MyColors.colorOrange,
                   groupValue: _color,
                   title: Row(

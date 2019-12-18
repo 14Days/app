@@ -69,6 +69,22 @@ class _TopClassState extends State<TopClass> {
     '冷休闲',
     '现代'
   ];
+  Map<String, int> categoryIndex = {
+    '动感': 1,
+    '豪华': 2,
+    "粗狂": 3,
+    '浪漫': 4,
+    '自然': 4,
+    '古典': 5,
+    '古典考究': 6,
+    '雅致': 7,
+    '精致': 8,
+    "考究": 9,
+    '高贵': 10,
+    '清爽': 11,
+    '冷休闲': 12,
+    '现代': 13
+  };
 
   @override
   void initState() {
@@ -97,7 +113,9 @@ class _TopClassState extends State<TopClass> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          Provider.of<MessageState>(context).updateCategory(i + 1);
+          Provider.of<MessageState>(context)
+              .updateCategory(categoryIndex[category[i + 1]]);
+
           index = i;
         });
       },
