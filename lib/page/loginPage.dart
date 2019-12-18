@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +51,27 @@ class _LoginBodyState extends State<LoginBody> {
   TextEditingController _controllerAcc = new TextEditingController();
   TextEditingController _controllerPwd = new TextEditingController();
 
+//定义变量
+  Timer _timer;
+
+  //倒计时数值
+  var countdownTime = 0;
+
+  //倒计时方法
+  startCountdown() {
+    countdownTime = 3;
+    final call = (timer) {
+      setState(() {
+        if (countdownTime < 1) {
+          _timer.cancel();
+        } else {
+          countdownTime -= 1;
+        }
+      });
+    };
+    _timer = Timer.periodic(Duration(seconds: 1), call);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -62,16 +85,20 @@ class _LoginBodyState extends State<LoginBody> {
 
   @override
   void dispose() {
+    if (_timer != null) {
+      _timer.cancel();
+    }
     _controllerAcc.dispose();
     _controllerPwd.dispose();
     super.dispose();
   }
 
   //登录提示文本
-  String _showText = "正在登录";
+  String _showText = "开始登录";
 
   //验证登录
   void testLogin() async {
+    startCountdown();
     if (_controllerAcc.text.toString() == '') {
       _showText = '请输入用户名或手机号';
     } else if (_controllerPwd.text.toString() == '') {
@@ -82,14 +109,6 @@ class _LoginBodyState extends State<LoginBody> {
           _controllerAcc.text.toString(), _controllerPwd.text.toString());
       if (onValue['status'] == 'success') {
         _showText = "正在登录";
-        Scaffold.of(context).showSnackBar(
-          new SnackBar(
-            content: new Text(_showText),
-            backgroundColor: Colors.black87,
-            behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 1),
-          ),
-        );
         final toColor = await getUserService();
         if (toColor['status'] == 'success') {
           Navigator.of(context).pushAndRemoveUntil(
@@ -111,13 +130,39 @@ class _LoginBodyState extends State<LoginBody> {
         }
       }
     }
-    final _snackBar = new SnackBar(
-      content: new Text(_showText),
-      backgroundColor: Colors.black87,
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: 1),
-    );
-    Scaffold.of(context).showSnackBar(_snackBar);
+    if (_showText != "正在登录") {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                alignment: Alignment.center,
+                height: 120,
+                width: 170,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.white,
+                ),
+                child: Text(
+                  _showText,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    decoration: TextDecoration.none,
+                    fontSize: 17.0,
+                    fontFamily: "Rock Salt",
+                    fontWeight: FontWeight.w100,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -201,7 +246,9 @@ class _LoginBodyState extends State<LoginBody> {
                     ),
                   ),
                   onPressed: () {
-                    testLogin();
+                    if (countdownTime == 0) {
+                      testLogin();
+                    }
                   },
                 ),
               ),

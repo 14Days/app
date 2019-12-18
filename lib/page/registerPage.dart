@@ -119,20 +119,20 @@ class _RegisterBodyState extends State<RegisterBody> {
     } else {
       final onValue = await codeService(_controllerTel.text);
       if (onValue['status'] == 'success') {
-        startCountdown();
         _showText = "验证码已发送";
+        startCountdown();
       } else {
         if (onValue['err_msg'] == '手机号已存在') {
           _showText = "手机号已存在";
         } else {
-          startCountdown();
           _showText = "发送失败,请稍后尝试";
+          startCountdown();
         }
       }
     }
     final _snackBar = new SnackBar(
       content: new Text(_showText),
-      backgroundColor: Colors.black87,
+      backgroundColor: MyColors.colorOrange,
       behavior: SnackBarBehavior.floating,
       duration: Duration(seconds: 1),
     );
@@ -141,7 +141,6 @@ class _RegisterBodyState extends State<RegisterBody> {
 
   void testRegister() async {
     String _showText = "开始注册";
-    bool _ok = false;
     //验证注册
     if (_controllerVerif.text.toString() == '') {
       _showText = "请输入验证码";
@@ -152,7 +151,7 @@ class _RegisterBodyState extends State<RegisterBody> {
           _controllerTel.text.toString(),
           _controllerVerif.text.toString());
       if (onValue['status'] == 'success') {
-        _ok = true;
+        _showText = "正在注册";
       } else {
         if (onValue['err_msg'] == '验证码错误') {
           _showText = "验证码错误";
@@ -164,18 +163,41 @@ class _RegisterBodyState extends State<RegisterBody> {
       }
     }
 
-    final snackBar = new SnackBar(
-      content: new Text(_showText),
-      backgroundColor: Colors.blue,
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: 1),
-    );
-    Scaffold.of(context).showSnackBar(snackBar);
-
-    if (_ok == true) {
+    if (_showText != "正在注册") {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                alignment: Alignment.center,
+                height: 120,
+                width: 170,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.white,
+                ),
+                child: Text(
+                  _showText,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    decoration: TextDecoration.none,
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginPage()),
-          (route) => route == null);
+              (route) => route == null);
     }
   }
 

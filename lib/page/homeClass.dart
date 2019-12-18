@@ -55,35 +55,27 @@ class _TopClassState extends State<TopClass> {
   int index;
   List category = [
     '动感',
-    '豪华',
-    "粗狂",
-    '浪漫',
     '自然',
-    '古典',
-    '古典考究',
-    '雅致',
-    '精致',
-    "考究",
-    '高贵',
     '清爽',
+    '雅致',
+    '豪华',
+    '浪漫',
+    '高贵',
     '冷休闲',
-    '现代'
+    '考究',
+    '温暖',
   ];
   Map<String, int> categoryIndex = {
-    '动感': 1,
-    '豪华': 2,
-    "粗狂": 3,
-    '浪漫': 4,
-    '自然': 4,
-    '古典': 5,
-    '古典考究': 6,
-    '雅致': 7,
-    '精致': 8,
-    "考究": 9,
-    '高贵': 10,
-    '清爽': 11,
-    '冷休闲': 12,
-    '现代': 13
+    '动感': 44,
+    '自然': 45,
+    '清爽': 46,
+    '雅致': 47,
+    '豪华': 48,
+    '浪漫': 49,
+    '高贵': 50,
+    '冷休闲': 51,
+    '考究': 52,
+    '温暖': 53,
   };
 
   @override
@@ -91,7 +83,7 @@ class _TopClassState extends State<TopClass> {
     super.initState();
     index = 0;
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateCategory(index + 1);
+      Provider.of<MessageState>(context).updateCategory(44);
     });
   }
 
@@ -114,8 +106,7 @@ class _TopClassState extends State<TopClass> {
       onTap: () {
         setState(() {
           Provider.of<MessageState>(context)
-              .updateCategory(categoryIndex[category[i + 1]]);
-
+              .updateCategory(categoryIndex[category[i]]);
           index = i;
         });
       },

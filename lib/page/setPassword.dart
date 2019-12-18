@@ -93,6 +93,7 @@ class _SetPasswordState extends State<SetPassword> {
                           ),
                           child: Text(
                             _showText,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               decoration: TextDecoration.none,
                               fontSize: 17.0,
