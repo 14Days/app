@@ -54,7 +54,7 @@ class _LogoutState extends State<Logout> {
       height: 50.0,
       child: RaisedButton(
         color: Color.fromARGB(255, 254, 254, 254),
-        highlightColor: Colors.blue[700],
+        highlightColor: Colors.transparent,
         colorBrightness: Brightness.dark,
         splashColor: Colors.grey,
         child: Text(

@@ -1,3 +1,4 @@
+import 'package:furture/provider/messageState.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,10 @@ class _SetNicknameState extends State<SetNickname> {
       final onValue =
           await postUserService(user.email, user.sex, user.nickname);
       if (onValue['status'] == 'success') {
+        Provider.of<MessageState>(context).updateRecommend();
+        Provider.of<MessageState>(context).updateFollow();
+        Provider.of<MessageState>(context).updateCollect();
+        Provider.of<MessageState>(context).updateCategory(44);
         Navigator.pop(context);
       } else {
         _showText = "设置失败，请检查格式";

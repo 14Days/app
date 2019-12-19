@@ -35,7 +35,7 @@ class _SecondCommentPageState extends State<SecondCommentPage> {
             padding: const EdgeInsets.only(left: 25.0, top: 5.0),
             alignment: Alignment.centerLeft,
             child: Text(
-              "他的回复",
+              "回复内容",
               style: TextStyle(
                 color: Colors.grey,
               ),

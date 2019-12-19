@@ -147,7 +147,7 @@ class _FollowBodyState extends State<FollowBody> {
     _follow = Provider.of<MessageState>(context).follow;
     return _follow.length == 0
         ? Center(
-            child: Text("暂无消息"),
+            child: Text("你还没有关注哦~"),
           )
         : ListView.builder(
             scrollDirection: Axis.vertical,

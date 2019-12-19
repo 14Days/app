@@ -18,7 +18,7 @@ class _HomeClassState extends State<HomeClass>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateCategory(1);
+      Provider.of<MessageState>(context).updateCategory(44);
     });
   }
 
