@@ -84,6 +84,7 @@ class _SetNicknameState extends State<SetNickname> {
             margin: const EdgeInsets.all(20.0),
             child: TextField(
               controller: _nickname,
+              maxLength: 6,
               decoration: InputDecoration(
                 hintText: user.nickname,
               ),
