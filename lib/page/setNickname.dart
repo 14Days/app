@@ -76,12 +76,17 @@ class _SetNicknameState extends State<SetNickname> {
             ),
           ],
         ),
-        body: Container(
-          margin: const EdgeInsets.all(20.0),
-          child: TextField(
-            controller: _nickname,
-            decoration: InputDecoration(
-              hintText: user.nickname,
+        body: Theme(
+          data: ThemeData(
+            primaryColor: MyColors.colorBlack,
+          ),
+          child: Container(
+            margin: const EdgeInsets.all(20.0),
+            child: TextField(
+              controller: _nickname,
+              decoration: InputDecoration(
+                hintText: user.nickname,
+              ),
             ),
           ),
         ),

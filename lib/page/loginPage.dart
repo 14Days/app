@@ -100,7 +100,7 @@ class _LoginBodyState extends State<LoginBody> {
   void testLogin() async {
     startCountdown();
     if (_controllerAcc.text.toString() == '') {
-      _showText = '请输入用户名或手机号';
+      _showText = '请输入用户名';
     } else if (_controllerPwd.text.toString() == '') {
       _showText = "请输入密码";
     } else {
