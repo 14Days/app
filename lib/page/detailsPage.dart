@@ -412,6 +412,7 @@ class _InterActionState extends State<InterAction> {
       );
     } else {
       return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         itemCount: _comments.length,
         itemBuilder: (context, index) {

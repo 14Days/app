@@ -117,16 +117,15 @@ class _RegisterBodyState extends State<RegisterBody> {
     } else if (_controllerPwd.text != _controllerRepwd.text) {
       _showText = "两次密码不一致";
     } else {
+      startCountdown();
       final onValue = await codeService(_controllerTel.text);
       if (onValue['status'] == 'success') {
         _showText = "验证码已发送";
-        startCountdown();
       } else {
         if (onValue['err_msg'] == '手机号已存在') {
           _showText = "手机号已存在";
         } else {
           _showText = "发送失败,请稍后尝试";
-          startCountdown();
         }
       }
     }
