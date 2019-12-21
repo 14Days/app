@@ -26,7 +26,7 @@ class _SetPasswordState extends State<SetPassword> {
       print("新密码的监听方法：" + _new.text);
     });
     _reNew.addListener(() {
-      print("新密码的监听方法：" + _new.text);
+      print("新密码的监听方法：" + _reNew.text);
     });
   }
 
@@ -60,10 +60,10 @@ class _SetPasswordState extends State<SetPassword> {
               onPressed: () async {
                 if (_old.text == '') {
                   _showText = "请输入旧密码";
-                } else if (!_password.hasMatch(_new.text)) {
-                  _showText = "密码格式不正确";
                 } else if (_new.text != _reNew.text) {
                   _showText = "两次密码不一致";
+                } else if (!_password.hasMatch(_new.text)) {
+                  _showText = "密码格式不正确";
                 } else {
                   final _onValue = await changePasswordService(
                       _old.text.toString(), _new.text.toString());

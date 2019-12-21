@@ -54,9 +54,7 @@ class DetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          SliverFillRemaining(
-            child: InterAction(),
-          ),
+          InterAction(),
         ],
       ),
       //底部按钮
@@ -411,14 +409,24 @@ class _InterActionState extends State<InterAction> {
         child: Text("暂无评论"),
       );
     } else {
-      return ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        itemCount: _comments.length,
-        itemBuilder: (context, index) {
-          return _items(index);
-        },
+      return SliverFixedExtentList(        // SliverList的语法糖，用于每个item固定高度的List
+        delegate: SliverChildBuilderDelegate(
+              (context, index) => Container(
+                child: _items(index),
+              ),
+          childCount: _comments.length,
+        ),
+        itemExtent: 100,
       );
+//      return ListView.builder(
+//        shrinkWrap: true,
+//        physics: NeverScrollableScrollPhysics(),
+//        scrollDirection: Axis.vertical,
+//        itemCount: _comments.length,
+//        itemBuilder: (context, index) {
+//          return _items(index);
+//        },
+//      );
     }
   }
 }
