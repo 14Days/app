@@ -405,8 +405,10 @@ class _InterActionState extends State<InterAction> {
     _message = ModalRoute.of(context).settings.arguments;
     _comments = _message.topComment;
     if (_comments.length == 0) {
-      return Center(
-        child: Text("暂无评论"),
+      return SliverFillRemaining(
+        child: Center(
+          child: Text("暂无评论"),
+        ),
       );
     } else {
       return SliverFixedExtentList(        // SliverList的语法糖，用于每个item固定高度的List
