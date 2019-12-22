@@ -322,7 +322,7 @@ class _InterActionState extends State<InterAction> {
           padding: const EdgeInsets.only(
             left: 15.0,
             right: 15.0,
-            top: 20.0,
+            top: 10.0,
             bottom: 10.0,
           ),
           margin: const EdgeInsets.only(bottom: 6.0),
@@ -386,7 +386,7 @@ class _InterActionState extends State<InterAction> {
                   _comments[index].content != null
                       ? _comments[index].content
                       : "刚刚",
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 20.0),
@@ -604,11 +604,11 @@ class _BottomInputState extends State<BottomInput> {
             ),
           ),
           new Container(
-            height: 50,
+            height: 70,
             color: Colors.white,
             child: TextField(
               autofocus: true,
-              maxLines: 100,
+              maxLength: 50,
               controller: _text,
               decoration: InputDecoration(
                 hintText: "  输入想要说的话吧~",
