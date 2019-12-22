@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:furture/component/comment.dart';
 import 'package:furture/provider/messageState.dart';
-import 'package:provider/provider.dart';
 import 'package:furture/utils/utils.dart';
+import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'PhotoView.dart';
 
@@ -43,7 +44,16 @@ class FollowBody extends StatefulWidget {
 }
 
 class _FollowBodyState extends State<FollowBody> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   List<MessageData> _follow = [];
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000), () async {
+      await Provider.of<MessageState>(context).updateFollow();
+    });
+    _refreshController.refreshCompleted();
+  }
 
   @override
   void initState() {
@@ -145,18 +155,35 @@ class _FollowBodyState extends State<FollowBody> {
   @override
   Widget build(BuildContext context) {
     _follow = Provider.of<MessageState>(context).follow;
-    return _follow.length == 0
-        ? Center(
-            child: Text("你还没有关注哦~"),
-          )
-        : ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: _follow.length,
-            itemBuilder: (context, index) {
-              return Material(
-                child: _items(index),
-              );
-            },
+    return SmartRefresher(
+      controller: _refreshController,
+      enablePullDown: true,
+      header: WaterDropHeader(
+        refresh: CupertinoActivityIndicator(),
+        complete: Center(
+          child: Text(
+            "刷新完成",
+            style: TextStyle(
+                color: Colors.grey,
+                fontSize: 15
+            ),
+          ),
+        ),
+      ),
+      onRefresh: _onRefresh,
+      child: _follow.length == 0
+          ? Center(
+        child: Text("你还没有关注哦~"),
+      )
+          : ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: _follow.length,
+        itemBuilder: (context, index) {
+          return Material(
+            child: _items(index),
           );
+        },
+      ),
+    );
   }
 }
