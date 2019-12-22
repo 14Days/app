@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:furture/service/serviceMethod.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
+
 import '../provider/userState.dart';
-import 'package:furture/service/serviceMethod.dart';
 
 class SetEmail extends StatefulWidget {
   @override
@@ -11,7 +12,8 @@ class SetEmail extends StatefulWidget {
 
 class _SetEmailState extends State<SetEmail> {
   TextEditingController _email = new TextEditingController();
-
+  RegExp _emailReg = RegExp(
+      r'^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$');
   @override
   void initState() {
     super.initState();
@@ -32,19 +34,50 @@ class _SetEmailState extends State<SetEmail> {
     user.getUserInfo();
     String _showText = "";
     void testSet() async {
-      final onValue =
-          await postUserService(user.email, user.sex, user.nickname);
-      if (onValue['status'] == 'success') {
-        Navigator.pop(context);
+      if (_emailReg.hasMatch(_email.text)) {
+        final onValue =
+        await postUserService(user.email, user.sex, user.nickname);
+        if (onValue['status'] == 'success') {
+          _showText = "设置成功";
+          Navigator.pop(context);
+        } else {
+          _showText = "设置失败，请检查格式";
+        }
       } else {
-        _showText = "设置失败，请检查格式";
-        final _snackBar = new SnackBar(
-          content: new Text(_showText),
-          backgroundColor: Colors.blue,
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 1),
+        _showText = "邮箱格式不正确";
+      }
+      if (_showText != "设置成功") {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(5.0),
+                  alignment: Alignment.center,
+                  height: 140,
+                  width: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.white,
+                  ),
+                  child: Text(
+                    _showText,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      fontSize: 17.0,
+                      fontFamily: "Rock Salt",
+                      fontWeight: FontWeight.w100,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         );
-        Scaffold.of(context).showSnackBar(_snackBar);
       }
     }
 
