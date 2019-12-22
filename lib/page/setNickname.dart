@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:furture/provider/messageState.dart';
+import 'package:furture/service/serviceMethod.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
+
 import '../provider/userState.dart';
-import 'package:furture/service/serviceMethod.dart';
 
 class SetNickname extends StatefulWidget {
   @override
@@ -35,6 +36,7 @@ class _SetNicknameState extends State<SetNickname> {
       final onValue =
           await postUserService(user.email, user.sex, user.nickname);
       if (onValue['status'] == 'success') {
+        user.setNickname(_nickname.text);
         Provider.of<MessageState>(context).updateRecommend();
         Provider.of<MessageState>(context).updateFollow();
         Provider.of<MessageState>(context).updateCollect();
@@ -70,7 +72,6 @@ class _SetNicknameState extends State<SetNickname> {
                 ),
               ),
               onPressed: () {
-                user.setNickname(_nickname.text);
                 testSet();
               },
             ),

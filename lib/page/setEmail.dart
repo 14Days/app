@@ -39,6 +39,7 @@ class _SetEmailState extends State<SetEmail> {
         await postUserService(user.email, user.sex, user.nickname);
         if (onValue['status'] == 'success') {
           _showText = "设置成功";
+          user.setEmail(_email.text);
           Navigator.pop(context);
         } else {
           _showText = "设置失败，请检查格式";
@@ -99,7 +100,6 @@ class _SetEmailState extends State<SetEmail> {
                 ),
               ),
               onPressed: () {
-                user.setEmail(_email.text);
                 testSet();
               },
             ),
