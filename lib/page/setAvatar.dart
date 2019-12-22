@@ -84,7 +84,7 @@ class _SetAvatarState extends State<SetAvatar> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            new GestureDetector(
+                            new InkWell(
                               child: Container(
                                 padding: const EdgeInsets.only(top: 10),
                                 height: 50.0,
@@ -96,7 +96,7 @@ class _SetAvatarState extends State<SetAvatar> {
                                 _takePhoto();
                               },
                             ),
-                            new GestureDetector(
+                            new InkWell(
                               child: Container(
                                 padding: const EdgeInsets.only(top: 10),
                                 height: 50.0,
