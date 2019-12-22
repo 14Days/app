@@ -108,14 +108,8 @@ class _RegisterBodyState extends State<RegisterBody> {
   void sendCode() async {
     String _showText = "111";
     //验证注册
-    if (!_name.hasMatch(_controllerName.text) || _controllerName.text == '') {
-      _showText = "请输入正确用户名";
-    } else if (!_phone.hasMatch(_controllerTel.text)) {
+    if (!_phone.hasMatch(_controllerTel.text)) {
       _showText = "手机号格式不正确";
-    } else if (!_password.hasMatch(_controllerPwd.text)) {
-      _showText = "密码应包含大小写字母，数字，符号中的任意三种";
-    } else if (_controllerPwd.text != _controllerRepwd.text) {
-      _showText = "两次密码不一致";
     } else {
       startCountdown();
       final onValue = await codeService(_controllerTel.text);
@@ -141,7 +135,14 @@ class _RegisterBodyState extends State<RegisterBody> {
   void testRegister() async {
     String _showText = "开始注册";
     //验证注册
-    if (_controllerVerif.text.toString() == '') {
+    if (!_name.hasMatch(_controllerName.text) ||
+        _controllerName.text == '') {
+      _showText = "请输入正确用户名";
+    } else if (!_password.hasMatch(_controllerPwd.text)) {
+      _showText = "密码应包含大小写字母，数字，符号中的任意三种";
+    } else if (_controllerPwd.text != _controllerRepwd.text) {
+      _showText = "两次密码不一致";
+    } else if (_controllerVerif.text.toString() == '') {
       _showText = "请输入验证码";
     } else {
       final onValue = await registerService(
@@ -196,7 +197,7 @@ class _RegisterBodyState extends State<RegisterBody> {
     } else {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginPage()),
-              (route) => route == null);
+          (route) => route == null);
     }
   }
 
@@ -213,16 +214,16 @@ class _RegisterBodyState extends State<RegisterBody> {
             child: new Column(
               children: <Widget>[
                 TextField(
-                  controller: _controllerName,
-                  cursorColor: MyColors.colorBlack,
-                  decoration: InputDecoration(
-                      hintText: "用户名", icon: Icon(Icons.person)),
-                ),
-                TextField(
                   controller: _controllerTel,
                   cursorColor: MyColors.colorBlack,
                   decoration:
                       InputDecoration(hintText: "手机号", icon: Icon(Icons.phone)),
+                ),
+                TextField(
+                  controller: _controllerName,
+                  cursorColor: MyColors.colorBlack,
+                  decoration: InputDecoration(
+                      hintText: "用户名", icon: Icon(Icons.person)),
                 ),
                 TextField(
                   controller: _controllerPwd,
