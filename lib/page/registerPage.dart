@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:furture/service/serviceMethod.dart';
 import 'package:furture/utils/utils.dart';
+
 import '../component/comment.dart';
 import 'loginPage.dart';
 
@@ -46,7 +48,7 @@ class _RegisterBodyState extends State<RegisterBody> {
   TextEditingController _controllerPwd = new TextEditingController();
   TextEditingController _controllerRepwd = new TextEditingController();
   TextEditingController _controllerVerif = new TextEditingController();
-  RegExp _name = RegExp(r'^(?![\u4e00-\u9fa5])');
+  RegExp _name = RegExp(r'^([A-Za-z_][A-Za-z_0-9]{3,6}$)');
   RegExp _password = RegExp(
       r'^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]{8,16}$');
   RegExp _phone = RegExp(r'^1[35678]\d{9}$');
@@ -135,9 +137,10 @@ class _RegisterBodyState extends State<RegisterBody> {
   void testRegister() async {
     String _showText = "开始注册";
     //验证注册
-    if (!_name.hasMatch(_controllerName.text) ||
-        _controllerName.text == '') {
-      _showText = "请输入正确用户名";
+    if (!_phone.hasMatch(_controllerTel.text)) {
+      _showText = "手机号格式不正确";
+    } else if (!_name.hasMatch(_controllerName.text) || _controllerName.text == '') {
+      _showText = "请输入3-6位用户名";
     } else if (!_password.hasMatch(_controllerPwd.text)) {
       _showText = "密码应包含大小写字母，数字，符号中的任意三种";
     } else if (_controllerPwd.text != _controllerRepwd.text) {
@@ -223,7 +226,9 @@ class _RegisterBodyState extends State<RegisterBody> {
                   controller: _controllerName,
                   cursorColor: MyColors.colorBlack,
                   decoration: InputDecoration(
-                      hintText: "用户名", icon: Icon(Icons.person)),
+                    hintText: "用户名",
+                    icon: Icon(Icons.person),
+                  ),
                 ),
                 TextField(
                   controller: _controllerPwd,

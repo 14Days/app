@@ -225,7 +225,7 @@ class _TextDetailState extends State<TextDetail> {
                     },
                   ),
                 ),
-                flex: 3,
+                flex: 1,
               ),
             ],
           ),
