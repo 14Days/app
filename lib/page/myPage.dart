@@ -1,9 +1,12 @@
 import 'package:fluro/fluro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
 import 'package:furture/provider/messageState.dart';
-import '../provider/userState.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import '../provider/userState.dart';
 import '../utils/utils.dart';
 import 'PhotoView.dart';
 
@@ -184,6 +187,16 @@ class CollectBody extends StatefulWidget {
 }
 
 class _CollectBodyState extends State<CollectBody> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000), () async {
+      await Provider.of<MessageState>(context).updateRecommend();
+    });
+    _refreshController.refreshCompleted();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -280,12 +293,27 @@ class _CollectBodyState extends State<CollectBody> {
   @override
   Widget build(BuildContext context) {
     final _message = Provider.of<MessageState>(context);
-    if (_message.collect.length == 0) {
-      return Center(
+    return SmartRefresher(
+      controller: _refreshController,
+      enablePullDown: true,
+      header: WaterDropHeader(
+        refresh: CupertinoActivityIndicator(),
+        complete: Center(
+          child: Text(
+            "刷新完成",
+            style: TextStyle(
+                color: Colors.grey,
+                fontSize: 15
+            ),
+          ),
+        ),
+      ),
+      onRefresh: _onRefresh,
+      child: _message.collect.length == 0
+          ? Center(
         child: Text("你还没有收藏哦~"),
-      );
-    } else {
-      return ListView.builder(
+      )
+          : ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: _message.collect.length,
         itemBuilder: (context, index) {
@@ -293,7 +321,7 @@ class _CollectBodyState extends State<CollectBody> {
             child: _items(index),
           );
         },
-      );
-    }
+      ),
+    );
   }
 }
