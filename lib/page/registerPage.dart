@@ -140,7 +140,7 @@ class _RegisterBodyState extends State<RegisterBody> {
     if (!_phone.hasMatch(_controllerTel.text)) {
       _showText = "手机号格式不正确";
     } else if (!_name.hasMatch(_controllerName.text) || _controllerName.text == '') {
-      _showText = "请输入3-6位用户名";
+      _showText = "请输入3-6位用户名(字母开头)";
     } else if (!_password.hasMatch(_controllerPwd.text)) {
       _showText = "密码应包含大小写字母，数字，符号中的任意三种";
     } else if (_controllerPwd.text != _controllerRepwd.text) {
