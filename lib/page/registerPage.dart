@@ -48,7 +48,7 @@ class _RegisterBodyState extends State<RegisterBody> {
   TextEditingController _controllerPwd = new TextEditingController();
   TextEditingController _controllerRepwd = new TextEditingController();
   TextEditingController _controllerVerif = new TextEditingController();
-  RegExp _name = RegExp(r'^([A-Za-z_][A-Za-z_0-9]{3,6}$)');
+  RegExp _name = RegExp(r'^[A-Za-z_][A-Za-z_0-9]{2,5}$');
   RegExp _password = RegExp(
       r'^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_]+$)(?![a-z0-9]+$)(?![a-z\W_]+$)(?![0-9\W_]+$)[a-zA-Z0-9\W_]{8,16}$');
   RegExp _phone = RegExp(r'^1[35678]\d{9}$');
