@@ -86,6 +86,7 @@ class _NoticeBodyState extends State<NoticeBody> {
           ),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               height: 55.0,
@@ -128,7 +129,7 @@ class _NoticeBodyState extends State<NoticeBody> {
                     alignment: Alignment.centerLeft,
                     child: new Text(
                       notice.items[index].content,
-                      maxLines: 10,
+                      maxLines: 100,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 20.0),
                     ),
