@@ -1,12 +1,36 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:furture/config/routes.dart';
 import 'package:furture/provider/messageState.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 import 'PhotoView.dart';
-
+List category = [
+  '动感',
+  '自然',
+  '清爽',
+  '雅致',
+  '豪华',
+  '浪漫',
+  '高贵',
+  '冷休闲',
+  '考究',
+  '温暖',
+];
+Map<String, int> categoryIndex = {
+  '动感': 44,
+  '自然': 45,
+  '清爽': 46,
+  '雅致': 47,
+  '豪华': 48,
+  '浪漫': 49,
+  '高贵': 50,
+  '冷休闲': 51,
+  '考究': 52,
+  '温暖': 53,
+};
+int index;
 class HomeClass extends StatefulWidget {
   @override
   _HomeClassState createState() => _HomeClassState();
@@ -18,7 +42,8 @@ class _HomeClassState extends State<HomeClass>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateCategory(44);
+      index = Provider.of<MessageState>(context).classIndex;
+      Provider.of<MessageState>(context).updateCategory(categoryIndex[category[index]]);
     });
   }
 
@@ -30,6 +55,7 @@ class _HomeClassState extends State<HomeClass>
   //基本框架 顶部分类+分类内容
   @override
   Widget build(BuildContext context) {
+    index = Provider.of<MessageState>(context).classIndex;
     return new Column(
       children: <Widget>[
         Expanded(
@@ -52,38 +78,15 @@ class TopClass extends StatefulWidget {
 }
 
 class _TopClassState extends State<TopClass> {
-  int index;
-  List category = [
-    '动感',
-    '自然',
-    '清爽',
-    '雅致',
-    '豪华',
-    '浪漫',
-    '高贵',
-    '冷休闲',
-    '考究',
-    '温暖',
-  ];
-  Map<String, int> categoryIndex = {
-    '动感': 44,
-    '自然': 45,
-    '清爽': 46,
-    '雅致': 47,
-    '豪华': 48,
-    '浪漫': 49,
-    '高贵': 50,
-    '冷休闲': 51,
-    '考究': 52,
-    '温暖': 53,
-  };
+
+
 
   @override
   void initState() {
     super.initState();
-    index = 0;
     WidgetsBinding.instance.addPostFrameCallback((callback) {
-      Provider.of<MessageState>(context).updateCategory(44);
+      index = Provider.of<MessageState>(context).classIndex;
+      Provider.of<MessageState>(context).updateCategory(categoryIndex[category[index]]);
     });
   }
 
@@ -108,6 +111,8 @@ class _TopClassState extends State<TopClass> {
           Provider.of<MessageState>(context)
               .updateCategory(categoryIndex[category[i]]);
           index = i;
+          Provider.of<MessageState>(context)
+              .updateIndex(i);
         });
       },
       child: Container(

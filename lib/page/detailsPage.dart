@@ -222,6 +222,8 @@ class _TextDetailState extends State<TextDetail> {
                       Provider.of<MessageState>(context).updateFollow();
                       Provider.of<MessageState>(context).updateRecommend();
                       Provider.of<MessageState>(context).updateCollect();
+                      Provider.of<MessageState>(context).updateCategory(
+                          Provider.of<MessageState>(context).classIndex + 44);
                     },
                   ),
                 ),
@@ -411,11 +413,12 @@ class _InterActionState extends State<InterAction> {
         ),
       );
     } else {
-      return SliverFixedExtentList(        // SliverList的语法糖，用于每个item固定高度的List
+      return SliverFixedExtentList(
+        // SliverList的语法糖，用于每个item固定高度的List
         delegate: SliverChildBuilderDelegate(
-              (context, index) => Container(
-                child: _items(index),
-              ),
+          (context, index) => Container(
+            child: _items(index),
+          ),
           childCount: _comments.length,
         ),
         itemExtent: 100,
@@ -501,6 +504,8 @@ class _BottomInterState extends State<BottomInter> {
                     Provider.of<MessageState>(context).updateCollect();
                     Provider.of<MessageState>(context).updateRecommend();
                     Provider.of<MessageState>(context).updateFollow();
+                    Provider.of<MessageState>(context).updateCategory(
+                        Provider.of<MessageState>(context).classIndex + 44);
                   },
                 ),
                 new Text(_countLike.toString()),
@@ -536,6 +541,8 @@ class _BottomInterState extends State<BottomInter> {
                 Provider.of<MessageState>(context).updateRecommend();
                 Provider.of<MessageState>(context).updateCollect();
                 Provider.of<MessageState>(context).updateFollow();
+                Provider.of<MessageState>(context).updateCategory(
+                    Provider.of<MessageState>(context).classIndex + 44);
               },
             ),
           ),
@@ -634,6 +641,8 @@ class _BottomInputState extends State<BottomInput> {
                         Provider.of<MessageState>(context).updateRecommend();
                         Provider.of<MessageState>(context).updateCollect();
                         Provider.of<MessageState>(context).updateFollow();
+                        Provider.of<MessageState>(context).updateCategory(
+                            Provider.of<MessageState>(context).classIndex + 44);
                       }
                     }
                   },

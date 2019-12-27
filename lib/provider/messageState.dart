@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:furture/component/comment.dart';
+
 import '../service/serviceMethod.dart';
 
 class MessageState with ChangeNotifier {
+  int _classIndex = 0;
   List<MessageData> _recommend = [];
   List<MessageData> _follow = [];
   List<MessageData> _category = [];
@@ -15,6 +17,8 @@ class MessageState with ChangeNotifier {
   List<MessageData> get category => _category;
 
   List<MessageData> get collect => _collect;
+
+  int get classIndex => _classIndex;
 
   updateRecommend() async {
     MessageModel recommendModel;
@@ -73,6 +77,10 @@ class MessageState with ChangeNotifier {
       _category = categoryModel.data;
     }
 
+    notifyListeners();
+  }
+  updateIndex(int index) async {
+    _classIndex = index;
     notifyListeners();
   }
 }
