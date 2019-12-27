@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furture/provider/noticeState.dart';
 import 'package:furture/utils/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NoticePage extends StatefulWidget {
   @override
@@ -46,13 +48,16 @@ class NoticeBody extends StatefulWidget {
 }
 
 class _NoticeBodyState extends State<NoticeBody> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
-  Future<Null> _onRefresh() async {
+  void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000), () async {
       await Provider.of<NoticeState>(context).updateNotice();
     });
-
+    _refreshController.refreshCompleted();
   }
+
   @override
   void initState() {
     super.initState();
@@ -146,24 +151,35 @@ class _NoticeBodyState extends State<NoticeBody> {
   @override
   Widget build(BuildContext context) {
     final notice = Provider.of<NoticeState>(context);
-    return RefreshIndicator(
-      onRefresh: _onRefresh,
-      child: notice.items == null
-          ? Center(
-        child: Text(
-          "暂无通知",
-          style: TextStyle(color: Colors.black, fontSize: 30),
+    return SmartRefresher(
+      controller: _refreshController,
+      enablePullDown: true,
+      header: WaterDropHeader(
+        refresh: CupertinoActivityIndicator(),
+        complete: Center(
+          child: Text(
+            "刷新完成",
+            style: TextStyle(color: Colors.grey, fontSize: 15),
+          ),
         ),
-      )
-          : ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: notice.items.length,
-        itemBuilder: (context, index) {
-          return Material(
-            child: _item(index),
-          );
-        },
       ),
+      onRefresh: _onRefresh,
+      child: notice.items.length == 0
+          ? Center(
+              child: Text(
+                "暂无通知",
+                style: TextStyle(color: Colors.black, fontSize: 17),
+              ),
+            )
+          : ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: notice.items.length,
+              itemBuilder: (context, index) {
+                return Material(
+                  child: _item(index),
+                );
+              },
+            ),
     );
   }
 }
