@@ -33,24 +33,56 @@ class _SetNicknameState extends State<SetNickname> {
     final user = Provider.of<UserState>(context);
     String _showText = "";
     void testSet() async {
-      final onValue =
-          await postUserService(user.email, user.sex, user.nickname);
-      if (onValue['status'] == 'success') {
-        user.setNickname(_nickname.text);
-        Provider.of<MessageState>(context).updateRecommend();
-        Provider.of<MessageState>(context).updateFollow();
-        Provider.of<MessageState>(context).updateCollect();
-        Provider.of<MessageState>(context).updateCategory(44);
-        Navigator.pop(context);
+      if (_nickname.text == '' || _nickname.text == null) {
+        _showText = "昵称不能为空";
       } else {
-        _showText = "设置失败，请检查格式";
-        final _snackBar = new SnackBar(
-          content: new Text(_showText),
-          backgroundColor: Colors.blue,
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 1),
+        final onValue =
+            await postUserService(user.email, user.sex, user.nickname);
+        if (onValue['status'] == 'success') {
+          _showText = "设置成功";
+          user.setNickname(_nickname.text);
+          Provider.of<MessageState>(context).updateRecommend();
+          Provider.of<MessageState>(context).updateFollow();
+          Provider.of<MessageState>(context).updateCollect();
+          Provider.of<MessageState>(context).updateCategory(
+              Provider.of<MessageState>(context).classIndex + 44);
+          Navigator.pop(context);
+        } else {
+          _showText = "设置失败，请检查格式";
+        }
+      }
+      if (_showText != "设置成功") {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.all(5.0),
+                  alignment: Alignment.center,
+                  height: 140,
+                  width: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.white,
+                  ),
+                  child: Text(
+                    _showText,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      fontSize: 17.0,
+                      fontFamily: "Rock Salt",
+                      fontWeight: FontWeight.w100,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         );
-        Scaffold.of(context).showSnackBar(_snackBar);
       }
     }
 
